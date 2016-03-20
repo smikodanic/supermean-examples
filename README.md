@@ -1,4 +1,4 @@
-# supermean
+# superMEAN
 SuperMEAN is simple but powerfull MEAN stack framework for beginners or experienced developers.
 
 FEATURES  

@@ -1,6 +1,6 @@
 # superMEAN
 SuperMEAN is simple but powerfull MEAN stack framework for beginners or experienced developers.
-It's convenient for coding one page apps, server multi page apps or APIs.
+It's convenient for coding one page apps (/client/ folder), multi page apps (/server/ folder) or APIs.
 
 FEATURES  
  expressjs, express-enrouten, ejs template engine, angularjs, browserify, bower, gulp, pm2, aws elasticbeanstalk configuration, virtual host with vhost npm

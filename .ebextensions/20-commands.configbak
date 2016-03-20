@@ -1,0 +1,12 @@
+# some commands
+commands:
+  changeuser:
+    command: su nodejs
+  createdir:
+    command: mkdir /var/app/current/bower_components
+  whoami:
+    command: whoami > whoami.log
+    cwd: /var/app/current
+  whoamihome:
+    command: whoami > whoamihome.log
+    cwd: /home/ec2-user

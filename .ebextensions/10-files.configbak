@@ -1,0 +1,8 @@
+files:
+  "/home/ec2-user/mytest.txt" :
+    mode: "000755"
+    owner: nodejs
+    group: nodejs
+    content: |
+      # this is my file
+      # with content

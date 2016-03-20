@@ -1,4 +1,7 @@
-/*jslint unparam: true, node: true*/
+/**
+ * Main application file for calling middlewares.
+ */
+
 
 require('rootpath')(); //root path for require()
 var express = require('express');
@@ -31,6 +34,14 @@ app.use(enrouten({
 }));
 
 
+//show all requests in console
+app.use(function (req, res, next) {
+    'use strict';
+    debug(chalk.gray(req.method + ' ' + req.originalUrl));
+    next();
+});
+
+
 //static files
 app.use('/assets', express.static(path.join(__dirname, '/../assets')));
 app.use('/bower', express.static(path.join(__dirname, '/../../bower_components')));
@@ -46,9 +57,10 @@ app.use(favicon(path.join(__dirname + '/../assets/img/favicon.png')));
 require('server/app/config/middleware/index.js')(app);
 
 
-// if doesn't find any route on server side e.g. in /server/app/controllers/ 
+// if doesn't find any route on server side e.g. in /server/app/controllers/
 // then render client side one page app e.g. angular app /server/views/clientApp.ejs
 app.use(function (req, res, next) {
+    'use strict';
     res.render('clientApp');
 });
 
@@ -57,6 +69,7 @@ app.use(function (req, res, next) {
 // will print stacktrace
 if (app.get('env') === 'dev') {
     app.use(function (err, req, res, next) {
+        'use strict';
         res.status(err.status || 500);
         res.render('error', {
             message: err.message,
@@ -68,14 +81,12 @@ if (app.get('env') === 'dev') {
 // production error handler
 // no stacktraces leaked to user
 app.use(function (err, req, res, next) {
+    'use strict';
     res.status(err.status || 500);
     res.render('error', {
         message: err.message,
         error: {}
     });
 });
-
-//show all requests in console
-app.use();
 
 module.exports = app;

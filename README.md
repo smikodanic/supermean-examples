@@ -8,7 +8,7 @@ FEATURES
  $ gulp default
  
 
-SUPERMEAN ROUTING
+SUPERMEAN ROUTING  
 When URL is typed in browser Supermean first trying to find route on server-side e.g. inside /server/controllers/.
 Writing of server side routes on server side is very simple because of "express-enrouten" npm.
 

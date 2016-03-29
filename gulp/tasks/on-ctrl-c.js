@@ -7,7 +7,7 @@ module.exports = function (gulp) {
             gulp.start('pm2-stop', function () {
                 console.log('\nExiting ... Please wait.\n');
                 setTimeout(function () {
-                    process.exit();
+                    process.exit(); //exiting gulp
                 }, 3400);
             });
         }

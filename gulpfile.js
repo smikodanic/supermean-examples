@@ -7,7 +7,7 @@ gulp.task('rimraf', require('./gulp/tasks/rimraf.js'));
 gulp.task('browserify', require('./gulp/tasks/browserify.js'));
 gulp.task('htmlmin', require('./gulp/tasks/htmlmin.js'));
 gulp.task('on-ctrl-c', require('./gulp/tasks/on-ctrl-c.js')(gulp));
-require('./gulp/tasks/pm2.js')(config);
+require('./gulp/tasks/server-pm2.js')(config);
 
 
 var scss = require('gulp-scss');

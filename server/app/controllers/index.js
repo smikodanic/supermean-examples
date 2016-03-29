@@ -28,6 +28,21 @@ module.exports = function (router) {
     });
 
 
+    /* endpoint: GET /login */
+    router.get('/login', function (req, res) {
+
+        var vdata = {
+            title: 'Login form',
+            desc: 'Supermean login test.',
+            keywords: 'key1, key2, key3',
+            static_files: config.static_files,
+            bodyText: 'Login text'
+        };
+
+        res.render('public/login', vdata);
+    });
+
+
     /* 404 not found */
     router.get('/404', function (req, res) {
         res.status(404).render('404');

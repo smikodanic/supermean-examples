@@ -1,0 +1,40 @@
+<!doctype html> 
+<html lang="en">
+
+<head>
+	<%- include('../public/0partials/01head'); -%>
+</head>
+
+<body>
+	<%- include('../public/0partials/05header'); -%>
+
+
+	<main class="container" style="min-height:350px">
+	
+        <h1>Login</h1>
+	
+	   <form action="#" method="POST" enctype="application/x-www-form-urlencoded" class="form-horizontal">
+
+            <div class="form-group">
+                <label for="user" class="col-sm-2  control-label">User:</label>
+                <div class="col-sm-3">
+                    <input type="text" id="user" name="user" class="form-control">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="pass" class="col-sm-2  control-label">Password:</label>
+                <div class="col-sm-3">
+                    <input type="text" id="pass" name="pass" class="form-control">
+                </div>
+            </div>
+
+        </form>
+
+
+	</main>
+
+
+	<%- include('../public/0partials/20footer'); -%>
+</body>
+</html>

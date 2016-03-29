@@ -14,7 +14,7 @@ var scss = require('gulp-scss');
 gulp.task('scss', function () {
     'use strict';
     gulp.src([
-        './client/src/controller_view/**/*.scss'
+        'client/src/controller_view/**/*.scss'
     ])
         .pipe(scss({bundleExec: true}))
         .pipe(gulp.dest('client/dist/css'));
@@ -28,23 +28,23 @@ gulp.task('watch', ['htmlmin', 'browserify'], function () {
 
     //*** watch server side
     gulp.watch([
-        './server/app/views/**/*.ejs',
-        './server/app/**/*.js'
+        'server/app/views/**/*.ejs',
+        'server/app/**/*.js'
     ], ['pm2-restart']);
 
 
 
     //*** watch client side
     gulp.watch([
-        './client/src/**/*.js'
+        'client/src/**/*.js'
     ], ['browserify']);
 
     gulp.watch([
-        './client/src/**/*.html'
+        'client/src/**/*.html'
     ], ['htmlmin']);
 
     gulp.watch([
-        './client/src/**/*.scss'
+        'client/src/**/*.scss'
     ], ['scss']);
 
 });
@@ -54,7 +54,7 @@ gulp.task('watch', ['htmlmin', 'browserify'], function () {
 gulp.task('build-dist', ['rimraf', 'browserify', 'htmlmin', 'scss']);
 
 
-gulp.task('default', ['pm2-stop', 'build-dist', 'watch', 'on-ctrl-c'], function () {
+gulp.task('default', ['build-dist', 'watch', 'on-ctrl-c'], function () {
     'use strict';
     gulp.start('pm2-start');
 });

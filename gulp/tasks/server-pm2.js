@@ -31,12 +31,14 @@ module.exports = function (config) {
         });
     });
 
+    var i = 0; //restart iteration number
     gulp.task('pm2-restart', function () {
         exec('pm2 restart server -n ' + app_name, function (err, stdout) {
             if (err) {
                 console.log(err);
             } else {
-                console.log('pm2 restart server -n ' + app_name);
+                console.log('(#' + i + ') pm2 restart server -n ' + app_name + '\n');
+                i = i + 1;
                 // console.log(stdout);
             }
         });

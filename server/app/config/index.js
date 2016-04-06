@@ -1,4 +1,7 @@
-//environment dependant configuration: $export NODE_ENV=dev || $export NODE_ENV=prod
+/*
+ * environment dependant configuration: $export NODE_ENV=dev || $export NODE_ENV=prod
+ * config.server_manager = 'pm2' || 'nodemon'
+ */
 var config_env = require('./env/' + (process.env.NODE_ENV || 'dev'));
 
 var config = {

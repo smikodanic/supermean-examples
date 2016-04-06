@@ -4,9 +4,10 @@ var config = {
     name: 'dev',
     server: {
         virtualHost: false,
-        domain: 'dev.nodeigniterjs.loc',
+        domain: 'dev.supermean.loc',
         port: process.env.PORT || 3001
     },
+    gulpFile: 'gulpfile-nodemon.js',
     mongodb: 'mongodb://user:pass@server.com:27017/db_name'
 
 };

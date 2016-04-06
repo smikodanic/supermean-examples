@@ -1,4 +1,4 @@
 var config = require('./server/app/config');
 
-require('./gulp/' + config.env.gulpFile);
+require('./.gulp/' + config.env.gulpFile);
 

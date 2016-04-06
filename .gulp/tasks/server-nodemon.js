@@ -15,7 +15,7 @@ module.exports = function () {
                 'gulp/**',
                 '.*/**'
             ],
-            watchedExtensions: ['js', 'json', 'html'],
+            watchedExtensions: ['js', 'json'],
             watchedFolders: ['server'],
             debug: true,
             delayTime: 1,

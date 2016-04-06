@@ -1,3 +1,7 @@
+/**
+ ***** production environment
+ * gulpFile: gulpfile-nodemon.js || gulpfile-pm2.js
+ */
 var config = {
 
     url: 'http://www.supermean.org',

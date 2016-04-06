@@ -1,4 +1,3 @@
-var config = require('../server/app/config');
 var gulp = require('gulp');
 
 //GULP Tasks
@@ -9,6 +8,7 @@ gulp.task('htmlmin', require('./tasks/htmlmin.js'));
 gulp.task('server-nodemon', require('./tasks/server-nodemon.js')());
 
 
+//gulp scss task
 var scss = require('gulp-scss');
 gulp.task('scss', function () {
     'use strict';
@@ -20,9 +20,8 @@ gulp.task('scss', function () {
 });
 
 
-
-//GULP Watches
-gulp.task('watch', ['htmlmin', 'browserify'], function () {
+//gulp watchers
+gulp.task('watch', function () {
     'use strict';
 
     //*** watch client side
@@ -45,4 +44,5 @@ gulp.task('watch', ['htmlmin', 'browserify'], function () {
 gulp.task('build-dist', ['rimraf', 'browserify', 'htmlmin', 'scss']);
 
 
+//defult gulp task
 gulp.task('default', ['build-dist', 'watch', 'nodemon-start']);

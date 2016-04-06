@@ -23,7 +23,7 @@ gulp.task('scss', function () {
 
 
 //GULP Watches
-gulp.task('watch', ['htmlmin', 'browserify'], function () {
+gulp.task('watch', function () {
     'use strict';
 
     //*** watch server side

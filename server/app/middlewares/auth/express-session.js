@@ -1,4 +1,7 @@
-//simple login session with express-session
+/**
+ * Authentication with session file stored in './server/tmp/session/'
+ * https://www.npmjs.com/package/express-sessions
+ */
 var session = require('express-session');
 var FileStore = require('session-file-store')(session);
 

@@ -7,18 +7,16 @@ module.exports = function () {
     gulp.task('nodemon-start', function () {
         return nodemon({
             script: 'server',
+            ext: 'js json html',
             ignore: [
                 'README.md',
                 'node_modules/**',
                 'bower_components/**',
                 'client/**',
-                'gulp/**',
+                '.gulp/**',
                 '.*/**'
             ],
-            watchedExtensions: ['js', 'json'],
-            watchedFolders: ['server'],
-            debug: true,
-            delayTime: 1,
+            delayTime: 10,
             env: {
                 NODE_ENV: process.env.NODE_ENV || 'dev'
             }

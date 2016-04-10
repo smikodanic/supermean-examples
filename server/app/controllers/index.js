@@ -1,8 +1,7 @@
 /**
  * /server/app/controllers/index.js
  */
-require('rootpath');
-var config = require('server/app/config/');
+var config = require('../config/');
 
 module.exports = function (router) {
     'use strict';
@@ -11,7 +10,7 @@ module.exports = function (router) {
     router.get('/', function (req, res) {
 
         var vdata = {
-            title: 'Homepage',
+            title: 'SuperMEAN - MEAN stack',
             desc: 'Some Description of homepage.',
             keywords: 'key1, key2, key3',
             static_files: config.static_files,
@@ -27,30 +26,15 @@ module.exports = function (router) {
         res.render('public/index', vdata);
     });
 
-
-    /* endpoint: GET /login */
-    router.get('/login', function (req, res) {
-
-        var vdata = {
-            title: 'Login form',
-            desc: 'Supermean login test.',
-            keywords: 'key1, key2, key3',
-            static_files: config.static_files,
-            bodyText: 'Login text'
-        };
-
-        res.render('public/login', vdata);
+    /* endpoint: GET /test */
+    router.get('test', function (req, res) {
+        res.send('This is TEST!');
     });
 
 
     /* 404 not found */
     router.get('/404', function (req, res) {
-        res.status(404).render('404');
+        res.status(404).render('error404');
     });
-
-    /* server side /example route has advantage over slient side /example route */
-    // router.get('/example', function (req, res) {
-    //     res.send('This is server side response to /example URL!');
-    // });
 
 };

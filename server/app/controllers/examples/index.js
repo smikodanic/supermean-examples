@@ -11,7 +11,7 @@ module.exports = function (router) {
     router.get('/', function (req, res) {
 
         var vdata = {
-            title: 'Supermean examples',
+            title: 'List of superMEAN examples',
             desc: 'A list of supermean examples.',
             keywords: 'supermean, mean stack, examples',
             static_files: config.static_files

@@ -7,11 +7,11 @@ var config = {
     url: 'http://www.supermean.org',
     name: 'prod',
     server: {
-        virtualHost: true,
+        virtualHost: false,
         domain: 'www.supermean.loc',
-        port: process.env.PORT || 3000
+        port: process.env.PORT || 3001
     },
-    gulpFile: 'gulpfile-pm2',
+    gulpFile: 'gulpfile-nodemon',
     mongodb: 'mongodb://user:pass@server.com:27017/db_name'
 
 };

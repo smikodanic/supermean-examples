@@ -10,4 +10,5 @@ module.exports = function () {
         ])
         .pipe(htmlmin({collapseWhitespace: true}))
         .pipe(gulp.dest('./client/dist/html/'));
+
 };

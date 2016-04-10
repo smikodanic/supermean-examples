@@ -2,18 +2,26 @@
 <html lang="en">
 
 <head>
-	<%- include('../public/0partials/01head'); -%>
+	<%- include('_partials/01head'); -%>
 </head>
 
 <body>
-	<%- include('../public/0partials/05header'); -%>
+	<%- include('_partials/05header'); -%>
 
-	<main class="container" style="min-height: 350px">
+	<ol class="col-sm-7 breadcrumb">
+  		<li><a href="/">Home</a></li>
+  		<li class="active">SS Examples</li>
+	</ol>
 
-		<h1>A list of examples</h1>
+
+	<main class="col-sm-12 container" style="min-height: 350px">
+
+		<h1>Server Side Examples</h1>
 	
+		<h3>Authentication</h3>
+
 		<ol>
-			<li><a href="/examples/login">Login</a> - server side login with <a href="http://passportjs.org/docs" target="_blank">passport npm</a></li>
+			<li><a href="/examples/auth/passport">Passport Authentication</a> - different authentication strategies using <a href="http://passportjs.org/docs" target="_blank">passport npm</a></li>
 
 
 
@@ -23,6 +31,6 @@
 
 	</main>
 
-	<%- include('../public/0partials/20footer'); -%>
+	<%- include('_partials/20footer'); -%>
 </body>
 </html>

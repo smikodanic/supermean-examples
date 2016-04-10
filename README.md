@@ -14,11 +14,14 @@ FEATURES
  - virtual host with vhost npm (optional)
  
 
+
 DEVELOPMENT  
  $ gulp default
  
 
+
 *SUPERMEAN ROUTING LOGIC*
+
 SuperMEAN routing logic makes it possible to use server and client side routes in the same application.
 The logic is very simple and as follows:
 

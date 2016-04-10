@@ -40,8 +40,11 @@ gulp.task('watch', function () {
 });
 
 
-//build /client/dist/ directory
-gulp.task('build-dist', ['rimraf', 'browserify', 'htmlmin', 'scss']);
+//first delete then build /client/dist/ directory
+gulp.task('build-dist', ['rimraf'], function () {
+    'use strict';
+    gulp.start('browserify', 'htmlmin', 'scss');
+});
 
 
 //defult gulp task

@@ -14,7 +14,7 @@ FEATURES
  - virtual host with vhost npm (optional)
  
 
- DEVELOPMENT  
+DEVELOPMENT  
  $ gulp default
  
 

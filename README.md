@@ -1,19 +1,31 @@
 # superMEAN
-SuperMEAN is simple but powerfull MEAN stack framework for beginners or experienced developers.
+SuperMEAN is simple but powerfull MEAN stack framework for beginners and experienced developers.
 It's convenient for coding one page apps (/client/ folder), multi page apps (/server/ folder) or APIs.
 
 FEATURES  
- expressjs, express-enrouten, ejs template engine, angularjs, browserify, bower, gulp, pm2, aws elasticbeanstalk configuration, virtual host with vhost npm
+ - expressjs
+ - ejs template engine
+ - angularjs
+ - browserify
+ - bower & npm
+ - gulp
+ - nodemon or pm2
+ - aws elasticbeanstalk configuration
+ - virtual host with vhost npm (optional)
  
+
  DEVELOPMENT  
  $ gulp default
  
 
-SUPERMEAN ROUTING  
-When URL is typed in browser Supermean first trying to find route on server-side e.g. inside /server/controllers/.
-Writing of server side routes on server side is very simple because of "express-enrouten" npm.
+*SUPERMEAN ROUTING LOGIC*
+SuperMEAN routing logic makes it possible to use server and client side routes in the same application.
+The logic is very simple and as follows:
 
-If route is not found on server-side the Supermean is trying to find route on client side e.g. inside /client/src/config/routes.js . Client side URLs doen't use hasbang (#!) because the Angular is working in HTML5 mode.
+When URL is typed in browser superMEAN first trying to find route on server-side e.g. inside /server/routes/.
 
-If route doesn't exist neither on client-side it redirects to server-side 404.html not found page.
+If route is not found on server-side the superMEAN is trying to find route on client side e.g. inside /client/src/config/routes.js .
+Client side URLs doesn't use hasbang (#!) because the Angular is working in HTML5 mode ($locationProvider.html5Mode(true);).
+
+If route doesn't exist neither on client-side it redirects to server-side /server/views/errors/error404.ejs not found page.
 

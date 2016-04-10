@@ -33,8 +33,8 @@ app.use('/bower', express.static(path.join(__dirname, '/../../bower_components')
 app.use('/client', express.static(path.join(__dirname, '/../../client')));
 
 //*** auth middlewares
-// require('./middlewares/auth/passport_local.js')(app);
 // require('./middlewares/auth/express-session.js')(app);
+// require('./middlewares/auth/passport_local.js')(app);
 
 
 

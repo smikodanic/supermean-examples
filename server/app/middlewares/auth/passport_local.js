@@ -29,7 +29,7 @@ module.exports = function (app) {
 
     passport.use(new LocalStrategy(
         function (username, password, cb) {
-            console.log('UP:' + username + '-' + password);
+            // console.log('UP:' + username + '-' + password);
             if (username !== 'sasa') {
                 return cb(null, false);
             }

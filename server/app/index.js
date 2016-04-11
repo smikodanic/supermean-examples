@@ -34,45 +34,7 @@ app.use('/client', express.static(path.join(__dirname, '/../../client')));
 
 //*** auth middlewares
 // require('./middlewares/auth/express-session.js')(app);
-// require('./middlewares/auth/passport_local.js')(app);
-
-
-
-//***PASSPORT
 require('./middlewares/auth/passport_local.js')(app);
-// var passport = require('passport');
-// var Strategy = require('passport-local').Strategy;
-
-// passport.serializeUser(function (user, cb) {
-//     'use strict';
-//     cb(null, user);
-// });
-
-// passport.deserializeUser(function (user, cb) {
-//     'use strict';
-//     cb(null, user);
-// });
-
-// app.use(require('express-session')({secret: 'keyboard cat', resave: false, saveUninitialized: false}));
-// app.use(passport.initialize());
-// app.use(passport.session());
-
-// passport.use(new Strategy(
-//     function (username, password, cb) {
-//         'use strict';
-//         console.log('UP:' + username + '-' + password);
-//         if (username !== 'sasa') {
-//             return cb(null, false);
-//         }
-//         if (password !== 'test') {
-//             return cb(null, false);
-//         }
-//         return cb(null, username);
-//     }
-// ));
-
-
-
 
 
 
@@ -83,6 +45,10 @@ app.use('/', require('./routes/index.js'));
 //*** examples
 app.use('/examples', require('./routes/examples/index.js'));
 app.use('/examples/auth/passport', require('./routes/examples/auth/passport.js'));
+
+
+
+
 
 
 

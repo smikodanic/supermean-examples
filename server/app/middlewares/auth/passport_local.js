@@ -13,18 +13,31 @@ var flash = require('connect-flash');
 module.exports = function (app) {
     'use strict';
 
+    passport.serializeUser(function (user, cb) {
+        cb(null, user);
+    });
+
+    passport.deserializeUser(function (user, cb) {
+        cb(null, user);
+    });
+
     app.use(session({secret: 'somesecret', name: 'passport_supermean', resave: true, saveUninitialized: true})); // session secret
     app.use(passport.initialize());
     app.use(passport.session()); // persistent login sessions
     app.use(flash()); // use connect-flash for flash messages stored in session
-    passport.use('local-login', new LocalStrategy({
-        // by default, local strategy uses username and password, we will override with email
-        usernameField: 'user',
-        passwordField: 'pass',
-        passReqToCallback: true // allows us to pass back the entire request to the callback
-    }, function (user, pass, done) { // callback with email and password from our form
-        console.log(JSON.stringify(user, null, 2));
-        console.log(JSON.stringify(pass, null, 2));
-    }));
+
+
+    passport.use(new LocalStrategy(
+        function (username, password, cb) {
+            console.log('UP:' + username + '-' + password);
+            if (username !== 'sasa') {
+                return cb(null, false);
+            }
+            if (password !== 'test') {
+                return cb(null, false);
+            }
+            return cb(null, username);
+        }
+    ));
 
 };

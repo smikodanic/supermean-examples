@@ -6,6 +6,7 @@
 var config = require('../../../config');
 var express = require('express');
 var router = express.Router();
+var passport = require('passport');
 
 
 /* endpoint: GET /examples/auth/passport */
@@ -38,7 +39,7 @@ router.get('/local', function (req, res) {
 
 
 /* endpoint: POST /examples/auth/passport/local/login */
-router.post('/local/login', function (req, res) {
+router.post('/local/login', passport.authenticate('local', {failureRedirect: '/login'}), function (req, res) {
     'use strict';
     var vdata = {
         title: 'Supermean examples - passportJS local authentication',

@@ -9,6 +9,7 @@ var LocalStrategy = require('passport-local').Strategy;
 var session = require('express-session');
 var flash = require('connect-flash');
 
+var cookieParser = require('cookie-parser');
 
 module.exports = function (app) {
     'use strict';
@@ -21,7 +22,14 @@ module.exports = function (app) {
         cb(null, user);
     });
 
-    app.use(session({secret: 'somesecret', name: 'passport_supermean', resave: true, saveUninitialized: true})); // session secret
+    app.use(session({
+        name: 'passport_supermean',
+        secret: 'somesecret',
+        resave: false,
+        saveUninitialized: false //if 'false' then session cookie is not created unless req.session.username = 'value' is set
+    }));
+    app.use(cookieParser());
+
     app.use(passport.initialize());
     app.use(passport.session()); // persistent login sessions
     app.use(flash()); // use connect-flash for flash messages stored in session
@@ -29,7 +37,7 @@ module.exports = function (app) {
 
     passport.use(new LocalStrategy(
         function (username, password, cb) {
-            // console.log('UP:' + username + '-' + password);
+            // console.log('UserPass:' + username + '-' + password);
             if (username !== 'sasa') {
                 return cb(null, false);
             }
@@ -39,5 +47,7 @@ module.exports = function (app) {
             return cb(null, username);
         }
     ));
+
+
 
 };

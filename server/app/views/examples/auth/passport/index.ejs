@@ -9,19 +9,71 @@
 	<%- include('../../_partials/05header'); -%>
 
 	<ol class="col-sm-7 breadcrumb">
-  	<li><a href="/">Home</a></li>
-  	<li><a href="/examples">SS Examples</a></li>
-  	<li class="active">Passport</li>
+        <li><a href="/">Home</a></li>
+        <li><a href="/examples">SS Examples</a></li>
+        <li class="active">Passport</li>
 	</ol>
 
 	<main class="col-sm-12 container" style="min-height:350px">
 	
         <h1><span class="fa fa-lock"></span> Passport Authentication</h1>
+        <p>Pages PAGE 1, PAGE 2 and PAGE 3 will not be visible until successful login.</p>
 	
-	       <div class="jumbotron text-center">
+	       <div class="col-sm-4 well text-center">
+            <a href="/examples/auth/passport/local/page1">PAGE 1</a> |
+            <a href="/examples/auth/passport/local/page2">PAGE 2</a> |
+            <a href="/examples/auth/passport/local/page3">PAGE 3</a>
 
-            <p>Login with:</p>
-            <a href="/examples/auth/passport/local" class="btn btn-default"><span class="fa fa-user"></span> Local Login</a>
+            <br>
+            <br>
+            <br>
+
+            <!-- local strategy -->
+            <form action="/examples/auth/passport/local/page1" method="POST" enctype="application/x-www-form-urlencoded" class="form-horizontal">
+
+            	<div class="form-group">
+            	    <label for="user" class="col-sm-2  control-label">User:</label>
+            	    <div class="col-sm-5">
+            	        <input type="text" id="user" name="username" class="form-control">
+            	    </div>
+            	</div>
+	
+            	<div class="form-group">
+            	    <label for="pass" class="col-sm-2  control-label">Password:</label>
+            	    <div class="col-sm-5">
+            	        <input type="text" id="pass" name="password" class="form-control">
+            	    </div>
+            	</div>
+	
+            	<div class="form-group">
+            	    <div class="col-sm-3 col-sm-offset-2">
+            	        <button type="submit" class="btn btn-default">
+            	        	<i class="glyphicon glyphicon-log-in"></i> Local Login
+            	        </button>
+            	    </div>
+            	</div>
+	
+        	</form>
+            <!-- local strategy end -->
+
+
+            <div class="clearfix">&nbsp;</div><br>
+
+
+            <!-- Facebook strategy -->
+            <button type="submit" class="btn btn-default">
+                <i class="fa fa-facebook"></i> Facebook Login
+            </button>
+
+            <!-- Twitter strategy -->
+            <button type="submit" class="btn btn-default">
+                <i class="fa fa-twitter"></i> Twitter Login
+            </button>
+
+            <!-- Google+ strategy -->
+            <button type="submit" class="btn btn-default">
+                <i class="fa fa-google-plus"></i> Google+ Login
+            </button>
 
         </div>
 

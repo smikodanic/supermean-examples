@@ -23,8 +23,9 @@ require('./middlewares/logger_morgan.js')(app, config); //must be first to log e
 require('./middlewares/debug.js')(app, config);
 require('./middlewares/errors.js')(app, config);
 require('./middlewares/favicon.js')(app);
+// require('./middlewares/cookieParser.js')(app);
 require('./middlewares/bodyParser.js')(app);
-require('./middlewares/cookieParser.js')(app);
+
 // require('./middlewares/virtual_host.js')(app, config);
 
 //*** static file middlewares --- path.join() creates absolute path from root
@@ -38,14 +39,13 @@ require('./middlewares/auth/passport_local.js')(app);
 
 
 
-
 //****** SERVER SIDE ROUTES *****
 app.use('/', require('./routes/index.js'));
 
-//*** examples
+//*** server-side examples
 app.use('/examples', require('./routes/examples/index.js'));
+// app.use('/examples/auth/passport', require('./middlewares/nodedump_req.js'), require('./routes/examples/auth/passport.js')); //with nodedump debuggung
 app.use('/examples/auth/passport', require('./routes/examples/auth/passport.js'));
-
 
 
 

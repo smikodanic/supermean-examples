@@ -11,6 +11,8 @@ var flash = require('connect-flash');
 
 var cookieParser = require('cookie-parser');
 
+var config = require('../../config');
+
 module.exports = function (app) {
     'use strict';
 
@@ -38,10 +40,10 @@ module.exports = function (app) {
     passport.use(new LocalStrategy(
         function (username, password, cb) {
             // console.log('UserPass:' + username + '-' + password);
-            if (username !== 'sasa') {
+            if (username !== config.auth.local.username) {
                 return cb(null, false);
             }
-            if (password !== 'test') {
+            if (password !== config.auth.local.password) {
                 return cb(null, false);
             }
             return cb(null, username);

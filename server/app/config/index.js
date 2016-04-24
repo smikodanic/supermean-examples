@@ -3,6 +3,7 @@
  * config.server_manager = 'pm2' || 'nodemon'
  */
 var config_env = require('./env/' + (process.env.NODE_ENV || 'dev'));
+var auth_config = require('./auth.config.js');
 
 var config = {
     app_name: 'SuperMEAN App',
@@ -23,7 +24,9 @@ var config = {
             img: []
         }
 
-    }
+    },
+
+    auth: auth_config
 
 };
 

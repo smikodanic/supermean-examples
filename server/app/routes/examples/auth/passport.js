@@ -1,3 +1,4 @@
+/*jslint unparam: true, node: true*/
 /**
  ****** /server/app/routes/examples/index.js
  * Server Side Examples
@@ -8,17 +9,34 @@ var express = require('express');
 var router = express.Router();
 var passport = require('passport');
 
-//will redirect to /xamples/passport/badlogin if persistent connection is not good
-var ensureLogin = require('connect-ensure-login').ensureLoggedIn('../badlogin');
 
 
-/* endpoint: GET /examples/auth/passport */
+/***** COMMON MIDDLEWARES ***/
+
+/* Define to which page redirect after successful login */
+var afterLoginPage = function (req, res) {
+    'use strict';
+    res.redirect('/examples/auth/passport/page1');
+};
+
+/* Pages require login where this function is applied.
+Will redirect to '/examples/auth/passport/badlogin' if persistent connection is not good. */
+var ensureLogin = require('connect-ensure-login').ensureLoggedIn('badlogin');
+
+
+
+
+
+/***** MAIN LOGIN FORM ***/
+
+/* Login form with Local, Facebook, Twitter and G+ strategies
+endpoint: GET /examples/auth/passport */
 router.get('/', function (req, res) {
     'use strict';
     var vdata = {
-        title: 'superMEAN examples - passportJS',
-        desc: 'Supermean example for passportJS.',
-        keywords: 'supermean, mean stack, examples',
+        title: 'superMEAN examples - passportJS - Login Form',
+        desc: 'Supermean example for passportJS. Login form with Local, Facebook, Twitter and G+ strategies.',
+        keywords: 'supermean, mean stack, examples, Local, Facebook, Twitter',
         static_files: config.static_files
     };
 
@@ -27,25 +45,44 @@ router.get('/', function (req, res) {
 
 
 
-/* endpoint: POST /examples/auth/passport/local/page1 */
-router.post('/local/page1', passport.authenticate('local', {failureRedirect: '/examples/auth/passport/badlogin', successRedirect: ''}), function (req, res) {
-    'use strict';
-    // console.log("req.cookies: ", req.cookies);
-    // console.log("req.session: ", req.session); //req.session.passport.user
-    // console.log("req.user: ", req.user);
-    var vdata = {
-        title: 'Supermean examples - passportJS local authentication',
-        desc: 'Supermean example for passportJS.',
-        keywords: 'supermean, mean stack, examples',
-        static_files: config.static_files
-    };
-
-    res.render('examples/auth/passport/page1', vdata);
-});
 
 
-/* endpoint: GET /examples/auth/passport/local/page1 */
-router.get('/local/page1', function (req, res, next) {
+/***** LOCAL STRATEGY ***/
+
+/* Receive username & password from login form and check authentication.
+After successful authentication redirect to afterLoginPage.
+endpoint: POST /examples/auth/passport/local/return */
+router.post('/local/return', passport.authenticate('local', {
+
+    failureRedirect: '/examples/auth/passport/badlogin',
+    successRedirect: ''
+
+}), afterLoginPage);
+
+
+
+
+
+/***** FACEBOOK STRATEGY ***/
+
+/* Open FB login form
+endpoint: GET /examples/auth/passport/facebook */
+router.get('/facebook', passport.authenticate('facebook'));
+
+
+/* After successful FB authentication redirect to afterLoginPage.
+endpoint: GET /examples/auth/passport/facebook/return */
+router.get('/facebook/return', passport.authenticate('facebook'), afterLoginPage);
+
+
+
+
+
+/***** PAGES ***/
+
+/* Page 1
+endpoint: GET /examples/auth/passport/page1 */
+router.get('/page1', function (req, res, next) {
     'use strict';
     // console.log("req.cookies: ", req.cookies);
     // console.log("req.session: ", req.session); //req.session.passport.user
@@ -65,10 +102,11 @@ router.get('/local/page1', function (req, res, next) {
 });
 
 
-/* endpoint: GET /examples/auth/passport/local/page2 */
-router.get('/local/page2', ensureLogin, function (req, res) {
+/* Page 2
+endpoint: GET /examples/auth/passport/page2 */
+router.get('/page2', ensureLogin, function (req, res) {
     'use strict';
-    console.log("Cookies2: ", req.cookies);
+
     var vdata = {
         title: 'Supermean examples - passportJS local authentication',
         desc: 'Supermean example for passportJS.',
@@ -80,8 +118,9 @@ router.get('/local/page2', ensureLogin, function (req, res) {
 });
 
 
-/* endpoint: GET /examples/auth/passport/local/page3 */
-router.get('/local/page3', ensureLogin, function (req, res) {
+/* Page 3
+endpoint: GET /examples/auth/passport/page3 */
+router.get('/page3', ensureLogin, function (req, res) {
     'use strict';
 
     var vdata = {
@@ -95,16 +134,14 @@ router.get('/local/page3', ensureLogin, function (req, res) {
 });
 
 
-
- /* endpoint: GET /examples/auth/passport/local/badlogin
- * redirect on this page if authentication is not passed
- */
+ /* Bad login page
+ endpoint: GET /examples/auth/passport/badlogin */
 router.get('/badlogin', function (req, res) {
     'use strict';
 
     var vdata = {
-        title: 'Supermean examples - passportJS local authentication',
-        desc: 'Supermean example for passportJS.',
+        title: 'Supermean examples - Bad Login',
+        desc: 'Supermean example for passportJS. Bad Login page.',
         keywords: 'supermean, mean stack, examples',
         static_files: config.static_files
     };
@@ -112,9 +149,14 @@ router.get('/badlogin', function (req, res) {
     res.render('examples/auth/passport/badlogin', vdata);
 });
 
-/* endpoint: GET /examples/auth/passport/local/badlogin
- * redirect on this page if authentication is not passed
- */
+
+
+
+
+/***** LOGOUT ***/
+
+/* Log out
+endpoint: GET /examples/auth/passport/logout */
 router.get('/logout', function (req, res) {
     'use strict';
     req.logout();

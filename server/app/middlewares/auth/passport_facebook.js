@@ -1,60 +1,38 @@
 /**
  * PassportJS authentication middleware
- * FACEBOOK STRATEGY
+ * FACEBOOK STRATEGY (OAuth 2.0-based)
  * http://passportjs.org/docs
  */
 
 var passport = require('passport');
 var FacebookStrategy = require('passport-facebook').Strategy;
-var session = require('express-session');
-var flash = require('connect-flash');
-
-var cookieParser = require('cookie-parser');
-
 var config = require('../../config');
 
-module.exports = function (app) {
+module.exports = function () {
     'use strict';
 
-    passport.serializeUser(function (user, cb) {
-        cb(null, user);
-    });
-
-    passport.deserializeUser(function (user, cb) {
-        cb(null, user);
-    });
-
-    app.use(session({
-        name: 'passport_supermean',
-        secret: 'somesecret',
-        resave: false,
-        saveUninitialized: false //if 'false' then session cookie is not created unless req.session.username = 'value' is set
-    }));
-    app.use(cookieParser());
-
-    app.use(passport.initialize());
-    app.use(passport.session()); // persistent login sessions
-    app.use(flash()); // use connect-flash for flash messages stored in session
-
-
-    // Configure the Facebook strategy for use by Passport.
-    //
-    // OAuth 2.0-based strategies require a `verify` function which receives the
-    // credential (`accessToken`) for accessing the Facebook API on the user's
-    // behalf, along with the user's profile.  The function must invoke `cb`
-    // with a user object, which will be set at `req.user` in route handlers after
-    // authentication.
     passport.use(new FacebookStrategy({
         clientID: config.auth.facebook.appID,
         clientSecret: config.auth.facebook.appSecret,
         callbackURL: '/examples/auth/passport/facebook/return'
-    }, function (accessToken, refreshToken, profile, cb) {
-        // In this example, the user's Facebook profile is supplied as the user
-        // record.  In a production-quality application, the Facebook profile should
-        // be associated with a user record in the application's database, which
-        // allows for account linking and authentication with other identity
-        // providers.
-        return cb(null, profile);
+    }, function (accessToken, refreshToken, profile_fb, cb) {
+        /* var profile is transfered into req.user and can be used in controller, req.user = profile_fb
+
+            {
+                "id": "1136568889728590",
+                "displayName": "Drvene Kuće Brvno",
+                "name": {},
+                "provider": "facebook",
+                "_raw": "{\"name\":\"Drvene Ku\\u0107e Brvno\",\"id\":\"1136568889728590\"}",
+                "_json": {
+                  "name": "Drvene Kuće Brvno",
+                  "id": "1136568889728590"
+                }
+            }
+        */
+
+        // console.log('PROFILE' + JSON.stringify(profile_fb, null, 2));
+        return cb(null, profile_fb);
     }));
 
 

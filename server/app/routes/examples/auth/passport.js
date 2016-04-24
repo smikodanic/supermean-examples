@@ -1,4 +1,3 @@
-/*jslint unparam: true, node: true*/
 /**
  ****** /server/app/routes/examples/index.js
  * Server Side Examples
@@ -8,7 +7,6 @@ var config = require('../../../config');
 var express = require('express');
 var router = express.Router();
 var passport = require('passport');
-
 
 
 /***** COMMON MIDDLEWARES ***/
@@ -95,7 +93,8 @@ router.get('/page1', function (req, res, next) {
         title: 'Supermean examples - passportJS local authentication',
         desc: 'Supermean example for passportJS.',
         keywords: 'supermean, mean stack, examples',
-        static_files: config.static_files
+        static_files: config.static_files,
+        user: req.user.displayName || req.user
     };
 
     res.render('examples/auth/passport/page1', vdata);
@@ -111,7 +110,8 @@ router.get('/page2', ensureLogin, function (req, res) {
         title: 'Supermean examples - passportJS local authentication',
         desc: 'Supermean example for passportJS.',
         keywords: 'supermean, mean stack, examples',
-        static_files: config.static_files
+        static_files: config.static_files,
+        user: req.user.displayName || req.user
     };
 
     res.render('examples/auth/passport/page2', vdata);
@@ -127,7 +127,8 @@ router.get('/page3', ensureLogin, function (req, res) {
         title: 'Supermean examples - passportJS local authentication',
         desc: 'Supermean example for passportJS.',
         keywords: 'supermean, mean stack, examples',
-        static_files: config.static_files
+        static_files: config.static_files,
+        user: req.user.displayName || req.user
     };
 
     res.render('examples/auth/passport/page3', vdata);

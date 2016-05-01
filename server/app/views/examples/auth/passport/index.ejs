@@ -9,71 +9,71 @@
 	<%- include('../../_partials/05header'); -%>
 
 	<ol class="col-sm-7 breadcrumb">
-        <li><a href="/">Home</a></li>
-        <li><a href="/examples">SS Examples</a></li>
-        <li class="active">Passport</li>
+		<li><a href="/">Home</a></li>
+		<li><a href="/examples">SS Examples</a></li>
+		<li class="active">Passport</li>
 	</ol>
 
 	<main class="col-sm-12 container" style="min-height:350px">
 
-        <h1><span class="fa fa-lock"></span> Passport Authentication</h1>
-        <p>Pages PAGE 1, PAGE 2 and PAGE 3 will not be visible until successful login.</p>
+		<h1><span class="fa fa-lock"></span> Passport Authentication</h1>
+		<p>Pages PAGE 1, PAGE 2 and PAGE 3 will not be visible until successful login.</p>
 
-	       <div class="col-sm-4 well text-center">
-            <%- include('_topmenu'); -%>
+		   <div class="col-sm-4 well text-center">
+			<%- include('_topmenu'); -%>
 
-            <br>
-            <br>
-            <br>
+			<br>
+			<br>
+			<br>
 
-            <!-- local strategy -->
-            <form action="/examples/auth/passport/local/return" method="POST" enctype="application/x-www-form-urlencoded" class="form-horizontal">
+			<!-- local strategy -->
+			<form action="/examples/auth/passport/local/return" method="POST" enctype="application/x-www-form-urlencoded" class="form-horizontal">
 
-            	<div class="form-group">
-            	    <label for="user" class="col-sm-2  control-label">User:</label>
-            	    <div class="col-sm-5">
-            	        <input type="text" id="user" name="username" class="form-control" value="someuser">
-            	    </div>
-            	</div>
+				<div class="form-group">
+					<label for="user" class="col-sm-2  control-label">User:</label>
+					<div class="col-sm-5">
+						<input type="text" id="user" name="username" class="form-control" value="someuser">
+					</div>
+				</div>
 
-            	<div class="form-group">
-            	    <label for="pass" class="col-sm-2  control-label">Password:</label>
-            	    <div class="col-sm-5">
-            	        <input type="text" id="pass" name="password" class="form-control" value="somepass">
-            	    </div>
-            	</div>
+				<div class="form-group">
+					<label for="pass" class="col-sm-2  control-label">Password:</label>
+					<div class="col-sm-5">
+						<input type="text" id="pass" name="password" class="form-control" value="somepass">
+					</div>
+				</div>
 
-            	<div class="form-group">
-            	    <div class="col-sm-3 col-sm-offset-2">
-            	        <button type="submit" class="btn btn-default">
-            	        	<i class="glyphicon glyphicon-log-in"></i> Local Login
-            	        </button>
-            	    </div>
-            	</div>
+				<div class="form-group">
+					<div class="col-sm-3 col-sm-offset-2">
+						<button type="submit" class="btn btn-default">
+							<i class="glyphicon glyphicon-log-in"></i> Local Login
+						</button>
+					</div>
+				</div>
 
-        	</form>
-            <!-- local strategy end -->
-
-
-            <div class="clearfix">&nbsp;</div><br>
+			</form>
+			<!-- local strategy end -->
 
 
-            <!-- Facebook strategy -->
-            <a href="/examples/auth/passport/facebook" type="submit" class="btn btn-default">
-                <i class="fa fa-facebook"></i> Facebook Login
-            </a>
+			<div class="clearfix">&nbsp;</div><br>
 
-            <!-- Twitter strategy -->
-            <button type="submit" class="btn btn-default">
-                <i class="fa fa-twitter"></i> Twitter Login
-            </button>
 
-            <!-- Google+ strategy -->
-            <button type="submit" class="btn btn-default">
-                <i class="fa fa-google-plus"></i> Google+ Login
-            </button>
+			<!-- Facebook strategy -->
+			<a href="/examples/auth/passport/facebook" class="btn btn-default">
+				<i class="fa fa-facebook"></i> Facebook Login
+			</a>
 
-        </div>
+			<!-- Twitter strategy -->
+			<a href="/examples/auth/passport/twitter" class="btn btn-default">
+				<i class="fa fa-twitter"></i> Twitter Login
+			</a>
+
+			<!-- Google+ strategy -->
+			<a href="/examples/auth/passport/google" class="btn btn-default">
+				<i class="fa fa-google-plus"></i> Google+ Login
+			</a>
+
+		</div>
 
 
 

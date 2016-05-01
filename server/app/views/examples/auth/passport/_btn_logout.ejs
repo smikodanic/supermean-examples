@@ -3,3 +3,7 @@
 </a>
 <br><br>
 Logged as: <b style="color:green"><%= user %></b>
+
+<%if (user_img) {%>
+	<br><img src="<%= user_img %>" alt="Profile image" style="border:1px solid silver">
+<% } %>

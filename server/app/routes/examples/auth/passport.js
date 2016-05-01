@@ -1,6 +1,6 @@
 /**
- ****** /server/app/routes/examples/index.js
- * Server Side Examples
+ ****** /server/app/routes/examples/auth/passport.js
+ * PassportJS examples with Local, Facebook, Twitter and G+ Strategies
  */
 
 var config = require('../../../config');
@@ -70,7 +70,32 @@ router.get('/facebook', passport.authenticate('facebook'));
 
 /* After successful FB authentication redirect to afterLoginPage.
 endpoint: GET /examples/auth/passport/facebook/return */
-router.get('/facebook/return', passport.authenticate('facebook'), afterLoginPage);
+router.get('/facebook/return', passport.authenticate('facebook', {
+
+    failureRedirect: '/examples/auth/passport/badlogin',
+    successRedirect: ''
+
+}), afterLoginPage);
+
+
+
+
+
+/***** TWITTER STRATEGY ***/
+
+/* Open TW login form
+endpoint: GET /examples/auth/passport/twitter */
+router.get('/twitter', passport.authenticate('twitter'));
+
+
+/* After successful TW authentication redirect to afterLoginPage.
+endpoint: GET /examples/auth/passport/twitter/return */
+router.get('/twitter/return', passport.authenticate('twitter', {
+
+    failureRedirect: '/examples/auth/passport/badlogin',
+    successRedirect: ''
+
+}), afterLoginPage);
 
 
 
@@ -94,7 +119,8 @@ router.get('/page1', function (req, res, next) {
         desc: 'Supermean example for passportJS.',
         keywords: 'supermean, mean stack, examples',
         static_files: config.static_files,
-        user: req.user.displayName || req.user
+        user: req.user.displayName || req.user,
+        user_img: (req.user.photos && req.user.photos[0].value) || ''
     };
 
     res.render('examples/auth/passport/page1', vdata);
@@ -111,7 +137,8 @@ router.get('/page2', ensureLogin, function (req, res) {
         desc: 'Supermean example for passportJS.',
         keywords: 'supermean, mean stack, examples',
         static_files: config.static_files,
-        user: req.user.displayName || req.user
+        user: req.user.displayName || req.user,
+        user_img: (req.user.photos && req.user.photos[0].value) || ''
     };
 
     res.render('examples/auth/passport/page2', vdata);
@@ -128,7 +155,8 @@ router.get('/page3', ensureLogin, function (req, res) {
         desc: 'Supermean example for passportJS.',
         keywords: 'supermean, mean stack, examples',
         static_files: config.static_files,
-        user: req.user.displayName || req.user
+        user: req.user.displayName || req.user,
+        user_img: (req.user.photos && req.user.photos[0].value) || ''
     };
 
     res.render('examples/auth/passport/page3', vdata);

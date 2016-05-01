@@ -37,6 +37,8 @@ app.use('/client', express.static(path.join(__dirname, '/../../client')));
 require('./middlewares/auth/passport.js')(app); //passport common middleware
 require('./middlewares/auth/passport_local.js')();
 require('./middlewares/auth/passport_facebook.js')();
+require('./middlewares/auth/passport_twitter.js')();
+// require('./middlewares/auth/passport_google.js')();
 // require('./middlewares/auth/express-session.js')(app);
 
 

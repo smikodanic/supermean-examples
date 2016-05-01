@@ -1,4 +1,4 @@
-<!doctype html> 
+<!doctype html>
 <html lang="en">
 
 <head>
@@ -17,9 +17,9 @@
 
 
     <main class="col-sm-12 container" style="min-height:350px">
-    
+
         <h1>PassportJS Login</h1>
-    
+
        <div class="col-sm-4 well text-center">
             <%- include('_topmenu'); -%>
 
@@ -29,6 +29,8 @@
 
             <h1>BAD LOGIN Page</h1>
             <small>Login was unsuccessful.</small>
+            <br><b style="color:red"><%= errMsg %></b>
+            <br>
             <br><a href="/examples/auth/passport">Try again!</a>
 
        </div>

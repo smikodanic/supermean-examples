@@ -7,8 +7,6 @@
 
 var passport = require('passport');
 var session = require('express-session');
-var flash = require('connect-flash');
-var cookieParser = require('cookie-parser');
 
 
 module.exports = function (app) {
@@ -28,10 +26,8 @@ module.exports = function (app) {
         resave: false,
         saveUninitialized: false //if 'false' then session cookie is not created unless req.session.username = 'value' is set
     }));
-    app.use(cookieParser());
 
     app.use(passport.initialize());
     app.use(passport.session()); // persistent login sessions
-    app.use(flash()); // use connect-flash for flash messages stored in session
 
 };

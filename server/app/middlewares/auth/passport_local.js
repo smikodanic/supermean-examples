@@ -15,12 +15,12 @@ module.exports = function () {
         function (username, password, cb) {
             //if username doesn't exist
             if (username !== config.auth.local.username) {
-                return cb(null, false);
+                return cb(null, false, {message: 'BAD username!!!'}); //message: is connect-flash message
             }
 
             //if password is not correct
             if (password !== config.auth.local.password) {
-                return cb(null, false);
+                return cb(null, false, {message: 'BAD password!!!'});
             }
 
             /* var username is transfered into req.user and can be used in controller

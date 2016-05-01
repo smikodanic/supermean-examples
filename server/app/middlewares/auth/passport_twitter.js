@@ -2,6 +2,8 @@
  * PassportJS authentication middleware
  * TWITTER STRATEGY
  * http://passportjs.org/docs
+ *
+ * Create app at https://apps.twitter.com/
  */
 
 var passport = require('passport');
@@ -15,7 +17,8 @@ module.exports = function () {
     passport.use(new TwitterStrategy({
         consumerKey: config.auth.twitter.apiKey,
         consumerSecret: config.auth.twitter.apiSecret,
-        callbackURL: config.auth.twitter.callbackURL
+        callbackURL: config.auth.twitter.callbackURL,
+        profileFields: ['id', 'displayName', 'photos', 'email']
     }, function (accessToken, refreshToken, profile, cb) {
 /* var profile is transfered into req.user and can be used in controller, req.user = profile
 
@@ -81,7 +84,7 @@ module.exports = function () {
 
 */
 
-        console.log('TW-PROFILE' + JSON.stringify(profile, null, 2));
+        // console.log('TW-PROFILE' + JSON.stringify(profile, null, 2));
         return cb(null, profile);
     }));
 

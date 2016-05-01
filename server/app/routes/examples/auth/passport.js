@@ -52,8 +52,9 @@ After successful authentication redirect to afterLoginPage.
 endpoint: POST /examples/auth/passport/local/return */
 router.post('/local/return', passport.authenticate('local', {
 
+    successRedirect: '',
     failureRedirect: '/examples/auth/passport/badlogin',
-    successRedirect: ''
+    failureFlash: true
 
 }), afterLoginPage);
 
@@ -72,8 +73,9 @@ router.get('/facebook', passport.authenticate('facebook'));
 endpoint: GET /examples/auth/passport/facebook/return */
 router.get('/facebook/return', passport.authenticate('facebook', {
 
+    successRedirect: '',
     failureRedirect: '/examples/auth/passport/badlogin',
-    successRedirect: ''
+    failureFlash: true
 
 }), afterLoginPage);
 
@@ -92,11 +94,37 @@ router.get('/twitter', passport.authenticate('twitter'));
 endpoint: GET /examples/auth/passport/twitter/return */
 router.get('/twitter/return', passport.authenticate('twitter', {
 
+    successRedirect: '',
     failureRedirect: '/examples/auth/passport/badlogin',
-    successRedirect: ''
+    failureFlash: true
 
 }), afterLoginPage);
 
+
+
+
+
+/***** GOOGLE+ STRATEGY ***/
+
+/* Open G+ login form
+endpoint: GET /examples/auth/passport/google */
+router.get('/google', passport.authenticate('google', {
+    scope: [
+        'https://www.googleapis.com/auth/plus.login',
+        'https://www.googleapis.com/auth/plus.profile.emails.read'
+    ]
+}));
+
+
+/* After successful G+ authentication redirect to afterLoginPage.
+endpoint: GET /examples/auth/passport/google/return */
+router.get('/google/return', passport.authenticate('google', {
+
+    successRedirect: '',
+    failureRedirect: '/examples/auth/passport/badlogin',
+    failureFlash: true
+
+}), afterLoginPage);
 
 
 
@@ -172,7 +200,8 @@ router.get('/badlogin', function (req, res) {
         title: 'Supermean examples - Bad Login',
         desc: 'Supermean example for passportJS. Bad Login page.',
         keywords: 'supermean, mean stack, examples',
-        static_files: config.static_files
+        static_files: config.static_files,
+        errMsg: req.flash('error')
     };
 
     res.render('examples/auth/passport/badlogin', vdata);

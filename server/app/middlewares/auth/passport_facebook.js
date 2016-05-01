@@ -2,6 +2,8 @@
  * PassportJS authentication middleware
  * FACEBOOK STRATEGY (OAuth 2.0-based)
  * http://passportjs.org/docs
+ *
+ * Create app at https://developers.facebook.com/
  */
 
 var passport = require('passport');
@@ -49,7 +51,7 @@ module.exports = function () {
 }
 */
 
-        console.log('FB-PROFILE' + JSON.stringify(profile, null, 2));
+        // console.log('FB-PROFILE' + JSON.stringify(profile, null, 2));
         return cb(null, profile);
     }));
 

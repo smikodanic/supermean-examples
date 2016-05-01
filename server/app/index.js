@@ -25,6 +25,7 @@ require('./middlewares/errors.js')(app, config);
 require('./middlewares/favicon.js')(app);
 // require('./middlewares/cookieParser.js')(app);
 require('./middlewares/bodyParser.js')(app);
+require('./middlewares/connect_flash.js')(app);
 
 // require('./middlewares/virtual_host.js')(app, config);
 
@@ -38,7 +39,7 @@ require('./middlewares/auth/passport.js')(app); //passport common middleware
 require('./middlewares/auth/passport_local.js')();
 require('./middlewares/auth/passport_facebook.js')();
 require('./middlewares/auth/passport_twitter.js')();
-// require('./middlewares/auth/passport_google.js')();
+require('./middlewares/auth/passport_google.js')();
 // require('./middlewares/auth/express-session.js')(app);
 
 

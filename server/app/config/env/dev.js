@@ -9,7 +9,7 @@ var config = {
     server: {
         virtualHost: false,
         domain: 'dev.supermean.loc',
-        port: process.env.PORT || 3001
+        port: process.env.PORT || 3005
     },
     gulpFile: 'gulpfile-nodemon.js',
     mongodb: 'mongodb://user:pass@server.com:27017/db_name'

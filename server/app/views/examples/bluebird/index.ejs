@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<%- include('../_partials/01head'); -%>
+</head>
+
+<body>
+	<%- include('../_partials/05header'); -%>
+
+	<ol class="col-sm-7 breadcrumb">
+  		<li><a href="/">Home</a></li>
+  		<li><a href="/examples">SS Examples</a></li>
+  		<li class="active">Bluebird Examples</li>
+	</ol>
+
+
+	<main class="col-sm-12 container" style="min-height: 600px">
+
+		<h1>Bluebird Promise Examples</h1>
+		For API reference visit <a href="http://bluebirdjs.com/docs/api-reference.html" target="_blank">http://bluebirdjs.com/docs/api-reference.html</a> .
+
+
+		<br><br>
+		<h3>Bluebird Core</h3>
+
+		<b>Core methods of Promise instance</b>
+		<i style="color:orange">var BPromise = require('bluebird'); var promis = new Bpromise(function (resolve, reject) {...});</i>
+		<ol>
+			<li><a href="/examples/bluebird/01newpromise" target="_blank">new BPromise #1</a> - simple promise example with <b>New Bpromise(function (resolve, reject) { ... })</b>
+			<li><a href="/examples/bluebird/01newpromisefunction" target="_blank">new BPromise #2</a> - bluebird promise inside function
+			<li><a href="/examples/bluebird/02then" target="_blank">.then</a> - usage of <b>.then(fulfilledHandler, rejectedHandler)</b>
+			<li><a href="/examples/bluebird/02thenchain" target="_blank">.then in chain</a> - <b>.then().then().then().catch()</b> with <b>throw new Error()</b>
+			<li><a href="/examples/bluebird/02thenwithcatch" target="_blank">.then with catch</a> - when <b>.then(fulfilledHandler, rejectedHandler).catch()</b> is used, catch will not work
+			<li><a href="/examples/bluebird/03spread" target="_blank">.spread</a> - <b>.spread(function (arrVal1, arrVal2) { ... }).catch()</b>. Resolved value must be an array.
+			<li><a href="/examples/bluebird/03spreadafterthen" target="_blank">.spread after .then</a> - <b>.then(function (return [arrVal1, arrVal2])).spread(function (arrVal1, arrVal2) { ... })</b>
+			<li><a href="/examples/bluebird/03spreadbeforethen" target="_blank">.spread before .then</a> - <b>.spread(function (arrVal1, arrVal2) { ... return x }).then(function (x) { ... })</b>
+			<li><a href="/examples/bluebird/04catch" target="_blank">.catch</a> - <b>.catch(function (err) {...}</b> or <b>.catch(filter , function (err) {...}</b> . Example with catch() chain.
+			<li><a href="/examples/bluebird/05error" target="_blank">.error</a> - OperationalError <b>.error(function (err) {...}</b>
+			<li><a href="/examples/bluebird/06finallyhandler" target="_blank">.finally</a> -.finally(handler) will execute 'handler' both on fulfilled or rejected promise's state.
+			<li><a href="/examples/bluebird/06finallyreturn" target="_blank">.finally</a> -.finally(function () { return val}) -- <i>return val</i> will not change fulfillmentValue.
+			<li><a href="/examples/bluebird/06finallyend" target="_blank">.finally at the end</a> -.finally() at the end of chain, because doesn't receive and doesn't return
+			<li><a href="/examples/bluebird/07bind" target="_blank">.bind for thisObject</a> -<b>.bind(thisObj)</b> bind 'this' to 'thisObj' when 'this' is used in promise handler
+			<li><a href="/examples/bluebird/07bind2" target="_blank">.bind two promises</a> -<b>promisB.bind(promisA).then(...)</b> bind 'this' with resolved value from promisA
+
+		</ol>
+
+		<br><br>
+		<b>Core static methods of the Promise class</b>
+		<i style="color:orange">var BPromise = require('bluebird');</i>
+		<ol>
+			<li><a href="/examples/bluebird/08join" target="_blank">BPromise.join</a> - <b>BPromise.join(promisA, promisB, functionC, function (a, b, c) { ... })</b> Execute promisA, promisB and functionC and send results as parameters a,b,c into 'join' handler function.
+			<li><a href="/examples/bluebird/08jointhen" target="_blank">BPromise.join followed by then</a> - <b>BPromise.join().then()</b> Join followed by then.
+			<li><a href="/examples/bluebird/08jointhenables" target="_blank">BPromise.join with thenables</a> - Join exmple with thenables.
+			<li><a href="/examples/bluebird/09try" target="_blank">BPromise.try</a> - <b>BPromise.try(handler)</b> Use when an error should be thrown from handler function.
+			<li><a href="/examples/bluebird/10method" target="_blank">BPromise.method</a> - <b>BPromise.method(fja)().then().catch()</b> Wraps fja function which return a value or throws an error and create promise.Converts ordinary function 'fja' into thenable function.
+			<li><a href="/examples/bluebird/11resolve" target="_blank">BPromise.resolve(value)</a> - <b>BPromise.resolve(x).then().catch()</b> Returns a promise which has fulfilled state with resolved value 'x'.
+			<li><a href="/examples/bluebird/11resolvepromise" target="_blank">BPromise.resolve(promise)</a> - Resolved value is a value from another promise.
+			<li><a href="/examples/bluebird/11resolvefunction" target="_blank">BPromise.resolve(funct)</a> - <b>BPromise.resolve(fja()).then().catch()</b> Create promise whoose resolved value is returned or thrown from function 'fja'
+			<li><a href="/examples/bluebird/12reject" target="_blank">BPromise.reject(err)</a> - <b>BPromise.reject(new Error('My custom error!!!')).then().catch()</b> Returns a promise which has rejected state and an error is catched with catch().
+
+		</ol>
+
+
+		<br><br>
+		<h3>Synchronous inspection</h3>
+		<ol>
+			<li><a href="/examples/bluebird/13isfulfilled" target="_blank">.isFulfilled() &amp .value()</a> - checks if the promise is fulfilled. <b>.isFulfilled()</b> returns true or false and <b>.value()</b> returns fulfilled value
+			<li><a href="/examples/bluebird/14isrejected" target="_blank">.isRejected() &amp .reason()</a> - checks if the promise is rejected. <b>.isRejected()</b> returns true or false and <b>.reason()</b> returns rejected reason
+			<li><a href="/examples/bluebird/15ispending" target="_blank">.isPending()</a> - checks if the promise is in pending state
+		</ol>
+
+
+		<br><br>
+		<h3>Collections</h3>
+		<ol>
+			<li><a href="/examples/bluebird/16all" target="_blank">BPromise.all</a>
+		</ol>
+
+
+
+	</main>
+
+	<%- include('../_partials/20footer'); -%>
+</body>
+</html>

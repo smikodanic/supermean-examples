@@ -40,6 +40,7 @@
 			<li><a href="/examples/bluebird/06finallyhandler" target="_blank">.finally</a> -.finally(handler) will execute 'handler' both on fulfilled or rejected promise's state.
 			<li><a href="/examples/bluebird/06finallyreturn" target="_blank">.finally</a> -.finally(function () { return val}) -- <i>return val</i> will not change fulfillmentValue.
 			<li><a href="/examples/bluebird/06finallyend" target="_blank">.finally at the end</a> -.finally() at the end of chain, because doesn't receive and doesn't return
+			<li><a href="/examples/bluebird/06finally-with-promise" target="_blank">.finally with new promise</a> -.finally(BPromise.resolve()...) -finally execute new promise
 			<li><a href="/examples/bluebird/07bind" target="_blank">.bind for thisObject</a> -<b>.bind(thisObj)</b> bind 'this' to 'thisObj' when 'this' is used in promise handler
 			<li><a href="/examples/bluebird/07bind2" target="_blank">.bind two promises</a> -<b>promisB.bind(promisA).then(...)</b> bind 'this' with resolved value from promisA
 
@@ -52,7 +53,8 @@
 			<li><a href="/examples/bluebird/08join" target="_blank">BPromise.join</a> - <b>BPromise.join(promisA, promisB, functionC, function (a, b, c) { ... })</b> Execute promisA, promisB and functionC and send results as parameters a,b,c into 'join' handler function.
 			<li><a href="/examples/bluebird/08jointhen" target="_blank">BPromise.join followed by then</a> - <b>BPromise.join().then()</b> Join followed by then.
 			<li><a href="/examples/bluebird/08jointhenables" target="_blank">BPromise.join with thenables</a> - Join exmple with thenables.
-			<li><a href="/examples/bluebird/09try" target="_blank">BPromise.try</a> - <b>BPromise.try(handler)</b> Use when an error should be thrown from handler function.
+			<li><a href="/examples/bluebird/09try" target="_blank">BPromise.try</a> - <b>BPromise.try(handler)</b> An error is thrown from handler function and catched with catch().
+			<li><a href="/examples/bluebird/09try-spread" target="_blank">BPromise.try with spread()</a> - <b>BPromise.try(handler).spread()</b> - array is returned and used in spread()
 			<li><a href="/examples/bluebird/10method" target="_blank">BPromise.method</a> - <b>BPromise.method(fja)().then().catch()</b> Wraps fja function which return a value or throws an error and create promise.Converts ordinary function 'fja' into thenable function.
 			<li><a href="/examples/bluebird/11resolve" target="_blank">BPromise.resolve(value)</a> - <b>BPromise.resolve(x).then().catch()</b> Returns a promise which has fulfilled state with resolved value 'x'.
 			<li><a href="/examples/bluebird/11resolvepromise" target="_blank">BPromise.resolve(promise)</a> - Resolved value is a value from another promise.
@@ -74,13 +76,66 @@
 		<br><br>
 		<h3>Collections</h3>
 		<ol>
-			<li><a href="/examples/bluebird/16all" target="_blank">BPromise.all</a>
+			<li><a href="/examples/bluebird/16all" target="_blank">BPromise.all</a> - <b>BPromise.all([promisA, promisB, valueA, valueB]).then(function (valArr) { ... })</b> Execute then() handler when all promises are fulfilled. Values are returned in valArr.
+			<li><a href="/examples/bluebird/17props" target="_blank">BPromise.props</a> - <b>BPromise.all({one: promisA, two: promisB, three: valueA, four: valueB}).then(function (valObj) { ... })</b> Execute then() handler when all promises are fulfilled. Values are returned in valObj. Simmilar to .all().
+			<li><a href="/examples/bluebird/18some" target="_blank">BPromise.some</a> - <b>BPromise.some([promisA, promisB, valueA, valueB], <span style="color:red">n</span>).then(function (valArr) { ... })</b> Waits for 'n' promises to be solved, and after that execute then() handler.
+			<li><a href="/examples/bluebird/18some-spread" target="_blank">BPromise.some with .spread()</a> - <b>BPromise.some([promisA, promisB, valueA, valueB], n).spread(function (val1, val2, ...) { ... })</b> Instead valArr more parameters are used val1, val2, ...
+			<li><a href="/examples/bluebird/19any" target="_blank">BPromise.any</a> - <b>BPromise.any([promisA, promisB, valueA, valueB]).then(function (val) { ... })</b> Execute then() when first promise is in fullfiled state and returns only that resolved value.
+			<li><a href="/examples/bluebird/20map" target="_blank">BPromise.map</a> - <b>BPromise.map([promisA, promisB, valueA, valueB], function (elem) { ... }).then(function (valArr) { ... })</b> Simmilar as .all() but do mapping of resolved values.
+			<li><a href="/examples/bluebird/21reduce" target="_blank">BPromise.reduce</a> - <b>var arr = [promisA, promisB, valueA, valueB]; BPromise.reduce(arr, function (accumulator, elemArr, indexArr, lengthArr) { ... }).then(function (accumulatedVal) { ... })</b> Reduces array to accumulatedVal.
+			<li><a href="/examples/bluebird/22filter" target="_blank">BPromise.filter</a> - <b>var arr = [promisA, promisB, valueA, valueB]; BPromise.filter(arr, function (elemArr, indexArr, lengthArr) { ... }).then(function (valArr) { ... })</b> Filter array values.
+			<li><a href="/examples/bluebird/22filterspread" target="_blank">BPromise.filter with spread</a> - <b>var arr = [promisA, promisB, valueA, valueB]; BPromise.filter(arr, function (elemArr, indexArr, lengthArr) { ... }).spread(function (val1, val2) { ... })</b> Usage of spread() instead of then().
+			<li><a href="/examples/bluebird/23each" target="_blank">BPromise.each</a> - <b>BPromise.filter([promisA, promisB, valueA, valueB], function (elemArr, indexArr, lengthArr) { ... }).then(function (valArr) { ... })</b> Iterate each promise and returns to then() not changed array of values. If any promise in the input array is rejected the returned promise is rejected as well.
+			<li><a href="/examples/bluebird/24mapseries" target="_blank">BPromise.mapseries</a> - <b>BPromise.mapSeries([promisA, promisB, valueA, valueB], function (elemArr, indexArr, lengthArr) { ... }).then(function (valArr) { ... })</b> Iterate each promise and returns to then() not changed array of values. If any promise in the input array is rejected the returned promise is rejected as well.
+			<li><a href="/examples/bluebird/25race" target="_blank">BPromise.race</a> - <b>BPromise.race([promisA, promisB, valueA, valueB]).then(function (val) { ... })</b> W
+		</ol>
+
+
+		<br><br>
+		<h3>Promisification</h3>
+		<ol>
+			<li><a href="/examples/bluebird/30promisifyall" target="_blank">BPromise.promisifyAll</a> -example with custom object which can be promisified
+			<li><a href="/examples/bluebird/30promisifyall-error" target="_blank">BPromise.promisifyAll with error</a> -example with returning callback error
+			<li><a href="/examples/bluebird/30promisifyall-spread" target="_blank">BPromise.promisifyAll with spread()</a> -example with returning an array and using spread()
+			<li><a href="/examples/bluebird/30promisifyall2" target="_blank">BPromise.promisifyAll without callback</a> -compare two methods: with and without callback
+			<li><a href="/examples/bluebird/30promisifyall-nodejs-fs" target="_blank">BPromise.promisifyAll - NodeJS - fs</a> - example with NodeJS 'fs' module
+			<li><a href="/examples/bluebird/30promisifyall-nodejs-dns" target="_blank">BPromise.promisifyAll - NodeJS - DNS (multiArgs)</a> -NodeJS 'dns.lookup()' callback has 3 arguments. That's why use (<b style="color:brown">multiArgs: true</b> and <b>spread()</b>)
+			<li><a href="/examples/bluebird/31promisify" target="_blank">BPromise.promisify</a> -example with custom function which can be promisified
+			<li><a href="/examples/bluebird/31promisify-multiargs" target="_blank">BPromise.promisify with multiArgs:true</a> -example with custom function which callback has multiple arguments (>2 arguments)
+			<li><a href="/examples/bluebird/31promisify-nodejs-dnslookup" target="_blank">BPromise.promisify dns.lookup</a> -promisification of NodeJS's dns.lookup() method
+			<li><a href="/examples/bluebird/32fromcallback" target="_blank">BPromise.fromCallback</a> -retruns 'err' or 'data' from function's callback and send it to then() or catch().
+			<li><a href="/examples/bluebird/32fromcallback-nodejs-dnslookup" target="_blank">BPromise.fromCallback dns.lookup</a> -Example with NodeJS dns.lookup() method. Notice usage of <b>multiArgs:true</b> and <b>spread()</b>
+			<li><a href="/examples/bluebird/33ascallback" target="_blank">.asCallback</a> - Execute promise as callback in then() chain.
+			<li><a href="/examples/bluebird/33ascallback-spread" target="_blank">.asCallback with spread()</a> - Use <b>{spread: true}</b> when resolved value is an array.
+			<li><a href="/examples/bluebird/33ascallback-rejected" target="_blank">.asCallback after reject()</a> - Example with rejected promise.
+			<li><a href="/examples/bluebird/33ascallback-bp-cb" target="_blank">.asCallback</a> -example with promise and callback solution
+		</ol>
+
+
+		<br><br>
+		<h3>Timers</h3>
+		<ol>
+			<li><a href="/examples/bluebird/41delay" target="_blank">.delay</a> -delays fullfiled promise, but rejected execute instantly and send error to catch().
+			<li><a href="/examples/bluebird/41delay-after-then" target="_blank">.delay after then</a> -delay can be used after then to slow down then() chain.
+			<li><a href="/examples/bluebird/42timeout" target="_blank">.timeout</a> -execute when promise is not fulfilled or rejected in agiven time interval
+			<li><a href="/examples/bluebird/42timeout-delay" target="_blank">.timeout with .delay</a> -case when delay seconds are greater then timeout
+		</ol>
+
+
+		<br><br>
+		<h3>Cancellation</h3>
+		<ol>
+			<li><a href="/examples/bluebird/50cancel" target="_blank">.cancel</a> -promise cancellation
 		</ol>
 
 
 
 	</main>
 
+
+	<br>
+	<br>
+	<br>
 	<%- include('../_partials/20footer'); -%>
 </body>
 </html>

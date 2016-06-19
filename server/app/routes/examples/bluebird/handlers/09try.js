@@ -4,7 +4,7 @@
  *
  * ***
  * BPromise.try(handler)
- * - Use when an error should be thrown from handler function.
+ * - An error is thrown from handler function and catched with catch().
  * - Simmilar as BPromise.method()
  */
 

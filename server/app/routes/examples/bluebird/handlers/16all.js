@@ -3,7 +3,7 @@
  * GET /examples/bluebird/16all
  *
  * ***
- * BPromise.all([promisA, promisB, valueA, valueB).then(function (valArr) { ... })
+ * BPromise.all([promisA, promisB, valueA, valueB]).then(function (valArr) { ... })
  * Execute then() when all promises are in fullfiled state.
  * Returned values are inside array valArr.
  *
@@ -23,6 +23,8 @@ module.exports = function (req, res, next) {
             resolve('From promise promisArr[1].');
         }, 8000);
     });
+    promisArr[2] = 'Some string'; //this is String value, not promise
+
 
     BPromise.all(promisArr)
         .then(function (valArr) { //will wait for promisArr[1] to get fulfilled state
@@ -31,6 +33,7 @@ module.exports = function (req, res, next) {
             //echo values
             console.log(valArr[0].x);
             console.log(valArr[1]);
+            console.log(valArr[2]);
         });
 
 };

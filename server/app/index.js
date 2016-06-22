@@ -52,6 +52,7 @@ app.use('/examples', require('./routes/examples/index.js'));
 // app.use('/examples/auth/passport', require('./middlewares/nodedump_req.js'), require('./routes/examples/auth/passport.js')); //with nodedump debuggung
 app.use('/examples/auth/passport', require('./routes/examples/auth/passport.js'));
 app.use('/examples/bluebird', require('./routes/examples/bluebird/index.js'));
+app.use('/examples/mongoose', require('./routes/examples/mongoose/index.js'));
 
 
 

@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<%- include('../_partials/01head'); -%>
+</head>
+
+<body>
+	<%- include('../_partials/05header'); -%>
+
+	<ol class="col-sm-7 breadcrumb">
+  		<li><a href="/">Home</a></li>
+  		<li><a href="/examples">SS Examples</a></li>
+  		<li class="active">Mongoose Examples</li>
+	</ol>
+
+
+	<main class="col-sm-12 container" style="min-height: 600px">
+
+		<h2>Setup Mongo Database</h2>
+		Short instructions how to setup mongo database to make these examples work.
+
+		<br><br>
+		<h4>Mongodb server commands</h4>
+		<pre style="width: 40%">
+		# rm /var/lib/mongodb/mongod.lock
+
+		# mongod --config /etc/mongod.conf
+		# mongod --config /etc/mongod-noauth.conf
+
+		# mongod --shutdown --config /etc/mongod.conf
+		</pre>
+
+		<br><br>
+		<h4>Setup database from command line</h4>
+		<pre style="width: 40%">
+		>use admin
+		>db.auth('superadmin', 'xxpassyy')
+		>use supermeandb
+		>db.createCollection('users')
+		>show collections
+		>var userDocs = [
+		{
+			name: 'Mark',
+			age: 25
+		},
+		{
+			name: 'Ana',
+			age: 32
+		}
+		]
+		>db.users.insert(usersDoc)
+		</pre>
+
+
+
+
+
+
+	</main>
+
+
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<%- include('../_partials/20footer'); -%>
+</body>
+</html>

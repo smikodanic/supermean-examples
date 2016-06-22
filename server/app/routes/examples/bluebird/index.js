@@ -104,8 +104,23 @@ router.get('/42timeout-delay', require('./handlers/42timeout_delay'));
 
 //canclellation
 router.get('/50cancel', require('./handlers/50cancel'));
+router.get('/50cancel-finally', require('./handlers/50cancel_finally'));
 
 
+//utility
+router.get('/55tap', require('./handlers/55tap'));
+router.get('/56call', require('./handlers/56call'));
+router.get('/57get', require('./handlers/57get'));
+router.get('/58return', require('./handlers/58return'));
+router.get('/59throw', require('./handlers/59throw'));
+router.get('/60reflect', require('./handlers/60reflect'));
+
+//errors
+router.get('/70operationalerror', require('./handlers/70operationalerror'));
+router.get('/71timeouterror', require('./handlers/71timeouterror'));
+router.get('/71timeouterror-gen', require('./handlers/71timeouterror_gen'));
+router.get('/72cancellationerror', require('./handlers/72cancellationerror'));
+router.get('/73agregateerror', require('./handlers/73agregateerror'));
 
 //misc
 router.get('/90misctimedelay', require('./handlers/90misc_timedelay'));

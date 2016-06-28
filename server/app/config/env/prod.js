@@ -5,13 +5,13 @@
 var config = {
 
     url: 'http://www.supermean.org',
-    name: 'production',
+    name: 'prod',
     server: {
         virtualHost: false,
         domain: 'www.supermean.loc',
         port: process.env.PORT || 3001
     },
-    gulpFile: 'gulpfile-nodemon',
+    gulpFile: 'gulpfile-nodemon.js',
     mongodb: 'mongodb://user:pass@server.com:27017/db_name'
 
 };

@@ -5,7 +5,7 @@
 var config = {
 
     url: 'http://dev.supermean.org',
-    name: 'development',
+    name: 'dev',
     server: {
         virtualHost: false,
         domain: 'dev.supermean.loc',

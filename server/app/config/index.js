@@ -1,8 +1,9 @@
 /*
- * environment dependant configuration: $export NODE_ENV=development || $export NODE_ENV=produstion
+ * environment dependant configuration: $export NODE_ENV=dev || $export NODE_ENV=production
  * config.server_manager = 'pm2' || 'nodemon'
  */
-var config_env = require('./env/' + (process.env.NODE_ENV || 'development'));
+
+var config_env = require('./env/' + (process.env.NODE_ENV || 'dev'));
 var auth_config = require('./auth.config.js');
 
 var config = {

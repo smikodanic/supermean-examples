@@ -12,7 +12,7 @@ var config = {
         port: process.env.PORT || 3005
     },
     gulpFile: 'gulpfile-nodemon.js',
-    mongodb: 'mongodb://user:pass@server.com:27017/db_name'
+    mongodb: process.env.MONGODB || 'mongodb://supermean_user:smPass@127.0.0.1:27017/supermeandb-dev'
 
 };
 

@@ -32,11 +32,11 @@
 		</pre>
 
 		<br><br>
-		<h4>Setup database from command line</h4>
+		<h4>Create database from command line</h4>
 		<pre style="width: 40%">
 		>use admin
 		>db.auth('superadmin', 'xxpassyy')
-		>use supermeandb
+		>use supermeandb-dev
 		>db.createCollection('users')
 		>show collections
 		>var userDocs = [
@@ -50,6 +50,18 @@
 		}
 		]
 		>db.users.insert(userDocs)
+		</pre>
+
+
+
+		<br><br>
+		<h4>Auth from command line</h4>
+		<pre style="width: 80%">
+		>use admin
+		>db.auth('superadmin', 'xxpassyy')
+
+		>use supermeandb-dev
+		>db.createUser({user: 'supermean_user', pwd: 'somePass', roles: ['dbOwner']})
 		</pre>
 
 

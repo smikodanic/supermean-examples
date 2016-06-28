@@ -27,8 +27,10 @@ router.get('/', function (req, res, next) {
 /******** EXAMPLES *****/
 /* endpoint: GET /examples/mongoose/00setupmongo */
 
+
 //setup mongo database
 router.get('/00setupmongo', require('./handlers/00setupmongo'));
+router.get('/00connection', require('./handlers/00connection'));
 
 
 

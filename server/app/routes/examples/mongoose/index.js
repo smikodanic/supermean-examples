@@ -30,8 +30,14 @@ router.get('/', function (req, res, next) {
 
 //setup mongo database
 router.get('/00setupmongo', require('./handlers/00setupmongo'));
-router.get('/00connection', require('./handlers/00connection'));
+router.get('/00setupmongoose', require('./handlers/00setupmongoose'));
 
+//****schema types
+router.get('/01schematypes-string-callback', require('./handlers/01schematypes-string-callback'));
+router.get('/01schematypes-string', require('./handlers/01schematypes-string'));
+router.get('/01schematypes-number', require('./handlers/01schematypes-number'));
+router.get('/01schematypes-misc', require('./handlers/01schematypes-misc'));
+router.get('/01schematypes-buffer', require('./handlers/01schematypes-buffer'));
 
 
 

@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<%- include('../_partials/01head'); -%>
+</head>
+
+<body>
+	<%- include('../_partials/05header'); -%>
+
+	<ol class="col-sm-7 breadcrumb">
+  		<li><a href="/">Home</a></li>
+  		<li><a href="/examples">SS Examples</a></li>
+  		<li><a href="/examples/mongoose">Mongoose Examples</a></li>
+  		<li class="active">Setup Mongoose</li>
+	</ol>
+
+
+	<main class="col-sm-12 container" style="min-height: 600px">
+
+		<h2>Setup Mongoose</h2>
+
+		<br><br>
+		<h4>Installation</h4>
+		<pre style="width:40%;">
+ $npm install --save mongoose
+		</pre>
+
+
+		<br><br>
+		<h4>Mongoose connection</h4>
+		SuperMEAN start mongoose as an middleware.
+
+		<pre style="width:70%;">
+<b>FILE: server/app/index.js</b>
+//database middlewares
+if (config.env.database.mongodb.isActive) {
+    require('./middlewares/database/' + config.env.database.mongodb.driver + '.js')(config);
+}
+		</pre>
+
+				<pre style="width:70%;">
+<b>FILE: server/app/middlewares/database/mongoose.js</b>
+//establish mongoose connection
+mongoose.connect(config.env.database.mongodb.uri, options);
+
+
+//events
+mongoose.connection.on('error', function (err) {
+    console.error(chalk.blue('Mongoose error: ' + err));
+});
+		</pre>
+
+
+		<br><br>
+		<h4>Models</h4>
+		Schemas, Models and model functions are located inside <b style="color:Silver">server/app/models</b>.
+		<pre style="width:40%;">
+<b>FILE: server/app/models/examples/users_model.js (schema and model)</b>
+const mongoose = require('mongoose');
+var Schema = mongoose.Schema;
+
+//schema
+var usersSchema = new Schema({
+    first_name: String
+}, {collection: 'users'});
+
+//index
+usersSchema.index({first_name: -1});
+
+//model
+module.exports = mongoose.model('Users', usersSchema);
+		</pre>
+
+		<pre style="width:40%;">
+<b>FILE: server/app/models/examples/users.js (schema and model)</b>
+/**
+ * Actions for users model
+ */
+
+var Users = require('./users_model');
+
+//bluebird promisification
+const BPromise = require('bluebird');
+const mongoose = BPromise.promisifyAll(require('mongoose'));
+
+
+
+//callback version
+module.exports.saveUser = function (userDoc, res) {
+    'use strict';
+
+    var user = new Users(userDoc);
+
+    //object insertion
+    user.save(function (err, data) {
+        if (err) {
+            console.error(err);
+        } else {
+            res.send('MongoDB connection established and data inserted: <br>' + data);
+            console.log(JSON.stringify(data, null, 2));
+        }
+        //disconnect from mongodb
+        // mongoose.disconnect();
+    });
+};
+
+
+//Bluebird version
+module.exports.saveUserAsync = function (userDoc, res) {
+    'use strict';
+
+    var user = new Users(userDoc);
+
+    //return Bluebird Promise
+    return user.saveAsync();
+};
+		</pre>
+
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<%- include('../_partials/20footer'); -%>
+</body>
+</html>

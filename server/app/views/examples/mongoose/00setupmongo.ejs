@@ -11,7 +11,8 @@
 	<ol class="col-sm-7 breadcrumb">
   		<li><a href="/">Home</a></li>
   		<li><a href="/examples">SS Examples</a></li>
-  		<li class="active">Mongoose Examples</li>
+  		<li><a href="/examples/mongoose">Mongoose Examples</a></li>
+  		<li class="active">Setup MongoDB</li>
 	</ol>
 
 
@@ -22,58 +23,58 @@
 
 		<br><br>
 		<h4>Mongodb server commands</h4>
-		<pre style="width:40%;padding-left:0px;">
-		# rm /var/lib/mongodb/mongod.lock
+		<pre style="width:40%;">
+ # rm /var/lib/mongodb/mongod.lock
 
-		# mongod --config /etc/mongod.conf
-		# mongod --config /etc/mongod-noauth.conf
+ # mongod --config /etc/mongod.conf
+ # mongod --config /etc/mongod-noauth.conf
 
-		# mongod --shutdown --config /etc/mongod.conf
+ # mongod --shutdown --config /etc/mongod.conf
 		</pre>
+
+
+				<br><br>
+		<h4>Create user with root privilegies</h4>
+		<pre style="width:70%;">
+ # mongod --noauth --config /etc/mongod.conf
+
+ >use admin
+ >db.createUser({user: 'superadmin', pwd: 'rootPass', roles: ['root']})
+		</pre>
+
 
 		<br><br>
 		<h4>Create database from command line</h4>
-		<pre style="width: 40%">
-		>use admin
-		>db.auth('superadmin', 'xxpassyy')
-		>use supermeandb-dev
-		>db.createCollection('users')
-		>show collections
-		>var userDocs = [
-		{
-			name: 'Mark',
-			age: 25
-		},
-		{
-			name: 'Ana',
-			age: 32
-		}
-		]
-		>db.users.insert(userDocs)
+		<pre style="width:40%">
+ >use admin
+ >db.auth('superadmin', 'xxpassyy')
+ >use supermeandb-dev
+ >db.createCollection('users')
+ >show collections
+ >var userDocs = [
+ 	{
+ 		name: 'Mark',
+ 		age: 25
+ 	},
+ 	{
+ 		name: 'Ana',
+ 		age: 32
+ 	}
+ 	]
+ >db.users.insert(userDocs)
 		</pre>
 
 
 
 		<br><br>
-		<h4>Auth from command line</h4>
+		<h4>Create a database owner</h4>
 		<pre style="width: 80%">
-		>use admin
-		>db.auth('superadmin', 'xxpassyy')
+ >use admin
+ >db.auth('superadmin', 'xxpassyy')
 
-		>use supermeandb-dev
-		>db.createUser({user: 'supermean_user', pwd: 'somePass', roles: ['dbOwner']})
+ >use supermeandb-dev
+ >db.createUser({user: 'supermean_user', pwd: 'somePass', roles: ['dbOwner']})
 		</pre>
-
-
-		<br><br>
-		<h4>Mongoose</h4>
-		<pre style="width: 40%">
-			$npm install --save mongoose
-		</pre>
-
-
-
-
 
 
 	</main>

@@ -27,6 +27,11 @@ require('./middlewares/favicon.js')(app);
 require('./middlewares/bodyParser.js')(app);
 require('./middlewares/connect_flash.js')(app);
 
+//database middlewares
+if (config.env.database.mongodb.isActive) {
+    require('./middlewares/database/' + config.env.database.mongodb.driver + '.js')(config);
+}
+
 // require('./middlewares/virtual_host.js')(app, config);
 
 //*** static file middlewares --- path.join() creates absolute path from root

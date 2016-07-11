@@ -12,7 +12,13 @@ var config = {
         port: process.env.PORT || 3005
     },
     gulpFile: 'gulpfile-nodemon.js',
-    mongodb: process.env.MONGODB || 'mongodb://supermean_user:smPass@127.0.0.1:27017/supermeandb-dev'
+    database: {
+        mongodb: {
+            isActive: true, //true || false (if false then app will not use mongodb)
+            uri: process.env.MONGODB_URI || 'mongodb://supermean_user:smPass@127.0.0.1:27017/supermeandb-dev',
+            driver: 'mongoose'
+        }
+    }
 
 };
 

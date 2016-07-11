@@ -25,6 +25,7 @@
     "passport-google-oauth2": "^0.1.6",
     "passport-local": "^1.0.0",
     "passport-twitter": "^1.0.4",
+    "rootpath": "^0.1.2",
     "serve-favicon": "^2.2.1",
     "session-file-store": "0.0.3",
     "vhost": "^3.0.2"

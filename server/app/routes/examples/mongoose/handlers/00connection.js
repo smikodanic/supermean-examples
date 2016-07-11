@@ -8,7 +8,11 @@
 
 var config = require('../../../../config');
 var mongoose = require('mongoose');
-mongoose.connect(config.env.mongodb);
+
+var db = mongoose.connect(config.env.mongodb);
+
+//error when MongoDB server is down (will not be able to start nodeJS server without this line)
+mongoose.connection.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 //schema
 var usersSchema = mongoose.Schema({
@@ -35,7 +39,12 @@ module.exports = function (req, res, next) {
             res.send('MongoDB connection established and data inserted: <br>' + data);
             console.log(JSON.stringify(data, null, 2));
         }
+    }).then(function () {
+        //disconnection
+        db.disconnect();
     });
+
+
 
 
 };

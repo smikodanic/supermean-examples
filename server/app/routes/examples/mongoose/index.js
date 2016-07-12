@@ -40,5 +40,9 @@ router.get('/01schematypes-misc', require('./handlers/01schematypes-misc'));
 router.get('/01schematypes-buffer', require('./handlers/01schematypes-buffer'));
 
 
+router.get('/02schemaoptions-default', require('./handlers/02schemaoptions-default'));
+
+
+
 
 module.exports = router;

@@ -41,6 +41,9 @@ router.get('/01schematypes-buffer', require('./handlers/01schematypes-buffer'));
 
 
 router.get('/02schemaoptions-default', require('./handlers/02schemaoptions-default'));
+router.get('/02schemaoptions-required', require('./handlers/02schemaoptions-required'));
+router.get('/02schemaoptions-select', require('./handlers/02schemaoptions-select'));
+router.get('/02schemaoptions-select2', require('./handlers/02schemaoptions-select2'));
 
 
 

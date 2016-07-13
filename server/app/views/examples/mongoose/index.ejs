@@ -48,7 +48,9 @@
 		<ol>
 			<li><a href="/examples/mongoose/02schemaoptions-default" target="_blank">default</a> - set default value
 			<li><a href="/examples/mongoose/02schemaoptions-required" target="_blank">required</a> - {required: [bool], ...} validation rule
-			<li><a href="/examples/mongoose/02schemaoptions-select" target="_blank">select</a> - {select: [bool], ...} include or exclude from query results
+			<li><a href="/examples/mongoose/02schemaoptions-select" target="_blank">select</a> - {select: [bool], ...} define will the path is in selected results.
+				If <b>{prop: {type: String, select: false}}</b> then it can be included again with <b>.find().select('path_name')</b>
+			<li><a href="/examples/mongoose/02schemaoptions-select2" target="_blank">select with BPromise.join()</a>
 			<li><a href="/examples/mongoose/02schemaoptions-get" target="_blank">get</a> - {get: [function], ...} getter function, transform a value get from mongodb
 			<li><a href="/examples/mongoose/02schemaoptions-set" target="_blank">set</a> - {set: [function], ...} setter function, transform a value which will be set into mongodb
 			<li><a href="/examples/mongoose/02schemaoptions-index" target="_blank">index</a> - {index: [bool], ...} creates index

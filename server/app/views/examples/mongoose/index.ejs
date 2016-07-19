@@ -44,32 +44,73 @@
 			<li><a href="/examples/mongoose/01schematypes-buffer" target="_blank">Buffer</a> - {type: Buffer, ...}
 		</ol>
 
-		<h5>Additional options</h5>
+		<br>
+		<h5>Common schema field options</h5>
 		<ol>
 			<li><a href="/examples/mongoose/02schemaoptions-default" target="_blank">default</a> - set default value
 			<li><a href="/examples/mongoose/02schemaoptions-required" target="_blank">required</a> - {required: [bool], ...} validation rule
 			<li><a href="/examples/mongoose/02schemaoptions-select" target="_blank">select</a> - {select: [bool], ...} define will the path is in selected results.
-				If <b>{prop: {type: String, select: false}}</b> then it can be included again with <b>.find().select('path_name')</b>
+				If <b>{prop: {type: String, select: false}}</b> then it can be included again with <b>.find().select('path_name')</b> .
 			<li><a href="/examples/mongoose/02schemaoptions-select2" target="_blank">select with BPromise.join()</a>
-			<li><a href="/examples/mongoose/02schemaoptions-get" target="_blank">get</a> - {get: [function], ...} getter function, transform a value get from mongodb
-			<li><a href="/examples/mongoose/02schemaoptions-set" target="_blank">set</a> - {set: [function], ...} setter function, transform a value which will be set into mongodb
-			<li><a href="/examples/mongoose/02schemaoptions-index" target="_blank">index</a> - {index: [bool], ...} creates index
-			<li><a href="/examples/mongoose/02schemaoptions-unique" target="_blank">unique</a> - index: { unique: true } creates unique index
-			<li><a href="/examples/mongoose/02schemaoptions-sparse" target="_blank">sparse</a> - {sparse: [bool], ... } creates sparse index
+			<li><a href="/examples/mongoose/02schemaoptions-getset" target="_blank">get</a> - {get: [function], ...} getter function, transform a value get from mongodb. IMPORTANT!!! <b>Schema.set('toJSON', { getters: true });</b>
+			<li><a href="/examples/mongoose/02schemaoptions-getset" target="_blank">set</a> - {set: [function], ...} setter function, transform a value which will be set into mongodb
+			<li><a href="/examples/mongoose/02schemaoptions-index" target="_blank">index</a> - {index: {name: 'someIndName'}} or just {index: [bool], ...} creates index
+			<li><a href="/examples/mongoose/02schemaoptions-index" target="_blank">unique index</a> - index: { unique: true } or just {unique: true} creates unique index
+			<li><a href="/examples/mongoose/02schemaoptions-sparse" target="_blank">sparse index</a> - {sparse: [bool], ... } creates sparse index, e.g. index which takes only docs wich contains specific field
 			<li><a href="/examples/mongoose/02schemaoptions-validate" target="_blank">validate</a> - {validate: [function, regex, array], ... } validate entry for specific path
-			<li><a href="/examples/mongoose/02schemaoptions-ref" target="_blank">ref</a> - {ref: [string], ... } validate entry for specific path
+			<li><a href="/examples/mongoose/02schemaoptions-ref" target="_blank">ref</a> - {ref: [string], ... }
 		</ol>
 
 
 		<br><br>
-		<h4>Mongoose Queries</h4>
+		<h4>Middleware</h4>
+		Middlewares can be pre() and post() and are applied on doc methods: init, validate, save, remove.
+		<br>Also on query methods like: count, find, findOne, findOneAndRemove, findOneAndUpdate, update
 		<ol>
-			<li><a href="/examples/mongoose/20save" target="_blank">save</a> - callback version
-			<li><a href="/examples/mongoose/20save-async" target="_blank">saveAsync</a> - bluebird promise version
+			<li><a href="/examples/mongoose/05middlewareprepost" target="_blank">pre('save', fjaMD)</a> - pre middleware
+			<li><a href="/examples/mongoose/05middlewareprepost" target="_blank">post('remove', fjaMD)</a> - post middleware
 		</ol>
 
 
+		<br><br>
+		<h4>Basic operations</h4>
 
+		<h5>INSERT</h5>
+		<ol>
+			<li><a href="/examples/mongoose/10operationssave" target="_blank">save()</a> - save one doc
+			<li><a href="/examples/mongoose/11operationscreate" target="_blank">create()</a> - save array of docs
+			<li><a href="/examples/mongoose/12operationsinsertmany" target="_blank">insertMany()</a> - inserting array of operationss
+			<li><a href="/examples/mongoose/13operationspopulate" target="_blank">populate()</a> -
+		</ol>
+
+		<h5>DELETE</h5>
+		<ol>
+			<li><a href="/examples/mongoose/15operationsremove" target="_blank">remove()</a> - delete docs
+			<li><a href="/examples/mongoose/16operationsfindidremove" target="_blank">findByIdAndRemove()</a> -
+			<li><a href="/examples/mongoose/17operationsfindoneremove" target="_blank">findOneAndRemove()</a> -
+		</ol>
+
+		<h5>UPDATE</h5>
+		<ol>
+			<li><a href="/examples/mongoose/20operationsupdate" target="_blank">update()</a> - delete docs
+			<li><a href="/examples/mongoose/21operationsfindidupdate" target="_blank">findByIdAndUpdate()</a> -
+			<li><a href="/examples/mongoose/22operationsfindoneupdate" target="_blank">findOneAndUpdate()</a> -
+		</ol>
+
+		<h5>QUERY</h5>
+		where, $where, select, skip, limit, asc, desc, hint
+		<br>bluebird and query version
+		<ol>
+			<li><a href="/examples/mongoose/25operationsfind" target="_blank">find()</a> - find docs
+			<li><a href="/examples/mongoose/26operationsfindone" target="_blank">findOne()</a> -
+			<li><a href="/examples/mongoose/27operationsfindid" target="_blank">findById()</a> -
+			<li><a href="/examples/mongoose/28operationscount" target="_blank">count()</a> -
+			<li><a href="/examples/mongoose/29operationsdistinct" target="_blank">distinct()</a> -
+		</ol>
+
+
+		<br><br>
+		<h4>Subdocument</h4>
 
 
 

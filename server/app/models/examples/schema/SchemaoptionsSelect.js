@@ -1,5 +1,5 @@
 /**
- * schema option: select
+ * schema property option: select
  * http://mongoosejs.com/docs/2.7.x/docs/schematypes.html
  *
  */

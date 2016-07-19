@@ -6,7 +6,7 @@ module.exports = {
     collection: 'users', //default collection
     _id: true, //disable _id
     id: false, //set virtual id property
-    autoIndex: true, //auto-create indexes
+    autoIndex: true, //auto-create indexes in mognodb collection on mongoose restart
     minimize: true, //remove empty objects
     safe: true, //pass errors to callback
     strict: true, //values not defined in schema will not be saved in db

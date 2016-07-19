@@ -1,5 +1,5 @@
 /**
- * schema option: required
+ * schema property option: required
  * http://mongoosejs.com/docs/2.7.x/docs/schematypes.html
  *
  */

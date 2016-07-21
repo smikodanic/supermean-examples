@@ -6,7 +6,7 @@
  * http://mongoosejs.com/docs/api.html#document-js
  */
 require('rootpath')();
-var doc = require('server/app/models/examples/operations');
+var operations = require('server/app/models/examples/operations');
 var errorsLib = require('server/app/lib/errorsLib');
 
 
@@ -35,7 +35,7 @@ module.exports = function (req, res, next) {
 
 
 
-    doc
+    operations
         .saveDocAsync(docInput)
         .then((data) => {
             console.log('Inserted into mongoDB: \n' + JSON.stringify(data, null, 2));

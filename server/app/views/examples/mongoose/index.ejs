@@ -63,7 +63,7 @@
 
 
 		<br><br>
-		<h4>Middleware</h4>
+		<h4>Mongoose Middleware</h4>
 		Middlewares can be pre() and post() and are applied on doc methods: init, validate, save, remove.
 		<br>Also on query methods like: count, find, findOne, findOneAndRemove, findOneAndUpdate, update
 		<ol>
@@ -77,39 +77,45 @@
 
 		<h5>INSERT</h5>
 		<ol>
-			<li><a href="/examples/mongoose/10operationssave" target="_blank">save()</a> - save one doc
-			<li><a href="/examples/mongoose/11operationscreate" target="_blank">create()</a> - save array of docs
-			<li><a href="/examples/mongoose/12operationsinsertmany" target="_blank">insertMany()</a> - inserting array of operationss
+			<li><a href="/examples/mongoose/10operationssave" target="_blank">save(docObj)</a> - save one doc
+			<li><a href="/examples/mongoose/11operationscreate" target="_blank">create([doc1, doc2, ...])</a> - save array of docs
+			<li><a href="/examples/mongoose/12operationsinsertmany" target="_blank">insertMany([doc1, doc2, ...])</a> - inserting array of docs (simmilar to create() )
 			<li><a href="/examples/mongoose/13operationspopulate" target="_blank">populate()</a> -
 		</ol>
 
-		<h5>DELETE</h5>
+		<br><h5>DELETE</h5>
 		<ol>
-			<li><a href="/examples/mongoose/15operationsremove" target="_blank">remove()</a> - delete docs
-			<li><a href="/examples/mongoose/16operationsfindidremove" target="_blank">findByIdAndRemove()</a> -
-			<li><a href="/examples/mongoose/17operationsfindoneremove" target="_blank">findOneAndRemove()</a> -
+			<li><a href="/examples/mongoose/15operationsremove" target="_blank">remove(queryObj)</a> - delete multiple documents <b>Model.remove({ _id: '578d009d0c1873663130f4d4' }, function(err, countObj) { ... })</b>
+			<li><a href="/examples/mongoose/16operationsfindidremove" target="_blank">findByIdAndRemove(id)</a> - removing one doc found by id
+			<li><a href="/examples/mongoose/17operationsfindoneremove" target="_blank">findOneAndRemove(queryObj)</a> - removing first doc found by queryObj
 		</ol>
 
-		<h5>UPDATE</h5>
+		<br><h5>UPDATE</h5>
 		<ol>
-			<li><a href="/examples/mongoose/20operationsupdate" target="_blank">update()</a> - delete docs
-			<li><a href="/examples/mongoose/21operationsfindidupdate" target="_blank">findByIdAndUpdate()</a> -
-			<li><a href="/examples/mongoose/22operationsfindoneupdate" target="_blank">findOneAndUpdate()</a> -
+			<li><a href="/examples/mongoose/20operationsupdate" target="_blank">update(queryObj, docNew, updOpts)</a> - update multiple documents <b>Model.updateAsync(queryObj, docNew, updOpts).then(countObj => { ... });</b>
+			<li><a href="/examples/mongoose/21operationsfindidupdate" target="_blank">findByIdAndUpdate(id, docNew, updOpts)</a> - updating one doc found by id
+			<li><a href="/examples/mongoose/22operationsfindoneupdate" target="_blank">findOneAndUpdate(queryObj, docNew, updOpts)</a> - removing first doc found by queryObj
 		</ol>
 
-		<h5>QUERY</h5>
-		where, $where, select, skip, limit, asc, desc, hint
-		<br>bluebird and query version
+		<br><h5>SEARCH</h5>
 		<ol>
-			<li><a href="/examples/mongoose/25operationsfind" target="_blank">find()</a> - find docs
-			<li><a href="/examples/mongoose/26operationsfindone" target="_blank">findOne()</a> -
-			<li><a href="/examples/mongoose/27operationsfindid" target="_blank">findById()</a> -
-			<li><a href="/examples/mongoose/28operationscount" target="_blank">count()</a> -
-			<li><a href="/examples/mongoose/29operationsdistinct" target="_blank">distinct()</a> -
+			<li><a href="/examples/mongoose/25operationsfind" target="_blank">find(queryObj, showFields, findOpts)</a> - find documents by queryObj
+			<li><a href="/examples/mongoose/26operationsfindid" target="_blank">findById(id, showFields, findOpts)</a> - find a document by _id
+			<li><a href="/examples/mongoose/27operationsfindone" target="_blank">findOne(queryObj, showFields, findOpts)</a> - returns only first result which match queryObj
+			<li><a href="/examples/mongoose/28operationscount" target="_blank">count(queryObj)</a> - count number of docs match queryObj
+			<li><a href="/examples/mongoose/28operationscountfind" target="_blank">count() with find()</a> - first count all results then return all results. Usefull in pagination!
+			<li><a href="/examples/mongoose/29operationsdistinct" target="_blank">distinct(field, queryObj)</a> - returns an array of 'filed' results, which are distinct (no same elements in array)
+		</ol>
+
+		<br><h5>SEARCH QUERY</h5>
+		- where, $where, select, skip, limit, asc, desc, hint
+		<br>- bluebird promise  and query exec promise version (var promis = query.exec())
+		<ol>
+			<li><a href="/examples/mongoose/35operationsquery" target="_blank">query</a> - compound query example with bluebird promise
 		</ol>
 
 
-		<br><br>
+		<br><br><br><br>
 		<h4>Subdocument</h4>
 
 

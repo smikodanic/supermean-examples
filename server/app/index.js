@@ -12,13 +12,21 @@ var app = express();
 var path = require('path');
 
 
+
+
+
 //***** VIEW ENGINE *****
+//***********************
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 
 
+
+
+
 //***** MIDDLEWARES *****
+//***********************
 require('./middlewares/logger_morgan.js')(app, config); //must be first to log each request (also static files)
 require('./middlewares/debug.js')(app, config);
 require('./middlewares/errors.js')(app, config);
@@ -49,7 +57,11 @@ require('./middlewares/auth/passport_google.js')();
 
 
 
+
+
+
 //****** SERVER SIDE ROUTES *****
+//*******************************
 app.use('/', require('./routes/index.js'));
 
 //*** server-side examples
@@ -67,6 +79,7 @@ app.use('/examples/mongoose', require('./routes/examples/mongoose/index.js'));
 
 
 //****** CLIENT SIDE ROUTES *****
+//*******************************
 /**
  * When URL is typed in browser superMEAN first trying to find route on server-side e.g. inside /server/routes/.
  * If route is not found on server-side, superMEAN is trying to find route on client side e.g. inside /client/src/config/routes.js .

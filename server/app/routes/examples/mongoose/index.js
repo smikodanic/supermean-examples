@@ -69,8 +69,18 @@ router.get('/28operationscount', require('./handlers/28operationscount'));
 router.get('/28operationscountfind', require('./handlers/28operationscount_find'));
 router.get('/29operationsdistinct', require('./handlers/29operationsdistinct'));
 
-//*** queries: where, limit, sort, ...
+//**** query
 router.get('/35queryfind', require('./handlers/35queryfind'));
+
+//**most used
+router.get('/36querymostused-common', require('./handlers/36querymostused').common);
+router.get('/36querymostused-distinct', require('./handlers/36querymostused').distinct);
+router.get('/36querymostused-regex', require('./handlers/36querymostused').regex);
+router.get('/36querymostused-select', require('./handlers/36querymostused').select);
+
+
+
+
 router.get('/36querydolwhere', require('./handlers/36queries').dolwhere);
 
 

@@ -4,7 +4,7 @@
  * *** Buffer schema type
  */
 require('rootpath')();
-var SchematypesBufferodel = require('server/app/models/examples/schematypesBuffer');
+var SchematypesBufferModel = require('server/app/models/examples/schematypesBuffer');
 var errorsLib = require('server/app/lib/errorsLib');
 
 
@@ -22,7 +22,7 @@ module.exports = function (req, res, next) {
     };
 
     //insert doc
-    SchematypesBufferodel.saveDocAsync(docInput)
+    SchematypesBufferModel.saveDocAsync(docInput)
         .then(data => {
             //show buffer array in concole (too long)
             console.log(JSON.stringify(data, null, 2));

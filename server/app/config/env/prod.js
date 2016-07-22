@@ -15,7 +15,7 @@ var config = {
     database: {
         mongodb: {
             isActive: true, //true || false (if false then website will not use mongodb)
-            uri: process.env.MONGODB_URI || 'mongodb://supermean_user:smPass@127.0.0.1:27017/supermeandb-dev'
+            uri: process.env.MONGODB_URI || 'mongodb://supermean_user:smPass@127.0.0.1:27017/supermean
         }
     }
 

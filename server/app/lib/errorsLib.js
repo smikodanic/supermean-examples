@@ -8,7 +8,7 @@ module.exports.onErrorCatch = function (err, res) {
     'use strict';
 
     //console
-    console.log(chalk.red('saveUserAsyncERR: ' + err.message));
+    console.log(chalk.red('catchERR: ' + err.message));
 
     //browser window
     res.status(err.status || 500);

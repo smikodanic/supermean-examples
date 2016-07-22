@@ -108,10 +108,17 @@
 		</ol>
 
 		<br><h5>SEARCH QUERY</h5>
-		- where, $where, select, skip, limit, asc, desc, hint
-		<br>- bluebird promise  and query exec promise version (var promis = query.exec())
+		var query = Model.find(); var promis = query.execAsync();
+		<br><b>most used queries:</b> where, skip, limit, sort, count, distinct, regex, select
+		<br><b>search queries:</b> find, findOne, findOneAndRemove, findOneAndUpdate,
+		<br><b>logic and comparison queries:</b> and, or, nor, equals, gt, gte, lt, lte, ne
+		<br><b>array queries:</b> all, in, nin, elemMatch, size, slice
+		<br><b>operational queries:</b> delete, update
+		<br><b>misc:</b> $where, comment, cursor, exists, hint, merge, setOptions|sort, limit, skip, ...|
 		<ol>
-			<li><a href="/examples/mongoose/35operationsquery" target="_blank">query</a> - compound query example with bluebird promise
+			<li><a href="/examples/mongoose/35queryfind" target="_blank">query object</a> - example how to create query object with Model.find() method
+			<li><a href="/examples/mongoose/36querydolwhere" target="_blank">$where(JSfunction)</a> - JS function or expression passed to mongodb query (must return true or false)
+
 		</ol>
 
 

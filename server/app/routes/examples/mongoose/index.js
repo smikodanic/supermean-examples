@@ -72,11 +72,17 @@ router.get('/29operationsdistinct', require('./handlers/29operationsdistinct'));
 //**** query
 router.get('/35queryfind', require('./handlers/35queryfind'));
 
-//**most used
+//**most used queries
 router.get('/36querymostused-common', require('./handlers/36querymostused').common);
 router.get('/36querymostused-distinct', require('./handlers/36querymostused').distinct);
 router.get('/36querymostused-regex', require('./handlers/36querymostused').regex);
 router.get('/36querymostused-select', require('./handlers/36querymostused').select);
+router.get('/37querysearch-find', require('./handlers/37querysearch').find);
+router.get('/38querylogic-gt-lt', require('./handlers/38querylogic').gtlt);
+router.get('/38querylogic-and-or', require('./handlers/38querylogic').andor);
+router.get('/39queryarray-all', require('./handlers/39queryarray').all);
+router.get('/39queryarray-in', require('./handlers/39queryarray').in);
+router.get('/39queryarray-elemmatch', require('./handlers/39queryarray').elemMatch);
 
 
 

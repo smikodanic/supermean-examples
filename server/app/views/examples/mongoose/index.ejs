@@ -109,19 +109,26 @@
 
 		<br><h5>SEARCH QUERY</h5>
 		var query = Model.find(); var promis = query.execAsync();
-		<br><b>most used queries:</b> where, skip, limit, sort, count, distinct, regex, select
-		<br><b>search queries:</b> find, findOne, findOneAndRemove, findOneAndUpdate,
+		<ul>
+			<li><a href="/examples/mongoose/35queryfind" target="_blank">query object</a> - example how to create query object with Model.find() method
+		</ul>
+		<br><b>most used queries:</b> where, limit, skip, sort, count, distinct, regex, select
+		<br><b>search queries:</b> find, findOne, findOneAndRemove, findOneAndUpdate
 		<br><b>logic and comparison queries:</b> and, or, nor, equals, gt, gte, lt, lte, ne
 		<br><b>array queries:</b> all, in, nin, elemMatch, size, slice
 		<br><b>operational queries:</b> delete, update
 		<br><b>misc:</b> $where, comment, cursor, exists, hint, merge, setOptions|sort, limit, skip, ...|
 		<ol>
-			<li><a href="/examples/mongoose/35queryfind" target="_blank">query object</a> - example how to create query object with Model.find() method
-			<li><a href="/examples/mongoose/36querymostused-common" target="_blank">where, skip, limit, sort, count</a> - common used mongoose queries (used req.query to send parameters)
+			<li><a href="/examples/mongoose/36querymostused-common" target="_blank">where, limit, skip, sort, count</a> - common used mongoose queries (used req.query to send parameters)
 			<li><a href="/examples/mongoose/36querymostused-distinct" target="_blank">distinct</a> - return non-duplicated values
 			<li><a href="/examples/mongoose/36querymostused-regex?qs=from%20array" target="_blank">regex(field, regExp)</a> - regex search
 			<li><a href="/examples/mongoose/36querymostused-select?qs=from%20array" target="_blank">select('field1 field2 ...')</a> - determine which fields will be shown
-
+			<li><a href="/examples/mongoose/37querysearch-find?qs=from%20array" target="_blank">find, findOne</a> - find many and find one
+			<li><a href="/examples/mongoose/38querylogic-gt-lt" target="_blank">gt, lt</a> - results between two numbers
+			<li><a href="/examples/mongoose/38querylogic-and-or" target="_blank">and, or</a> - and() , or() usage <b>.or([{ color: 'red' }, { status: 'emergency' }])</b>
+			<li><a href="/examples/mongoose/39queryarray-all" target="_blank">.all('obj.arr_num', [5, 8, 13, 21]</a> - field must be array and must contain all elements from given array
+			<li><a href="/examples/mongoose/39queryarray-in" target="_blank">.in('num', [5, 13, 22, 33])</a> - field must be non-array (String, Number ...etc) and must be contained in given array
+			<li><a href="/examples/mongoose/39queryarray-elemmatch" target="_blank">.elemMatch('obj.arr_str', {$regex: /MARK/ig})</a> - field must be array and one of elements must match criteria
 
 
 

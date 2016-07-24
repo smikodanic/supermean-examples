@@ -118,24 +118,7 @@ module.exports.distinctDocAsync = function (field, queryObj) {
 
 //= - = - = - = SEARCH-QUERY operations
 
-//returned value is not Bluebird's promise, but query object which will be executed in router by exec(callback)
-module.exports.findQuery = (queryObj) => { //arrow function
-    'use strict';
-
-    //use this
-    // var query = operationsModel.find(queryObj);
-
-    //or this
-    var query = operationsModel.find(); //find() creates 'query' object
-    query.where(queryObj);
-
-    query.where({str: /1/g});
-
-    return query;
-};
-
 //returns 'query' object
 module.exports.getFindQuery = function () {
     return operationsModel.find();
-
 };

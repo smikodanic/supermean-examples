@@ -69,10 +69,10 @@ router.get('/28operationscount', require('./handlers/28operationscount'));
 router.get('/28operationscountfind', require('./handlers/28operationscount_find'));
 router.get('/29operationsdistinct', require('./handlers/29operationsdistinct'));
 
-//**** query
-router.get('/35queryfind', require('./handlers/35queryfind'));
 
-//**most used queries
+//**queries
+router.get('/35queryobject-byfind', require('./handlers/35queryobject').byfind);
+router.get('/35queryobject-byconstructor', require('./handlers/35queryobject').byconstructor);
 router.get('/36querymostused-common', require('./handlers/36querymostused').common);
 router.get('/36querymostused-distinct', require('./handlers/36querymostused').distinct);
 router.get('/36querymostused-regex', require('./handlers/36querymostused').regex);
@@ -83,11 +83,20 @@ router.get('/38querylogic-and-or', require('./handlers/38querylogic').andor);
 router.get('/39queryarray-all', require('./handlers/39queryarray').all);
 router.get('/39queryarray-in', require('./handlers/39queryarray').in);
 router.get('/39queryarray-elemmatch', require('./handlers/39queryarray').elemMatch);
+router.get('/39queryarray-size', require('./handlers/39queryarray').size);
+router.get('/39queryarray-slice', require('./handlers/39queryarray').slice);
+router.get('/40queryoper-remove', require('./handlers/40queryoper').remove);
+router.get('/40queryoper-update', require('./handlers/40queryoper').update);
+router.get('/41querymisc-dollarwhere', require('./handlers/41querymisc').dollarwhere);
+router.get('/41querymisc-comment', require('./handlers/41querymisc').comment);
+router.get('/41querymisc-cursor-stream', require('./handlers/41querymisc').cursorStream);
+router.get('/41querymisc-exists', require('./handlers/41querymisc').exists);
+router.get('/41querymisc-merge', require('./handlers/41querymisc').merge);
+router.get('/41querymisc-setoptions', require('./handlers/41querymisc').setOptions);
 
 
 
 
-router.get('/36querydolwhere', require('./handlers/36queries').dolwhere);
 
 
 module.exports = router;

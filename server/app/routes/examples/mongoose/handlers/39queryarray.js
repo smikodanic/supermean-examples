@@ -142,7 +142,7 @@ module.exports.in = function (req, res, next) {
 /*****************************************************************************************
 * GET /examples/mongoose/39queryarray-elemmatch *
 *****************************************************************************************
-* - elemMatch():   */
+* - elemMatch():  field must be array and one of elements must match criteria */
 module.exports.elemMatch = function (req, res, next) {
     'use strict';
 
@@ -155,7 +155,7 @@ module.exports.elemMatch = function (req, res, next) {
 
     //same as above
     query.where('mix') //'mix' is array
-        .elemMatch({'name': {$regex: /MARK/ig}});
+        .elemMatch({name: {$regex: /MARK/ig}});
 
 
 
@@ -226,4 +226,139 @@ module.exports.elemMatch = function (req, res, next) {
     "dat": "1981-01-12T18:25:55.567Z"
   }
 ]
+ */
+
+
+/*****************************************************************************************
+* GET /examples/mongoose/39queryarray-size *
+*****************************************************************************************
+* - size():  field must be array and must contain given number of elements */
+module.exports.size = function (req, res, next) {
+    'use strict';
+
+    // query.size('obj.arr_str', 0);
+    query.where('obj.arr_str').size(0);
+
+
+    console.log(JSON.stringify(query.getQuery(), null, 2));
+    /*
+{
+  "obj.arr_str": {
+    "$size": 0
+  }
+}
+     */
+
+
+    query.execAsync()
+        .then(function (resultsArr) {
+            console.log('Results: \n' + JSON.stringify(resultsArr, null, 2));
+            res.send('Results: <pre>' + JSON.stringify(resultsArr, null, 2) + '</pre>');
+        })
+        .catch(function (err) {
+            err.status = err.status || 500;
+            errorsLib.onErrorCatch(err, res);
+        });
+
+};
+/*
+[
+  {
+    "_id": "57936863df93c8ac10886bc8",
+    "updated_at": "2016-07-23T12:51:47.406Z",
+    "created_at": "2016-07-23T12:51:47.406Z",
+    "str": "From array 1 !",
+    "my_id": "577fde18ea79fe632b75c009",
+    "__v": 0,
+    "obj": {
+      "arr_num": [],
+      "arr_str": []
+    },
+    "dat": "2016-07-23T12:51:47.394Z"
+  },
+  {
+    "_id": "57936863df93c8ac10886bc9",
+    "updated_at": "2016-07-23T12:51:47.417Z",
+    "created_at": "2016-07-23T12:51:47.417Z",
+    "str": "From array 2 !",
+    "my_id": "577fde18ea79fe632b75c010",
+    "__v": 0,
+    "obj": {
+      "arr_num": [],
+      "arr_str": []
+    },
+    "dat": "2016-07-23T12:51:47.397Z"
+  },
+  {
+    "_id": "57936866df93c8ac10886bca",
+    "updated_at": "2016-07-23T12:51:50.639Z",
+    "created_at": "2016-07-23T12:51:50.639Z",
+    "str": "From array 17 !",
+    "my_id": "577fde18ea79fe632b75c017",
+    "obj": {
+      "arr_num": [],
+      "arr_str": []
+    },
+    "dat": "2016-07-23T12:51:50.629Z"
+  },
+  {
+    "_id": "57936866df93c8ac10886bcb",
+    "updated_at": "2016-07-23T12:51:50.640Z",
+    "created_at": "2016-07-23T12:51:50.640Z",
+    "str": "From array 18 !",
+    "my_id": "577fde18ea79fe632b75c018",
+    "obj": {
+      "arr_num": [],
+      "arr_str": []
+    },
+    "dat": "2016-07-23T12:51:50.636Z"
+  }
+]
+ */
+
+
+
+/*****************************************************************************************
+* GET /examples/mongoose/39queryarray-slice *
+*****************************************************************************************
+* - slice():  reduces number of array elements */
+module.exports.slice = function (req, res, next) {
+    'use strict';
+
+    query.where('num').equals(33)
+        // .slice('obj.arr_str', 2); //returns first 2 elements
+        // .slice('obj.arr_str', -2); //returns last 2 elements
+        .slice('obj.arr_str', [1, 3]); //returns elements from 1,2 and 3
+
+    console.log(JSON.stringify(query.getQuery(), null, 2));
+    /*
+
+     */
+
+    query.execAsync()
+        .then(function (resultsArr) {
+            console.log('Results: \n' + JSON.stringify(resultsArr, null, 2));
+            res.send('Results: <pre>' + JSON.stringify(resultsArr, null, 2) + '</pre>');
+        })
+        .catch(function (err) {
+            err.status = err.status || 500;
+            errorsLib.onErrorCatch(err, res);
+        });
+
+};
+/*
+array from mongodb:
+"arr_str" : [
+            "marko",
+            "marković",
+            "pero",
+            "perić"
+        ]
+
+sliced array with slice('obj.arr_str', [1, 3]):
+"arr_str": [
+        "marković",
+        "pero",
+        "perić"
+      ]
  */

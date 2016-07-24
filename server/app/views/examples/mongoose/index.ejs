@@ -75,7 +75,7 @@
 		<br><br>
 		<h4>Basic operations</h4>
 
-		<h5>INSERT</h5>
+		<h5>INSERT <span class="alert-danger">(First fill mongodb with these examples in order to use other delete,search, ... examples!)</span></h5>
 		<ol>
 			<li><a href="/examples/mongoose/10operationssave" target="_blank">save(docObj)</a> - save one doc
 			<li><a href="/examples/mongoose/11operationscreate" target="_blank">create([doc1, doc2, ...])</a> - save array of docs
@@ -110,13 +110,14 @@
 		<br><h5>SEARCH QUERY</h5>
 		var query = Model.find(); var promis = query.execAsync();
 		<ul>
-			<li><a href="/examples/mongoose/35queryfind" target="_blank">query object</a> - example how to create query object with Model.find() method
+			<li><a href="/examples/mongoose/35queryobject-byfind" target="_blank">query object -by find()</a> - query object created by find()
+			<li><a href="/examples/mongoose/35queryobject-byconstructor" target="_blank">query object -by Query()</a> - query object created by Query() constructor
 		</ul>
 		<br><b>most used queries:</b> where, limit, skip, sort, count, distinct, regex, select
 		<br><b>search queries:</b> find, findOne, findOneAndRemove, findOneAndUpdate
 		<br><b>logic and comparison queries:</b> and, or, nor, equals, gt, gte, lt, lte, ne
 		<br><b>array queries:</b> all, in, nin, elemMatch, size, slice
-		<br><b>operational queries:</b> delete, update
+		<br><b>operational queries:</b> remove, update
 		<br><b>misc:</b> $where, comment, cursor, exists, hint, merge, setOptions|sort, limit, skip, ...|
 		<ol>
 			<li><a href="/examples/mongoose/36querymostused-common" target="_blank">where, limit, skip, sort, count</a> - common used mongoose queries (used req.query to send parameters)
@@ -129,17 +130,31 @@
 			<li><a href="/examples/mongoose/39queryarray-all" target="_blank">.all('obj.arr_num', [5, 8, 13, 21]</a> - field must be array and must contain all elements from given array
 			<li><a href="/examples/mongoose/39queryarray-in" target="_blank">.in('num', [5, 13, 22, 33])</a> - field must be non-array (String, Number ...etc) and must be contained in given array
 			<li><a href="/examples/mongoose/39queryarray-elemmatch" target="_blank">.elemMatch('obj.arr_str', {$regex: /MARK/ig})</a> - field must be array and one of elements must match criteria
-
-
-
-			<li><a href="/examples/mongoose/36querydolwhere" target="_blank">$where(JSfunction)</a> - JS function or expression passed to mongodb query (must return true or false)
+			<li><a href="/examples/mongoose/39queryarray-size" target="_blank">.size('obj.arr_str', 0)</a> - field must be array and must contain given number of elements
+			<li><a href="/examples/mongoose/39queryarray-slice" target="_blank">.slice('obj.arr_str', -2)</a> - reduces number of array elements
+			<li><a href="/examples/mongoose/40queryoper-remove" target="_blank">.remove(criteria)</a> - delete all docs matching query criteria
+			<li><a href="/examples/mongoose/40queryoper-update" target="_blank">.update(criteria, newDoc, options)</a> - update all docs matching query criteria
+			<li><a href="/examples/mongoose/41querymisc-dollarwhere" target="_blank">.$where(JSfunction)</a> - JS function or expression passed to mongodb query (must return true or false)
+			<li><a href="/examples/mongoose/41querymisc-comment" target="_blank">.comment('Some comment!')</a> - add comment
+			<li><a href="/examples/mongoose/41querymisc-cursor-stream" target="_blank">.cursor().on('data', fja).on('end', fja)</a> - use cursor on data stream
+			<li><a href="/examples/mongoose/41querymisc-exists" target="_blank">.exists(path)</a> - returns docs where mongo path exists
+			<li><a href="/examples/mongoose/41querymisc-merge" target="_blank">query.merge(query2)</a> - merge results from query and query2
+			<li><a href="/examples/mongoose/41querymisc-setoptions" target="_blank">.setOptions({}})</a> - sets query options like limit, skip, sort, .... <a href="http://mongoosejs.com/docs/api.html#query_Query-setOptions">all options</a>
 
 		</ol>
 
 
 		<br><br><br><br>
-		<h4>Subdocument</h4>
+		<h4>Methods and statics</h4>
+		Docs:
+		<br><a href="http://mongoosejs.com/docs/2.7.x/docs/methods-statics.html" target="_blank">http://mongoosejs.com/docs/2.7.x/docs/methods-statics.html</a>
+		<br><a href="http://mongoosejs.com/docs/guide.html" target="_blank">http://mongoosejs.com/docs/guide.html</a>
 
+
+		<br><br><br><br>
+		<h4>Cursor() - new API for query stream</h4>
+		<a href="http://thecodebarbarian.com/cursors-in-mongoose-45.html" target="_blank">Read</a> the doc ahttp://mongoosejs.com/docs/guide.htmlbout mongoose cursor.
+		Also <a href="https://strongloop.com/strongblog/whats-new-io-js-beta-streams3/" target="_blank">NodeJS stream</a> explanation.
 
 
 

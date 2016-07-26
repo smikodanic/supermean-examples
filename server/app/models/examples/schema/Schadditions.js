@@ -1,5 +1,5 @@
 /**
- * Schema additions: methods, statics, virtuals, query helpers, middlewares(pree & post)
+ * Schema additions: methods, statics, virtuals, query helpers, middlewares(pree & post), plugins
  * http://mongoosejs.com/docs/2.7.x/docs/methods-statics.html
  * http://mongoosejs.com/docs/guide.html
  * http://mongoosejs.com/docs/2.7.x/docs/virtuals.html
@@ -14,7 +14,7 @@ opts.collection = 'schadditions';
 //schema definition
 var Sch = new Schema({
     name: {type: String, required: true},
-    age: Number
+    age: Number //or 'number'
 }, opts);
 
 
@@ -56,6 +56,11 @@ Sch.post('save', post_schadditions.post2);
 Sch.pre('save', pre_schadditions.startTimer);
 Sch.post('save', post_schadditions.stopTimer);
 
+
+
+/* =-=-=-=-= PLUGINS =-=-=-=-= */
+var plug_commonfields = require('./_plugins/plug_commonfields');
+Sch.plugin(plug_commonfields.idWithAutoIncrement);
 
 
 module.exports = Sch;

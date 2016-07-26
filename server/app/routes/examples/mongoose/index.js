@@ -55,6 +55,7 @@ router.get('/07schadditions-methods-findyounger', require('./handlers/07schaddit
 router.get('/07schadditions-statics-findyounger', require('./handlers/07schadditions').statics_findyounger);
 router.get('/07schadditions-query-filterbyname', require('./handlers/07schadditions').query_filterbyname);
 router.get('/07schadditions-prepost-save', require('./handlers/07schadditions').prepost_save);
+router.get('/07schadditions-plugin', require('./handlers/07schadditions').plugin);
 
 
 

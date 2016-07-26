@@ -186,9 +186,9 @@ CONSOLE:
 
 
 /*****************************************************************************************
-* GET /examples/mongoose/07schadditions-pre-save *
+* GET /examples/mongoose/07schadditions-prepost-save *
 *****************************************************************************************
-*  */
+* Schema pre and post middlewares will be executed. */
 module.exports.prepost_save = function (req, res, next) {
     'use strict';
 
@@ -208,10 +208,39 @@ module.exports.prepost_save = function (req, res, next) {
             errorsLib.onErrorCatch(err, res);
         });
 
-
 };
 /*
 CONSOLE:
-
+=== 1st pre middleware ===  New inserted name will be: Pre & Post Save Middleware test
+=== 2nd pre middleware === /age path is OK!
+=== 1st post middleware ===  New inserted name is: Pre & Post Save Middleware test
+=== 2nd post middleware ===
  */
+
+
+/*****************************************************************************************
+* GET /examples/mongoose/07schadditions-plugin *
+*****************************************************************************************
+* Plugins will be executed:
+*     a) plugin which will automatically add 'id' path with autoincrement. */
+module.exports.plugin = function (req, res, next) {
+    'use strict';
+
+    var docNew = {
+        name: 'Plugin test',
+        age: 1
+    };
+    //Notice: Path 'id' will be added automatically by plugin 'plug_commonfields..idWithAutoIncrement'
+
+    schadditions.savePlugAsync(docNew)
+        .then(function (insDoc) {
+            console.log('Inserted: \n' + JSON.stringify(insDoc, null, 2));
+            res.send('Inserted: <pre>' + JSON.stringify(insDoc, null, 2) + '</pre>');
+        })
+        .catch(function (err) {
+            err.status = err.status || 500;
+            errorsLib.onErrorCatch(err, res);
+        });
+
+};
 

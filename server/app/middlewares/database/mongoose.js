@@ -51,4 +51,11 @@ module.exports = function (config) {
         });
     });
 
+
+    //global plugin
+    //mongoose.plugin(function (schema. pluginOpts) {
+    //  schema.add({datum: Date});
+    //});
+
+
 };

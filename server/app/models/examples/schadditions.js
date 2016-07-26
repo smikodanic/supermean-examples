@@ -76,3 +76,15 @@ module.exports.savePrePostTestAsync = function (docNew) {
     var doc = new schadditions(docNew);
     return doc.saveAsync();
 };
+
+
+
+/////// PLUGINS
+
+//save doc (plugins will be activated)
+module.exports.savePlugAsync = function (docNew) {
+    'use strict';
+    console.log('NewDoc: ' + docNew);
+    var doc = new schadditions(docNew);
+    return doc.saveAsync();
+};

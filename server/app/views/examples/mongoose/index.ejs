@@ -3,6 +3,11 @@
 
 <head>
 	<%- include('../_partials/01head'); -%>
+	<style>
+		h4 {
+			text-decoration: underline;
+		}
+	</style>
 </head>
 
 <body>
@@ -117,9 +122,33 @@
 				<br>post('remove', fjaMD) - two post middlewares. Notice that next() in post is not used and will generate error.
 		</ol>
 
+		<br>
+		<h5>E) Plugins</h5>
+		Docs:
+		<a href="http://mongoosejs.com/docs/2.7.x/docs/plugins.html" target="_blank">http://mongoosejs.com/docs/2.7.x/docs/plugins.html</a> and
+		<a href="http://mongoosejs.com/docs/plugins.html" target="_blank">http://mongoosejs.com/docs/plugins.html</a>
+		<br>GLOBAL PLUGIN: Place it inside server/app/middlewares/database/mongoose.js - mongoose.plugin();
+		<br>SCHEMA SPECIFIC PLUGIN: Try <a href="/examples/mongoose/07schadditions-plugin" target="_blank">plugin example</a> which automatically adds path 'id' with autoincrement.
+			Refresh browser several times to see how 'id' will autoicrement.
 
 
 
+		<br><br>
+		<h4>Validation</h4>
+		There are several ways of validation:
+		<br>a) built-in validators: enum, min, max, ...
+		<br>b) using schema path property 'validate': {validate: [function, regex, array], ... }
+		<br>c) async validation with validate() method: schema.path('name').validate(cb)
+		<br>d) using 'pre' middleware
+		<br>Docs:
+		<a href="http://mongoosejs.com/docs/2.7.x/docs/validation.html" target="_blank">http://mongoosejs.com/docs/2.7.x/docs/validation.html</a> and
+		<a href="http://mongoosejs.com/docs/validation.html" target="_blank">http://mongoosejs.com/docs/validation.html</a>
+		<ol>
+			<li><a href="/examples/mongoose/08schvalid-builtin" target="_blank">built-in validators</a> - usage of enum, min, max,
+			<li><a href="/examples/mongoose/08schvalid-inpath" target="_blank">in path validator</a> - usage of 'validate' property
+			<li><a href="/examples/mongoose/08schvalid-async" target="_blank">async validation</a> - usage of validate() method
+			<li><a href="/examples/mongoose/08schvalid-pre" target="_blank">pre middleware</a> - validator in pre middleware
+		</ol>
 
 
 		<br><br>
@@ -192,6 +221,7 @@
 			<li><a href="/examples/mongoose/41querymisc-setoptions" target="_blank">.setOptions({}})</a> - sets query options like limit, skip, sort, .... <a href="http://mongoosejs.com/docs/api.html#query_Query-setOptions">all options</a>
 
 		</ol>
+
 
 
 

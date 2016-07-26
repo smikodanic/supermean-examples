@@ -1,5 +1,5 @@
 /**
- * Model for testing basic operations: insert, delete, update & query
+ * Schema for testing basic operations: insert, delete, update & query
  * http://mongoosejs.com/docs/documents.html
  * http://mongoosejs.com/docs/api.html#document-js
  *

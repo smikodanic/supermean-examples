@@ -49,8 +49,15 @@ router.get('/02schemaoptions-getset', require('./handlers/02schemaoptions-getset
 router.get('/02schemaoptions-index', require('./handlers/02schemaoptions-index'));
 router.get('/02schemaoptions-validate', require('./handlers/02schemaoptions-validate'));
 
-//**** mongoose middlewares: pre, post
-router.get('/05middlewareprepost', require('./handlers/05middlewareprepost'));
+//**** schema additions: methods, statics, query helpers, middlewares, virtuals
+router.get('/07schadditions-insertdocs', require('./handlers/07schadditions').insertdocs);
+router.get('/07schadditions-methods-findyounger', require('./handlers/07schadditions').methods_findyounger);
+router.get('/07schadditions-statics-findyounger', require('./handlers/07schadditions').statics_findyounger);
+router.get('/07schadditions-query-filterbyname', require('./handlers/07schadditions').query_filterbyname);
+router.get('/07schadditions-prepost-save', require('./handlers/07schadditions').prepost_save);
+
+
+
 
 //**** operations: insert, delete, update, search
 router.get('/10operationssave', require('./handlers/10operationssave'));

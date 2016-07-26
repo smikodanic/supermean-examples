@@ -31,8 +31,8 @@
 
 
 		<br><br>
-		<h4>Mongoose Schema</h4>
-		<h5>-- Schema Types</h5>
+		<h4>Mongoose Schema (Model)</h4>
+		<h5>Schema Types</h5>
 		Doc: <a href="http://mongoosejs.com/docs/schematypes.html" target="_blank">http://mongoosejs.com/docs/schematypes.html</a>
 		<ol>
 			<li><a href="/examples/mongoose/01schematypes-string-callback" target="_blank">String (callback version)</a> - Options: lowercase, uppercase, trim, match, enum
@@ -46,7 +46,7 @@
 		</ol>
 
 		<br>
-		<h5>-- Field options in schema definition</h5>
+		<h5>Field options in schema definition</h5>
 		<ol>
 			<li><a href="/examples/mongoose/02schemaoptions-default" target="_blank">default</a> - set default value
 			<li><a href="/examples/mongoose/02schemaoptions-required" target="_blank">required</a> - {required: [bool], ...} validation rule
@@ -62,30 +62,68 @@
 			<li><a href="/examples/mongoose/02schemaoptions-ref" target="_blank">ref</a> - {ref: [string], ... }
 		</ol>
 
-		<br>
-		<h5>-- Methods and statics</h5>
-		Docs:
-		<br><a href="http://mongoosejs.com/docs/2.7.x/docs/methods-statics.html" target="_blank">http://mongoosejs.com/docs/2.7.x/docs/methods-statics.html</a>
-		<br><a href="http://mongoosejs.com/docs/guide.html" target="_blank">http://mongoosejs.com/docs/guide.html</a>
+		<blockquote><i>NOTICE:</i>
+			<br>To rebuild indexes defined in mongoose schema:
+				<br>a) set autoIndex: true
+				<br>b) >db.schemaoptionsindex.dropIndexes()
+				<br>c) restart nodejs app</blockquote>
 
 
-		<br>
-		<h5>-- Virtuals</h5>
-		Doc: <a href="http://mongoosejs.com/docs/2.7.x/docs/virtuals.html" target="_blank">http://mongoosejs.com/docs/2.7.x/docs/virtuals.html</a>
+
 
 
 		<br><br>
-		<h4>Mongoose Middleware</h4>
-		Middlewares can be pre() and post() and are applied on doc methods: init, validate, save, remove.
+		<h4>Schema Additions</h4>
+		Additions: methods, statics, query helpers, virtuals, middlewares, ...
+		<br>Before tests <a href="/examples/mongoose/07schadditions-insertdocs" target="_blank">fill the database collection</a>.
+
+		<br>
+		<h5>A) Methods and statics</h5>
+		Instance and static methods.
+		<br>Docs:
+		<a href="http://mongoosejs.com/docs/2.7.x/docs/methods-statics.html" target="_blank">http://mongoosejs.com/docs/2.7.x/docs/methods-statics.html</a>
+		and <a href="http://mongoosejs.com/docs/guide.html" target="_blank">http://mongoosejs.com/docs/guide.html</a>
+		<ol>
+			<li><a href="/examples/mongoose/07schadditions-methods-findyounger" target="_blank">methods</a>
+				<br>- instance method <b>findYounger()</b> -- var myModel = mongoose.model('modelName', MySchema); var instanceDoc = new myModel(doc); var query = instanceDoc.findYounger('modelName').where({name: /ana/ig});
+			<li><a href="/examples/mongoose/07schadditions-statics-findyounger?age=13" target="_blank">statics</a>
+				<br>- static method  <b>findYoungerStat()</b> -- var myModel = mongoose.model('modelName', MySchema); var query = myModel.findYoungerStat(maxAge);
+		</ol>
+
+		<br>
+		<h5>B) Query helpers</h5>
+		Used in a query chain like: query.where().myCustom().
+		<br> Doc: <a href="http://mongoosejs.com/docs/guide.html" target="_blank">http://mongoosejs.com/docs/guide.html</a>
+		<ol>
+			<li><a href="/examples/mongoose/07schadditions-query-filterbyname?namePart=an" target="_blank">query helpers</a> - chainable query method <b>filterByName()</b> -- var myModel = mongoose.model('modelName', MySchema); var query = myModel.where().and().filterByName(namePart);
+		</ol>
+
+		<br>
+		<h5>C) Virtuals</h5>
+		Defining virtual paths which doesn't exist in mongo database but only in export.
+		<br>Doc: <a href="http://mongoosejs.com/docs/2.7.x/docs/virtuals.html" target="_blank">http://mongoosejs.com/docs/2.7.x/docs/virtuals.html</a>
+		<ol>
+			View any of previous examples:
+			<li><a href="/examples/mongoose/07schadditions-methods-findyounger" target="_blank">virtuals</a> - virtual path <b>"virt_name_age"</b>
+		</ol>
+
+		<br>
+		<h5>D) Mongoose Middleware</h5>
+		Middlewares can be pre() or post() and are applied on doc methods: init, validate, save, remove.
 		<br>Also on query methods like: count, find, findOne, findOneAndRemove, findOneAndUpdate, update
 		<ol>
-			<li><a href="/examples/mongoose/05middlewareprepost" target="_blank">pre('save', fjaMD)</a> - pre middleware
-			<li><a href="/examples/mongoose/05middlewareprepost" target="_blank">post('remove', fjaMD)</a> - post middleware
+			<li><a href="/examples/mongoose/07schadditions-prepost-save" target="_blank">pre() and post()</a>
+				<br>pre('save', fjaMD) - two pre save middlewares executing one after other. Second is called by next()
+				<br>post('remove', fjaMD) - two post middlewares. Notice that next() in post is not used and will generate error.
 		</ol>
 
 
+
+
+
+
 		<br><br>
-		<h4>Basic operations</h4>
+		<h4>Operations</h4>
 
 		<h5>INSERT <span class="alert-danger">(First fill mongodb with these examples in order to use other delete,search, ... examples!)</span></h5>
 		<ol>

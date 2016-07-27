@@ -47,7 +47,7 @@ router.get('/02schemaoptions-select', require('./handlers/02schemaoptions-select
 router.get('/02schemaoptions-select2', require('./handlers/02schemaoptions-select2'));
 router.get('/02schemaoptions-getset', require('./handlers/02schemaoptions-getset'));
 router.get('/02schemaoptions-index', require('./handlers/02schemaoptions-index'));
-router.get('/02schemaoptions-validate', require('./handlers/02schemaoptions-validate'));
+
 
 //**** schema additions: methods, statics, query helpers, middlewares, virtuals
 router.get('/07schadditions-insertdocs', require('./handlers/07schadditions').insertdocs);
@@ -58,6 +58,16 @@ router.get('/07schadditions-prepost-save', require('./handlers/07schadditions').
 router.get('/07schadditions-plugin', require('./handlers/07schadditions').plugin);
 
 
+//**** validation
+router.get('/08validation-builtin', require('./handlers/08validation').builtin);
+router.get('/08validation-validateproperty', require('./handlers/08validation').validateproperty);
+router.get('/08validation-validatemethod', require('./handlers/08validation').validatemethod);
+
+
+//**** indeks
+router.get('/09indeks-listall', require('./handlers/09indeks').listall);
+router.get('/09indeks-removeall', require('./handlers/09indeks').removeall);
+router.get('/09indeks-buildind', require('./handlers/09indeks').buildind);
 
 
 //**** operations: insert, delete, update, search
@@ -102,7 +112,8 @@ router.get('/41querymisc-exists', require('./handlers/41querymisc').exists);
 router.get('/41querymisc-merge', require('./handlers/41querymisc').merge);
 router.get('/41querymisc-setoptions', require('./handlers/41querymisc').setOptions);
 
-
+//**** multiple db connections
+router.get('/60multiconn-dynamic', require('./handlers/60multiconn').dynamic);
 
 
 

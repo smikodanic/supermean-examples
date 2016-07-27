@@ -58,6 +58,7 @@ module.exports = function (req, res, next) {
             console.log('TYPEERROR CATCH: ' + err); //will not work because of ReferenceError
 
         }).catch(ReferenceError, function (err) { //catch with ReferenceError filter
+            console.log('RefErr' + JSON.stringify(err, null, 2)); //{}
             console.log(err); //[ReferenceError: Hello]
             console.log('REFERENCEERROR CATCH: ' + err.message + ' | ' + err.fileName + ' | ' + err.lineNumber); //REFERENCEERROR CATCH: Hello | undefined | undefined
 

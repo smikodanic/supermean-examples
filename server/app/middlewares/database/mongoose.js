@@ -6,7 +6,7 @@ var mongoose = require('mongoose');
 var chalk = require('chalk');
 
 
-module.exports = function (config) {
+module.exports = function (dbUri) {
     'use strict';
 
     //options
@@ -20,39 +20,44 @@ module.exports = function (config) {
 
 
     //establish mongoose connection
-    mongoose.connect(config.env.database.mongodb.uri, options);
+    var db = mongoose.createConnection(dbUri, options);
+    // var db = mongoose.connect(dbUri, options);
+
+    //create dbShort which will be outputed to console
+    var dbShort = db.host + ':' + db.port + '/' + db.name;
 
 
-    //events
-    mongoose.connection.on('error', function (err) {
-        console.error(chalk.blue('Mongoose error: ' + err));
+
+    //events mongoose.connection or db
+    db.on('error', function (err) {
+        console.error(chalk.blue(dbShort, err));
     });
 
-    mongoose.connection.on('connected', function () {
-        console.info(chalk.blue('Mongoose connection: connected'));
+    db.on('connected', function () {
+        console.info(chalk.blue(dbShort, '-connected'));
     });
 
-    mongoose.connection.on('open', function () {
-        console.info(chalk.blue('Mongoose connection: open'));
+    db.on('open', function () {
+        console.info(chalk.blue(dbShort, '-connection open'));
     });
 
-    mongoose.connection.on('reconnected', function () {
-        console.info(chalk.blue('Mongoose connection: reconnected'));
+    db.on('reconnected', function () {
+        console.info(chalk.blue(dbShort, '-connection reconnected'));
     });
 
-    mongoose.connection.on('disconnected', function () {
-        console.warn(chalk.blue('Mongoose connection: disconnected'));
+    db.on('disconnected', function () {
+        console.warn(chalk.blue(dbShort, '-connection disconnected'));
     });
 
     process.on('SIGINT', function () {
         mongoose.disconnect(function () {
-            console.log(chalk.blue('Mongoose disconnected on app termination by SIGINT'));
+            console.log(chalk.blue(dbShort, '-disconnected on app termination by SIGINT'));
             process.exit(0);
         });
     });
 
 
-    //global plugin
+    //default plugin
     //mongoose.plugin(function (schema. pluginOpts) {
     //  schema.add({datum: Date});
     //});

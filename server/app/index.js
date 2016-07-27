@@ -36,9 +36,12 @@ require('./middlewares/bodyParser.js')(app);
 require('./middlewares/connect_flash.js')(app);
 
 //database middlewares
-if (config.env.database.mongodb.isActive) {
-    require('./middlewares/database/' + config.env.database.mongodb.driver + '.js')(config);
-}
+config.env.database.mongodb.forEach(function (mongoDB) {
+    if (mongoDB.isActive) {
+        require('./middlewares/database/' + mongoDB.driver + '.js')(mongoDB.uri);
+    }
+});
+
 
 // require('./middlewares/virtual_host.js')(app, config);
 

@@ -63,7 +63,7 @@
 			<li><a href="/examples/mongoose/02schemaoptions-index" target="_blank">index</a> - {index: {name: 'someIndName'}} or just {index: [bool], ...} creates index
 			<li><a href="/examples/mongoose/02schemaoptions-index" target="_blank">unique index</a> - index: { unique: true } or just {unique: true} creates unique index
 			<li><a href="/examples/mongoose/02schemaoptions-sparse" target="_blank">sparse index</a> - {sparse: [bool], ... } creates sparse index, e.g. index which takes only docs wich contains specific field
-			<li><a href="/examples/mongoose/02schemaoptions-validate" target="_blank">validate</a> - {validate: [function, regex, array], ... } validate entry for specific path
+			<li><a href="/examples/mongoose/08validation-validateproperty" target="_blank">validate</a> - {validate: [function, regex, array], ... } validate entry for specific path
 			<li><a href="/examples/mongoose/02schemaoptions-ref" target="_blank">ref</a> - {ref: [string], ... }
 		</ol>
 
@@ -139,15 +139,30 @@
 		<br>a) built-in validators: enum, min, max, ...
 		<br>b) using schema path property 'validate': {validate: [function, regex, array], ... }
 		<br>c) async validation with validate() method: schema.path('name').validate(cb)
-		<br>d) using 'pre' middleware
+		<br>d) using 'pre' middleware [Not recommended because will not generate ValidationError as a), b) and c) will.]
 		<br>Docs:
 		<a href="http://mongoosejs.com/docs/2.7.x/docs/validation.html" target="_blank">http://mongoosejs.com/docs/2.7.x/docs/validation.html</a> and
 		<a href="http://mongoosejs.com/docs/validation.html" target="_blank">http://mongoosejs.com/docs/validation.html</a>
 		<ol>
-			<li><a href="/examples/mongoose/08schvalid-builtin" target="_blank">built-in validators</a> - usage of enum, min, max,
-			<li><a href="/examples/mongoose/08schvalid-inpath" target="_blank">in path validator</a> - usage of 'validate' property
-			<li><a href="/examples/mongoose/08schvalid-async" target="_blank">async validation</a> - usage of validate() method
-			<li><a href="/examples/mongoose/08schvalid-pre" target="_blank">pre middleware</a> - validator in pre middleware
+			<li><a href="/examples/mongoose/08validation-builtin" target="_blank">built-in validators</a> - usage of enum, min, max. Generates ValidatorError or CastError.
+			<li><a href="/examples/mongoose/08validation-validateproperty" target="_blank">validate property</a> - usage of 'validate' property. Generates ValidatorError.
+			<li><a href="/examples/mongoose/08validation-validatemethod" target="_blank">validate method</a> - usage of validate(pathValue) method
+		</ol>
+
+
+		<br><br>
+		<h4>Indexes</h4>
+		Indexes are defined through ensureIndex every time a model is compiled for a certain connection / database.
+		This means that indexes will only be ensured once during the lifetime of your app.
+		<br>There are two ways for creating indexes: property 'index' and schema.index() method.
+		<br>Set <b>autoIndex: true</b> to build schema on NodeJS app restart.
+		<br>Docs:
+		<a href="http://mongoosejs.com/docs/2.7.x/docs/indexes.html" target="_blank">http://mongoosejs.com/docs/2.7.x/docs/indexes.html</a> and
+		<a href="https://docs.mongodb.com/manual/indexes/" target="_blank">https://docs.mongodb.com/manual/indexes/</a>
+		<ol>
+			<li><a href="/examples/mongoose/09indeks-listall" target="_blank">list all</a> - list all indexes build after NodeJS restart -- modelName.collection.getIndexesAsync()
+			<li><a href="/examples/mongoose/09indeks-removeall" target="_blank">remove all</a> - remove all indexes -- modelName.collection.dropIndexesAsync()
+			<li><a href="/examples/mongoose/09indeks-buildind" target="_blank">build indexes</a> - create indexes from current schema when express route is started -- modelName.ensureIndexes() . This will also create collection if doesnt exist.
 		</ol>
 
 
@@ -229,6 +244,23 @@
 		<h4>Cursor() - new API for query stream</h4>
 		<a href="http://thecodebarbarian.com/cursors-in-mongoose-45.html" target="_blank">Read</a> the doc ahttp://mongoosejs.com/docs/guide.htmlbout mongoose cursor.
 		Also <a href="https://strongloop.com/strongblog/whats-new-io-js-beta-streams3/" target="_blank">NodeJS stream</a> explanation.
+
+
+
+
+
+		<br><br>
+		<h4>Multiple db connections</h4>
+		Sometimes an app will use several databases. In that case we need to ensure multiple database connection with one mongoose instance.
+		<br>Instead of <b>mongoose.connect()</b> use <b>var conn = mongoose.createConnection();</b>
+		<br>Docs:
+		<a href="http://mongoosejs.com/docs/2.7.x/docs/indexes.html" target="_blank">http://mongoosejs.com/docs/2.7.x/docs/indexes.html</a> and
+		<a href="https://docs.mongodb.com/manual/indexes/" target="_blank">https://docs.mongodb.com/manual/indexes/</a>
+		<ol>
+			<li><a href="/examples/mongoose/60multiconn-dynamic" target="_blank">dynamic connection</a> - set db connection on the fly when express route is called
+			<li><a href="/examples/mongoose/60multiconn-merge" target="_blank">multiple connection</a> - get results from 2 databases and return merged data
+		</ol>
+
 
 
 

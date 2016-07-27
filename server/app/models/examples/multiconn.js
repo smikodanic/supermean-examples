@@ -7,22 +7,34 @@
 const BPromise = require('bluebird');
 const mongoose = BPromise.promisifyAll(require('mongoose'));
 
-//define model based on default db connection (server/app/middlewares/database/mongoose.js)
-var Multiconn = require('./schema/Multiconn');
-var multiconnModel = mongoose.model('multiconnMD', Multiconn);
+//common schema which wil be used in both models
+var MulticonnSchema = require('./schema/Multiconn');
+
+//default model
+var multiconn1Model = mongoose.model('multiconn1MD', MulticonnSchema);
 
 
-//define model based on second db connection
-var db2 = mongoose.createConnection('mongodb://supermean_user:somePass@localhost:27017/supermeandev2');
-var multiconnModel2 = db2.model('multiconnMD2', Multiconn);
+//another connection
+require('rootpath')();
+var config = require('server/app/config');
+var dbConfig = config.env.database.mongodb[1];
+var mongooseDriver = require('server/app/middlewares/database/mongooseDriver');
+
 
 
 //save a doc
 module.exports.saveDocAsync = function (docNew) {
     'use strict';
-    var doc = new multiconnModel(docNew);
+
+    //establish another connection and define another model
+    var db = mongooseDriver.konekt(dbConfig);
+    var multiconn2Model = db.model('multiconn2MD', MulticonnSchema);
+
+    //Saving doc into default db and after that in another db.
+    //Collection name is same in both databases and is defined in schema.
+    var doc = new multiconn1Model(docNew);
     return doc.saveAsync().then(function () {
-        var doc2 = new multiconnModel2(docNew);
+        var doc2 = new multiconn2Model(docNew);
         return doc2.saveAsync(docNew);
     });
 

@@ -35,22 +35,20 @@ require('./middlewares/favicon.js')(app);
 require('./middlewares/bodyParser.js')(app);
 require('./middlewares/connect_flash.js')(app);
 
-//database middlewares
-config.env.database.mongodb.forEach(function (mongoDB) {
-    if (mongoDB.isActive) {
-        require('./middlewares/database/' + mongoDB.driver + '.js')(mongoDB.uri);
-    }
-});
 
+//=-=-= database middlewares
+var dbConfig = config.env.database.mongodb[0]; //default database
+require('./middlewares/database/' + dbConfig.driver + 'Driver.js').konektDefault(dbConfig);
 
+//=-=-= virtual host
 // require('./middlewares/virtual_host.js')(app, config);
 
-//*** static file middlewares --- path.join() creates absolute path from root
+//=-=-= static file middlewares --- path.join() creates absolute path from root
 app.use('/assets', express.static(path.join(__dirname, '/assets')));
 app.use('/bower', express.static(path.join(__dirname, '/../../bower_components')));
 app.use('/client', express.static(path.join(__dirname, '/../../client')));
 
-//*** auth middlewares
+//=-=-= auth middlewares
 require('./middlewares/auth/passport.js')(app); //passport common middleware
 require('./middlewares/auth/passport_local.js')();
 require('./middlewares/auth/passport_facebook.js')();

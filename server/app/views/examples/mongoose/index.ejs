@@ -150,6 +150,8 @@
 		</ol>
 
 
+
+
 		<br><br>
 		<h4>Indexes</h4>
 		Indexes are defined through ensureIndex every time a model is compiled for a certain connection / database.
@@ -164,6 +166,8 @@
 			<li><a href="/examples/mongoose/09indeks-removeall" target="_blank">remove all</a> - remove all indexes -- modelName.collection.dropIndexesAsync()
 			<li><a href="/examples/mongoose/09indeks-buildind" target="_blank">build indexes</a> - create indexes from current schema when express route is started -- modelName.ensureIndexes() . This will also create collection if doesnt exist.
 		</ol>
+
+
 
 
 		<br><br>
@@ -240,7 +244,7 @@
 
 
 
-		<br><br><br><br>
+		<br><br>
 		<h4>Cursor() - new API for query stream</h4>
 		<a href="http://thecodebarbarian.com/cursors-in-mongoose-45.html" target="_blank">Read</a> the doc ahttp://mongoosejs.com/docs/guide.htmlbout mongoose cursor.
 		Also <a href="https://strongloop.com/strongblog/whats-new-io-js-beta-streams3/" target="_blank">NodeJS stream</a> explanation.
@@ -272,7 +276,19 @@
 			<li><a href="/examples/mongoose/65subdocs-savenew" target="_blank">subdocs saving</a> - save document with embeded child doc. If subdoc is inserted in array a an unique <b>_id </b>will be assigned.
 			<li><a href="/examples/mongoose/65subdocs-removesubdoc" target="_blank">remove subdoc</a> - finding subdoc by id and removing it from doc
 			<li><a href="/examples/mongoose/65subdocs-findparent" target="_blank">find parent</a> - finding parent doc by quering subdoc's property (field) -- <b>subdocsModel.find().elemMatch('arr', {'name': {$regex: /PET/ig}});</b>
+		</ol>
 
+
+
+		<br><br>
+		<h4>Population</h4>
+		Like JOIN in mySQL, population is the process of automatically replacing the specified paths in the document with document(s) from other collection(s).
+		Docs:
+		<a href="http://mongoosejs.com/docs/populate.html" target="_blank">http://mongoosejs.com/docs/populate.html</a> and
+		<a href="http://mongoosejs.com/docs/2.7.x/docs/populate.html" target="_blank">http://mongoosejs.com/docs/2.7.x/docs/populate.html</a>
+		<ol>
+			<li><a href="/examples/mongoose/70refs-save" target="_blank">save ref document</a> - saving refrenced document
+		</ol>
 
 
 

@@ -114,6 +114,7 @@ router.get('/41querymisc-setoptions', require('./handlers/41querymisc').setOptio
 
 //**** multiple db connections
 router.get('/60multiconn-dynamic', require('./handlers/60multiconn').dynamic);
+router.get('/60multiconn-merge', require('./handlers/60multiconn').merge);
 
 
 

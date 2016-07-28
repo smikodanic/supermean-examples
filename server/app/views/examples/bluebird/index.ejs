@@ -65,6 +65,8 @@
 			<li><a href="/examples/bluebird/08jointhenables" target="_blank">BPromise.join with thenables</a> - Join exmple with thenables.
 			<li><a href="/examples/bluebird/09try" target="_blank">BPromise.try</a> - <b>BPromise.try(handler)</b> An error is thrown from handler function and catched with catch().
 			<li><a href="/examples/bluebird/09try-spread" target="_blank">BPromise.try with spread()</a> - <b>BPromise.try(handler).spread()</b> - array is returned and used in spread()
+			<li><a href="/examples/bluebird/09try-next" target="_blank">BPromise.try with next()</a> - catch error sent from next(err) in previous handler
+					<br><b>router.get('/09try-next', function (req, res, next) {var err = new Error('greska'); next(err);}, function (req, res, next) { BPromise.try(function () {if (err) throw err})...catch();};</b>
 			<li><a href="/examples/bluebird/10method" target="_blank">BPromise.method</a> - <b>BPromise.method(fja)().then().catch()</b> Wraps fja function which return a value or throws an error and create promise.Converts ordinary function 'fja' into thenable function.
 			<li><a href="/examples/bluebird/11resolve" target="_blank">BPromise.resolve(value)</a> - <b>BPromise.resolve(x).then().catch()</b> Returns a promise which has fulfilled state with resolved value 'x'.
 			<li><a href="/examples/bluebird/11resolvepromise" target="_blank">BPromise.resolve(promise)</a> - Resolved value is a value from another promise.

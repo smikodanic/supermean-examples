@@ -50,6 +50,7 @@ router.get('/08jointhen', require('./handlers/08join_then'));
 router.get('/08jointhenables', require('./handlers/08join_thenables'));
 router.get('/09try', require('./handlers/09try'));
 router.get('/09try-spread', require('./handlers/09try_spread'));
+router.get('/09try-next', function (req, res, next) {var err = new Error('greska'); next(err);}, require('./handlers/09try_next'));
 router.get('/10method', require('./handlers/10method'));
 router.get('/11resolve', require('./handlers/11resolve'));
 router.get('/11resolvepromise', require('./handlers/11resolvepromise'));

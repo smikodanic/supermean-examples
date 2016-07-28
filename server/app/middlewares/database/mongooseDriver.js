@@ -2,8 +2,9 @@
  * Mongoose middleware for mongoDB
  */
 
-var mongoose = require('mongoose');
-var chalk = require('chalk');
+const mongoose = require('mongoose');
+const chalk = require('chalk');
+const util = require('util');
 
 //options
 var timeout = 30 * 1000; //30 seconds
@@ -21,7 +22,7 @@ var onEvent = function (conn) {
 
     //events mongoose.connection or db
     conn.on('error', function (err) {
-        console.error(chalk.blue(dbShort, err));
+        console.error(chalk.blue(dbShort, err, 'readyState:' + conn.readyState));
     });
 
     conn.on('connected', function () {
@@ -54,7 +55,8 @@ module.exports.konektDefault = function (dbConfig) {
     'use strict';
 
     //establish mongoose connection (use 'mongoose.connection')
-    mongoose.connect(dbConfig.uri, connOpts);
+    var db = mongoose.connect(dbConfig.uri, connOpts);
+    // console.log(util.inspect(db));
 
     //show events
     onEvent(mongoose.connection);
@@ -68,6 +70,7 @@ module.exports.konekt = function (dbConfig) {
 
     //establish mongoose connection (use 'db')
     var db = mongoose.createConnection(dbConfig.uri, connOpts);
+    // console.log(util.inspect(db));
 
     //show events
     onEvent(db);

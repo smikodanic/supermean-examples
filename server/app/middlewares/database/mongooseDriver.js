@@ -18,6 +18,8 @@ var connOpts = {
 
 //events
 var onEvent = function (conn) {
+    'use strict';
+
     var dbShort = conn.host + ':' + conn.port + '/' + conn.name;
 
     //events mongoose.connection or db
@@ -54,6 +56,8 @@ var onEvent = function (conn) {
 module.exports.konektDefault = function (dbConfig) {
     'use strict';
 
+    if (!dbConfig.isActive) return;
+
     //establish mongoose connection (use 'mongoose.connection')
     var db = mongoose.connect(dbConfig.uri, connOpts);
     // console.log(util.inspect(db));
@@ -74,6 +78,9 @@ module.exports.konekt = function (dbConfig) {
 
     //show events
     onEvent(db);
+
+    //close connection if db is not active
+    if (!dbConfig.isActive) db.close();
 
     return db;
 };

@@ -22,7 +22,7 @@ var config = {
             },
             {
                 name: 'supermeandev2',
-                isActive: true,
+                isActive: false,
                 uri: process.env.MONGODB_URI_2 || 'mongodb://supermean_user:somePass@127.0.0.1:27017/supermeandev2',
                 driver: 'mongoose'
             }

@@ -262,6 +262,18 @@
 		</ol>
 
 
+		<br><br>
+		<h4>Embeded documents - Subdocs</h4>
+		Each subdoc gets its own _id. Prevents schema repetition.
+		Docs:
+		<a href="http://mongoosejs.com/docs/subdocs.html" target="_blank">http://mongoosejs.com/docs/subdocs.html</a> and
+		<a href="http://mongoosejs.com/docs/2.7.x/docs/embedded-documents.html" target="_blank">http://mongoosejs.com/docs/2.7.x/docs/embedded-documents.html</a>
+		<ol>
+			<li><a href="/examples/mongoose/65subdocs-savenew" target="_blank">subdocs saving</a> - save document with embeded child doc. If subdoc is inserted in array a an unique <b>_id </b>will be assigned.
+			<li><a href="/examples/mongoose/65subdocs-removesubdoc" target="_blank">remove subdoc</a> - finding subdoc by id and removing it from doc
+			<li><a href="/examples/mongoose/65subdocs-findparent" target="_blank">find parent</a> - finding parent doc by quering subdoc's property (field) -- <b>subdocsModel.find().elemMatch('arr', {'name': {$regex: /PET/ig}});</b>
+
+
 
 
 

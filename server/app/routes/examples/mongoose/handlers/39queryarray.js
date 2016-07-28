@@ -101,7 +101,8 @@ CONSOLE:
 /*****************************************************************************************
 * GET /examples/mongoose/39queryarray-in *
 *****************************************************************************************
-* - in(): field value (String, Number, ...) must be in given array  */
+* - in(): field value (String, Number, ...) must be in given array
+* - elemMatch() is simmilar to in() but elemMatch() must have conditions and in() must have values */
 module.exports.in = function (req, res, next) {
     'use strict';
 
@@ -142,7 +143,8 @@ module.exports.in = function (req, res, next) {
 /*****************************************************************************************
 * GET /examples/mongoose/39queryarray-elemmatch *
 *****************************************************************************************
-* - elemMatch():  field must be array and one of elements must match criteria */
+* - elemMatch():  field must be array and one of elements must match criteria
+* - elemMatch() is simmilar to in() but elemMatch() must have conditions and in() must have values */
 module.exports.elemMatch = function (req, res, next) {
     'use strict';
 

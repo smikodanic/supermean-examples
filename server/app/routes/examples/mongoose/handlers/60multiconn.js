@@ -6,8 +6,6 @@ require('rootpath')();
 var multiconnModel = require('server/app/models/examples/multiconn');
 var errorsLib = require('server/app/lib/errorsLib');
 
-const BPromise = require('bluebird');
-
 
 /*****************************************************************************************
 * GET /examples/mongoose/60multiconn-dynamic *
@@ -82,9 +80,9 @@ module.exports.merge = function (req, res, next) {
 {
   "supermeandev": [
     {
-      "_id": "5799fdc79c75bc983a26a8f2",
-      "updated_at": "2016-07-28T12:42:47.875Z",
-      "created_at": "2016-07-28T12:42:47.875Z",
+      "_id": "579a025829e1ae473eea7a74",
+      "updated_at": "2016-07-28T13:02:16.136Z",
+      "created_at": "2016-07-28T13:02:16.136Z",
       "str": "Nesto",
       "num": 23,
       "__v": 0

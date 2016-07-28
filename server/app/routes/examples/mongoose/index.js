@@ -116,6 +116,10 @@ router.get('/41querymisc-setoptions', require('./handlers/41querymisc').setOptio
 router.get('/60multiconn-dynamic', require('./handlers/60multiconn').dynamic);
 router.get('/60multiconn-merge', require('./handlers/60multiconn').merge);
 
+//**** subdocs (embeded docs)
+router.get('/65subdocs-savenew', require('./handlers/65subdocs').savenew);
+router.get('/65subdocs-removesubdoc', require('./handlers/65subdocs').removesubdoc);
+router.get('/65subdocs-findparent', require('./handlers/65subdocs').findparent);
 
 
 

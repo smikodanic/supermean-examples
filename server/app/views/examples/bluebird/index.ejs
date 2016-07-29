@@ -61,13 +61,13 @@
 		<i style="color:orange">var BPromise = require('bluebird');</i>
 		<ol>
 			<li><a href="/examples/bluebird/08join" target="_blank">BPromise.join</a> - <b>BPromise.join(promisA, promisB, functionC, function (a, b, c) { ... })</b> Execute promisA, promisB and functionC and send results as parameters a,b,c into 'join' handler function.
-			<li><a href="/examples/bluebird/08jointhen" target="_blank">BPromise.join followed by then</a> - <b>BPromise.join().then()</b> Join followed by then.
+			<li><a href="/examples/bluebird/08jointhen" target="_blank">BPromise.join followed by then and catch</a> - <b>BPromise.join().then().catch()</b> In join() all promises must be fulfilled. If one of the promises is rejected then catch() is executed instread of then()..
 			<li><a href="/examples/bluebird/08jointhenables" target="_blank">BPromise.join with thenables</a> - Join exmple with thenables.
-			<li><a href="/examples/bluebird/09try" target="_blank">BPromise.try</a> - <b>BPromise.try(handler)</b> An error is thrown from handler function and catched with catch().
+			<li><a href="/examples/bluebird/09try" target="_blank">BPromise.try</a> - <b>BPromise.try(handler)</b> An error is thrown from handler function and catched with catch(). Handler must be function, not promise.
 			<li><a href="/examples/bluebird/09try-spread" target="_blank">BPromise.try with spread()</a> - <b>BPromise.try(handler).spread()</b> - array is returned and used in spread()
 			<li><a href="/examples/bluebird/09try-next" target="_blank">BPromise.try with next()</a> - catch error sent from next(err) in previous handler
 					<br><b>router.get('/09try-next', function (req, res, next) {var err = new Error('greska'); next(err);}, function (req, res, next) { BPromise.try(function () {if (err) throw err})...catch();};</b>
-			<li><a href="/examples/bluebird/10method" target="_blank">BPromise.method</a> - <b>BPromise.method(fja)().then().catch()</b> Wraps fja function which return a value or throws an error and create promise.Converts ordinary function 'fja' into thenable function.
+			<li><a href="/examples/bluebird/10method" target="_blank">BPromise.method</a> - <b>BPromise.method(fja)().then().catch()</b> Wraps fja function which return a value or throws an error and create promise. Converts ordinary function 'fja' into thenable function.
 			<li><a href="/examples/bluebird/11resolve" target="_blank">BPromise.resolve(value)</a> - <b>BPromise.resolve(x).then().catch()</b> Returns a promise which has fulfilled state with resolved value 'x'.
 			<li><a href="/examples/bluebird/11resolvepromise" target="_blank">BPromise.resolve(promise)</a> - Resolved value is a value from another promise.
 			<li><a href="/examples/bluebird/11resolvefunction" target="_blank">BPromise.resolve(funct)</a> - <b>BPromise.resolve(fja()).then().catch()</b> Create promise whoose resolved value is returned or thrown from function 'fja'
@@ -97,7 +97,7 @@
 			<li><a href="/examples/bluebird/21reduce" target="_blank">BPromise.reduce</a> - <b>var arr = [promisA, promisB, valueA, valueB]; BPromise.reduce(arr, function (accumulator, elemArr, indexArr, lengthArr) { ... }).then(function (accumulatedVal) { ... })</b> Reduces array to accumulatedVal.
 			<li><a href="/examples/bluebird/22filter" target="_blank">BPromise.filter</a> - <b>var arr = [promisA, promisB, valueA, valueB]; BPromise.filter(arr, function (elemArr, indexArr, lengthArr) { ... }).then(function (valArr) { ... })</b> Filter array values.
 			<li><a href="/examples/bluebird/22filterspread" target="_blank">BPromise.filter with spread</a> - <b>var arr = [promisA, promisB, valueA, valueB]; BPromise.filter(arr, function (elemArr, indexArr, lengthArr) { ... }).spread(function (val1, val2) { ... })</b> Usage of spread() instead of then().
-			<li><a href="/examples/bluebird/23each" target="_blank">BPromise.each</a> - <b>BPromise.filter([promisA, promisB, valueA, valueB], function (elemArr, indexArr, lengthArr) { ... }).then(function (valArr) { ... })</b> Iterate each promise and returns to then() not changed array of values. If any promise in the input array is rejected the returned promise is rejected as well.
+			<li><a href="/examples/bluebird/23each" target="_blank">BPromise.each</a> - <b>BPromise.each([promisA, promisB, valueA, valueB], function (elemArr, indexArr, lengthArr) { ... }).then(function (valArr) { ... })</b> Iterate each promise and returns to then() not changed array of values. If any promise in the input array is rejected the returned promise is rejected as well.
 			<li><a href="/examples/bluebird/24mapseries" target="_blank">BPromise.mapseries</a> - <b>BPromise.mapSeries([promisA, promisB, valueA, valueB], function (elemArr, indexArr, lengthArr) { ... }).then(function (valArr) { ... })</b> Iterate each promise and returns to then() not changed array of values. If any promise in the input array is rejected the returned promise is rejected as well.
 			<li><a href="/examples/bluebird/25race" target="_blank">BPromise.race</a> - <b>BPromise.race([promisA, promisB, valueA, valueB]).then(function (val) { ... })</b> W
 		</ol>

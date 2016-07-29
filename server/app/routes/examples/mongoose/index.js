@@ -121,6 +121,16 @@ router.get('/65subdocs-savenew', require('./handlers/65subdocs').savenew);
 router.get('/65subdocs-removesubdoc', require('./handlers/65subdocs').removesubdoc);
 router.get('/65subdocs-findparent', require('./handlers/65subdocs').findparent);
 
+//**** refs & population
+router.get('/70refs-savepersonthenstory', require('./handlers/70refs').savepersonthenstory);
+router.get('/70refs-savestorythenperson', require('./handlers/70refs').savestorythenperson);
+router.get('/70refs-getperson', require('./handlers/70refs').getperson);
+router.get('/70refs-deleteperson', require('./handlers/70refs').deleteperson);
+router.get('/70refs-deletestory', require('./handlers/70refs').deletestory);
+
+
+
+
 
 
 module.exports = router;

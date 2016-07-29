@@ -283,11 +283,22 @@
 		<br><br>
 		<h4>Population</h4>
 		Like JOIN in mySQL, population is the process of automatically replacing the specified paths in the document with document(s) from other collection(s).
-		Docs:
+		<br>Docs:
 		<a href="http://mongoosejs.com/docs/populate.html" target="_blank">http://mongoosejs.com/docs/populate.html</a> and
 		<a href="http://mongoosejs.com/docs/2.7.x/docs/populate.html" target="_blank">http://mongoosejs.com/docs/2.7.x/docs/populate.html</a>
 		<ol>
-			<li><a href="/examples/mongoose/70refs-save" target="_blank">save ref document</a> - saving refrenced document
+			<li><a href="/examples/mongoose/70refs-savepersonthenstory" target="_blank">save ref document (parallel)</a> - Save person then story. Two savings will be executed in parralel.
+			<li><a href="/examples/mongoose/70refs-savestorythenperson" target="_blank">save ref document (serial)</a> - Save story then person. Two savings will be executed serially, one after another.
+			<li><a href="/examples/mongoose/70refs-getperson?person_id=3" target="_blank">find doc with populated data</a>
+				- Get person with populated story data. Pay attention on 'ref' schema property which enable populate() method.
+				In order to get data, first fill the database with <a href="/examples/mongoose/70refs-savestorythenperson" target="_blank">2nd example</a>.
+			<li><a href="/examples/mongoose/70refs-deleteperson?person_id=1" target="_blank">ref deletion - person</a>
+				- Delete linked documents. For example if person doc is deleted all refrenced story docs should be deleted too.
+				<a href="/examples/mongoose/70refs-savepersonthenstory" target="_blank">Fill db</a> before deletion.
+				Used .pre('remove', fn) as middleware.
+			<li><a href="/examples/mongoose/70refs-deletestory?story_id=" target="_blank">ref deletion - story</a>
+				- When story doc is removed it should be also removed from person.stories[] array.
+				<a href="/examples/mongoose/70refs-savestorythenperson" target="_blank">Fill db</a> before deletion.
 		</ol>
 
 

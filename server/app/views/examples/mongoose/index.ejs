@@ -139,14 +139,18 @@
 		<br>a) built-in validators: enum, min, max, ...
 		<br>b) using schema path property 'validate': {validate: [function, regex, array], ... }
 		<br>c) async validation with validate() method: schema.path('name').validate(cb)
-		<br>d) using 'pre' middleware [Not recommended because will not generate ValidationError as a), b) and c) will.]
+		<br>d) sync validation with validateSync() method: schema.path('name').validate(cb)
+		<br>e) using 'pre' middleware [Not recommended because will not generate ValidationError as a), b) and c) will.]
 		<br>Docs:
 		<a href="http://mongoosejs.com/docs/2.7.x/docs/validation.html" target="_blank">http://mongoosejs.com/docs/2.7.x/docs/validation.html</a> and
 		<a href="http://mongoosejs.com/docs/validation.html" target="_blank">http://mongoosejs.com/docs/validation.html</a>
 		<ol>
 			<li><a href="/examples/mongoose/08validation-builtin" target="_blank">built-in validators</a> - usage of enum, min, max. Generates ValidatorError or CastError.
 			<li><a href="/examples/mongoose/08validation-validateproperty" target="_blank">validate property</a> - usage of 'validate' property. Generates ValidatorError.
-			<li><a href="/examples/mongoose/08validation-validatemethod" target="_blank">validate method</a> - usage of validate(pathValue) method
+			<li><a href="/examples/mongoose/08validation-validate-schema" target="_blank">validate async on schema</a> - async validation inside schema definition (applied every time when schema is applied)
+					<br><b>Sch.path('str_meth').validate(valid_text.lettersOnly, '{PATH}:{VALUE}---Input must not contain number.');</b>
+			<li><a href="/examples/mongoose/08validation-validate-doc" target="_blank">validate async on document</a> - usage of validate(pathValue) method on document
+			<li><a href="/examples/mongoose/08validation-validatesync-doc" target="_blank">validate sync on document</a> - usage of validateSync(pathValue) method on document
 		</ol>
 
 
@@ -192,7 +196,7 @@
 		<ol>
 			<li><a href="/examples/mongoose/20operationsupdate" target="_blank">update(queryObj, docNew, updOpts)</a> - update multiple documents <b>Model.updateAsync(queryObj, docNew, updOpts).then(countObj => { ... });</b>
 			<li><a href="/examples/mongoose/21operationsfindidupdate" target="_blank">findByIdAndUpdate(id, docNew, updOpts)</a> - updating one doc found by id
-			<li><a href="/examples/mongoose/22operationsfindoneupdate" target="_blank">findOneAndUpdate(queryObj, docNew, updOpts)</a> - removing first doc found by queryObj
+			<li><a href="/examples/mongoose/22operationsfindoneupdate" target="_blank">findOneAndUpdate(queryObj, docNew, updOpts)</a> - updating first doc found by queryObj
 		</ol>
 
 		<br><h5>SEARCH</h5>

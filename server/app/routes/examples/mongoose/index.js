@@ -61,7 +61,8 @@ router.get('/07schadditions-plugin', require('./handlers/07schadditions').plugin
 //**** validation
 router.get('/08validation-builtin', require('./handlers/08validation').builtin);
 router.get('/08validation-validateproperty', require('./handlers/08validation').validateproperty);
-router.get('/08validation-validatemethod', require('./handlers/08validation').validatemethod);
+router.get('/08validation-validate-schema', require('./handlers/08validation').validate_on_schema);
+router.get('/08validation-validate-doc', require('./handlers/08validation').validate_on_doc);
 
 
 //**** indeks

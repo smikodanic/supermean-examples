@@ -191,10 +191,10 @@ module.exports.validateproperty = function (req, res, next) {
 
 
 /*****************************************************************************************
-* GET /examples/mongoose/08validation-validatemethod *
+* GET /examples/mongoose/08validation-validate-schema *
 *****************************************************************************************
-* Property validate in schema path definition. */
-module.exports.validatemethod = function (req, res, next) {
+* Async validation inside schema -- Sch.path('path').validate(fn, 'message'). */
+module.exports.validate_on_schema = function (req, res, next) {
     'use strict';
 
     //valid input
@@ -220,6 +220,8 @@ module.exports.validatemethod = function (req, res, next) {
 
 };
 /*
+CONSOLE:
+
 {
   "message": "validationMD validation failed",
   "name": "ValidationError",
@@ -240,3 +242,28 @@ module.exports.validatemethod = function (req, res, next) {
   }
 }
  */
+
+
+
+/*****************************************************************************************
+* GET /examples/mongoose/08validation-validate-doc *
+*****************************************************************************************
+* Async validation on doc -- doc.validate(fn, 'message').
+* This example is finding one doc and (last updated_at) and
+* try to update 'str_meth' with an invalid value '9as'. The value is invalid because it contain number 9. */
+module.exports.validate_on_doc = function (req, res, next) {
+    'use strict';
+
+
+    validationModel.validateDoc()
+        .then(function (insDoc) {
+            console.log('Updated: \n' + JSON.stringify(insDoc, null, 2));
+            res.send('Updated: <pre>' + JSON.stringify(insDoc, null, 2) + '</pre>');
+        })
+        .catch(function (err) {
+            console.log(JSON.stringify(err, null, 2));
+            err.status = err.status || 500;
+            errorsLib.onErrorCatch(err, res);
+        });
+
+};

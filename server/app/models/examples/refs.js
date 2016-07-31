@@ -22,6 +22,18 @@ var refsStoryModel = mongoose.model('refsStoryMD', RefsStorySchema);
 /* *** ACTIONS *** */
 
 /*
+ * Empty collections 'refs_story' & 'refs_person' before examples.
+ */
+module.exports.emptyCollections = function () {
+    'use strict';
+    var promis1 = refsPersonModel.removeAsync();
+    var promis2 = refsStoryModel.removeAsync();
+
+    return BPromise.all([promis1, promis2]).timeout(3000, 'Operation timed out!!!');
+};
+
+
+/*
  * Save person then story.
  * Both savings can be performed in parallel
  */
@@ -114,6 +126,32 @@ module.exports.getPerson = function (person_id) {
     }
      */
 
+
+    return query;
+};
+
+
+
+/*
+ * Usage of execPopulate() e.g. execPopulateAsync()
+ */
+module.exports.execPopulatePerson = function (person_id) {
+    'use strict';
+
+    var query = refsPersonModel.findOne().sort('-updated_at').execAsync()
+        .then(function (doc) {
+            console.log('OriginalDOC: ' + JSON.stringify(doc.inspect(), null, 2));
+
+            doc.populate({
+                path: 'stories',
+                match: {},
+                select: 'title -_id', //remove _id
+                options: {limit: 1} //limit results in stories array
+            });
+
+
+            return doc.execPopulate().catch((err) => {throw err});
+        });
 
     return query;
 };

@@ -12,6 +12,30 @@ Bpromise.promisifyAll(require('mongoose'));
 
 
 /****************************************************
+* GET /examples/mongoose/70refs-emptycollections *
+*****************************************************
+* Empty collections to startr examples from reseted values. */
+module.exports.emptycollections = function (req, res, next) {
+    'use strict';
+
+    refs_model.emptyCollections()
+        .spread(function (personDel, storyDel) {
+            console.log('Emptied refs_person: \n' + JSON.stringify(personDel, null, 2));
+            console.log('Emptied refs_story: \n' + JSON.stringify(storyDel, null, 2));
+            res.send(
+                'Emptied refs_person: <pre>' + JSON.stringify(personDel, null, 2) + '</pre>' +
+                'Emptied refs_story: <pre>' + JSON.stringify(storyDel, null, 2) + '</pre>'
+            );
+        })
+        .catch(function (err) {
+            err.status = err.status || 500;
+            errorsLib.onErrorCatch(err, res);
+        });
+};
+
+
+
+/****************************************************
 * GET /examples/mongoose/70refs-savepersonthenstory *
 *****************************************************
 * Save person then story. Two savings will be executed in parralel. */
@@ -178,6 +202,54 @@ module.exports.getperson = function (req, res, next) {
   ]
 }
  */
+
+
+/*****************************************************
+* GET /examples/mongoose/70refs-execpopulate*
+******************************************************
+* Usage of execPopulate(). */
+module.exports.execpopulate = function (req, res, next) {
+    'use strict';
+
+    refs_model.execPopulatePerson()
+        .then(function (resultPerson) {
+            console.log('Result with populated data: \n' + JSON.stringify(resultPerson, null, 2));
+            res.send('Result with populated data: <pre>' + JSON.stringify(resultPerson, null, 2) + '</pre>');
+        })
+        .catch(function (err) {
+            err.status = err.status || 500;
+            errorsLib.onErrorCatch(err, res);
+        });
+
+};
+/*
+{
+    "_id": 3,
+    "updated_at": "2016-07-31T12:08:02.404Z",
+    "created_at": "2016-07-31T12:08:02.404Z",
+    "name": "Ivanko",
+    "age": 23,
+    "__v": 0,
+    "stories": [
+      {
+        "title": "Ivan story bla bla"
+      }
+    ]
+}
+ */
+
+
+
+
+
+
+
+
+
+
+
+//////////////////////////// DELETE LINKED DOCS /////////////////////////////////////////////////////////////////////////
+
 
 
 /*****************************************************

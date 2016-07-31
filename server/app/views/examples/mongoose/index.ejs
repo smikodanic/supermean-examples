@@ -289,6 +289,7 @@
 		<br><br>
 		<h4>Population</h4>
 		Like JOIN in mySQL, population is the process of automatically replacing the specified paths in the document with document(s) from other collection(s).
+		<br><a href="/examples/mongoose/70refs-emptycollections" target="_blank">Empty collections</a> before start examples.
 		<br>Docs:
 		<a href="http://mongoosejs.com/docs/populate.html" target="_blank">http://mongoosejs.com/docs/populate.html</a> and
 		<a href="http://mongoosejs.com/docs/2.7.x/docs/populate.html" target="_blank">http://mongoosejs.com/docs/2.7.x/docs/populate.html</a>
@@ -298,6 +299,15 @@
 			<li><a href="/examples/mongoose/70refs-getperson?person_id=3" target="_blank">find doc with populated data</a>
 				- Get person with populated story data. Pay attention on 'ref' schema property which enable populate() method.
 				In order to get data, first fill the database with <a href="/examples/mongoose/70refs-savestorythenperson" target="_blank">2nd example</a>.
+			<li><a href="/examples/mongoose/70refs-execpopulate" target="_blank">doc.execPopulate()</a> - Execute populate() and returns promise. (Bluebird's .execPopulateAsync() will not work)
+				In order to get data, first fill the database with <a href="/examples/mongoose/70refs-savestorythenperson" target="_blank">2nd example</a>.
+		</ol>
+
+
+		<br><br>
+		<h4>Deletion of linked docs</h4>
+		<a href="/examples/mongoose/70refs-emptycollections" target="_blank">Empty collections</a> before start examples.
+		<ol>
 			<li><a href="/examples/mongoose/70refs-deleteperson?person_id=1" target="_blank">ref deletion - person</a>
 				- Delete linked documents. For example if person doc is deleted all refrenced story docs should be deleted too.
 				<a href="/examples/mongoose/70refs-savepersonthenstory" target="_blank">Fill db</a> before deletion.
@@ -309,7 +319,53 @@
 
 
 
+		<br><br>
+		<h4>Mongoose Errors</h4>
+		Validation errors are contained in object <b>err.errors</b>:
+		<pre>
+{
+  "message": "validationMD validation failed",
+  "name": "ValidationError",
+  "errors": {
+    "str_meth": {
+      "message": "Path str_meth:some valid string is intentionally invalid!",
+      "name": "ValidatorError",
+      "properties": {
+        "path": "str_meth",
+        "message": "Path {PATH}:{VALUE} is intentionally invalid!",
+        "type": "user defined",
+        "value": "some valid string"
+      },
+      "kind": "user defined",
+      "path": "str_meth",
+      "value": "some valid string"
+    }
+  }
+}
+		</pre>
 
+		Doc: <a href="http://mongoosejs.com/docs/2.7.x/docs/errors.html" target="_blank">http://mongoosejs.com/docs/2.7.x/docs/errors.html</a> and
+
+
+
+		<br><br>
+		<h4>Misc</h4>
+		<a href="/examples/mongoose/80misc-fillcollection" target="_blank">Fill collection 'misc'</a> before execution the tests.
+		<ol>
+			<li><a href="/examples/mongoose/80misc-lean" target="_blank">query....lean()</a> - find()<b>.lean()</b> returns plain mongodb doc, not mongoose doc with attached properties and methods
+			<li><a href="/examples/mongoose/80misc-tojson" target="_blank">doc.toJSON</a> - convert object to JSON. The return value of this method is used in calls to JSON.stringify(doc).
+			<li><a href="/examples/mongoose/80misc-toobject" target="_blank">doc.toObject</a> - Converts mongoose doc into a plain javascript object, ready for storage in MongoDB.
+			<li><a href="/examples/mongoose/80misc-tostring" target="_blank">doc.toString</a> - convert mongoose doc to string. console.log() helper
+		</ol>
+
+
+
+		<br><br>
+		<h4>MongoDB NodeJS driver</h4>
+		Doc: <a href="https://mongodb.github.io/node-mongodb-native/" target="_blank">https://mongodb.github.io/node-mongodb-native/</a> and
+		<br> To access nodejs native driver from mongoose use: <b>MyModel.collection</b>
+		<ol>
+			<li><a href="/examples/mongoose/90native-find" target="_blank">find</a>
 
 	</main>
 

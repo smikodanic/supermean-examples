@@ -125,15 +125,26 @@ router.get('/65subdocs-removesubdoc', require('./handlers/65subdocs').removesubd
 router.get('/65subdocs-findparent', require('./handlers/65subdocs').findparent);
 
 //**** refs & population
+router.get('/70refs-emptycollections', require('./handlers/70refs').emptycollections);
 router.get('/70refs-savepersonthenstory', require('./handlers/70refs').savepersonthenstory);
 router.get('/70refs-savestorythenperson', require('./handlers/70refs').savestorythenperson);
 router.get('/70refs-getperson', require('./handlers/70refs').getperson);
+router.get('/70refs-execpopulate', require('./handlers/70refs').execpopulate);
+
+//*** delete linked docs
 router.get('/70refs-deleteperson', require('./handlers/70refs').deleteperson);
 router.get('/70refs-deletestory', require('./handlers/70refs').deletestory);
 
 
+//*** misc
+router.get('/80misc-fillcollection', require('./handlers/80misc').fillcollection);
+router.get('/80misc-lean', require('./handlers/80misc').lean);
+router.get('/80misc-tojson', require('./handlers/80misc').tojson);
+router.get('/80misc-toobject', require('./handlers/80misc').toobject);
+router.get('/80misc-tostring', require('./handlers/80misc').tostring);
 
-
+//*** native mongodb nodejs driver
+router.get('/90native-find', require('./handlers/90native').find);
 
 
 module.exports = router;

@@ -256,6 +256,97 @@ module.exports.validate_on_doc = function (req, res, next) {
 
 
     validationModel.validateDoc()
+        .then(function (updDoc) {
+            console.log('Updated: \n' + JSON.stringify(updDoc, null, 2));
+            res.send('Updated: <pre>' + JSON.stringify(updDoc, null, 2) + '</pre>');
+        })
+        .catch(function (err) {
+            console.log(JSON.stringify(err, null, 2));
+            err.status = err.status || 500;
+            errorsLib.onErrorCatch(err, res);
+        });
+
+};
+/*
+CONSOLE:
+{
+  "message": "validationMD validation failed",
+  "name": "ValidationError",
+  "errors": {
+    "str_meth": {
+      "message": "str_meth:9as---Input must not contain number.",
+      "name": "ValidatorError",
+      "properties": {
+        "type": "user defined",
+        "message": "{PATH}:{VALUE}---Input must not contain number.",
+        "path": "str_meth",
+        "value": "9as"
+      },
+      "kind": "user defined",
+      "path": "str_meth",
+      "value": "9as"
+    }
+  }
+}
+*/
+
+
+
+/*****************************************************************************************
+* GET /examples/mongoose/08validation-validate-doc *
+*****************************************************************************************
+* Async validation on doc -- doc.validate(fn, 'message').
+* This example is finding one doc and (last updated_at) and
+* try to update 'str_meth' with an invalid value '9as'. The value is invalid because it contain number 9. */
+module.exports.validatesync_on_doc = function (req, res, next) {
+    'use strict';
+
+
+    validationModel.validateSyncDoc()
+        .then(function (updDoc) {
+            console.log('Updated: \n' + JSON.stringify(updDoc, null, 2));
+            res.send('Updated: <pre>' + JSON.stringify(updDoc, null, 2) + '</pre>');
+        })
+        .catch(function (err) {
+            console.log(JSON.stringify(err, null, 2));
+            err.status = err.status || 500;
+            errorsLib.onErrorCatch(err, res);
+        });
+
+};
+/*
+{
+  "message": "validationMD validation failed",
+  "name": "ValidationError",
+  "errors": {
+    "str_meth": {
+      "message": "str_meth:123ab---Input must not contain number.",
+      "name": "ValidatorError",
+      "properties": {
+        "type": "user defined",
+        "message": "{PATH}:{VALUE}---Input must not contain number.",
+        "path": "str_meth",
+        "value": "123ab"
+      },
+      "kind": "user defined",
+      "path": "str_meth",
+      "value": "123ab"
+    }
+  }
+}
+ */
+
+
+
+/*****************************************************************************************
+* GET /examples/mongoose/08validation-invalidate *
+*****************************************************************************************
+* make doc's path an invalid: doc.invalidate(path, errorMsg, value, [kind]) */
+module.exports.makeinvalid = function (req, res, next) {
+    'use strict';
+
+
+    validationModel.makeInvalid()
         .then(function (insDoc) {
             console.log('Updated: \n' + JSON.stringify(insDoc, null, 2));
             res.send('Updated: <pre>' + JSON.stringify(insDoc, null, 2) + '</pre>');
@@ -267,3 +358,24 @@ module.exports.validate_on_doc = function (req, res, next) {
         });
 
 };
+/*
+{
+  "message": "validationMD validation failed",
+  "name": "ValidationError",
+  "errors": {
+    "str_meth": {
+      "message": "Path str_meth:some valid string is intentionally invalid!",
+      "name": "ValidatorError",
+      "properties": {
+        "path": "str_meth",
+        "message": "Path {PATH}:{VALUE} is intentionally invalid!",
+        "type": "user defined",
+        "value": "some valid string"
+      },
+      "kind": "user defined",
+      "path": "str_meth",
+      "value": "some valid string"
+    }
+  }
+}
+ */

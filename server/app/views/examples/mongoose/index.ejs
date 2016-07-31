@@ -135,7 +135,9 @@
 
 		<br><br>
 		<h4>Validation</h4>
-		There are several ways of validation:
+		Validation must be defined inside schema and is executed on doc.save(). On doc.update() schema validators are not executed automatically, so
+		doc.validate() or doc.validateSync() must be applied before updating.
+		<br>There are several ways of validation:
 		<br>a) built-in validators: enum, min, max, ...
 		<br>b) using schema path property 'validate': {validate: [function, regex, array], ... }
 		<br>c) async validation with validate() method: schema.path('name').validate(cb)
@@ -147,10 +149,10 @@
 		<ol>
 			<li><a href="/examples/mongoose/08validation-builtin" target="_blank">built-in validators</a> - usage of enum, min, max. Generates ValidatorError or CastError.
 			<li><a href="/examples/mongoose/08validation-validateproperty" target="_blank">validate property</a> - usage of 'validate' property. Generates ValidatorError.
-			<li><a href="/examples/mongoose/08validation-validate-schema" target="_blank">validate async on schema</a> - async validation inside schema definition (applied every time when schema is applied)
-					<br><b>Sch.path('str_meth').validate(valid_text.lettersOnly, '{PATH}:{VALUE}---Input must not contain number.');</b>
-			<li><a href="/examples/mongoose/08validation-validate-doc" target="_blank">validate async on document</a> - usage of validate(pathValue) method on document
-			<li><a href="/examples/mongoose/08validation-validatesync-doc" target="_blank">validate sync on document</a> - usage of validateSync(pathValue) method on document
+			<li><a href="/examples/mongoose/08validation-validate-schema" target="_blank">validate async on schema</a> - async validation on save() <br><b>Sch.path('str_meth').validate(valid_text.lettersOnly, '{PATH}:{VALUE}---Input must not contain number.');</b>
+			<li><a href="/examples/mongoose/08validation-validate-doc" target="_blank">validate async on document</a> - usage of validate(pathValue) method on document -- <b>doc.validateAsync().then(...)</b>
+			<li><a href="/examples/mongoose/08validation-validatesync-doc" target="_blank">validate sync on document</a> - usage of validateSync(pathValue) method on document -- <b>var validationErr = doc.validateSync();</b>
+			<li><a href="/examples/mongoose/08validation-makeinvalid" target="_blank">invalidate path</a> - mark path as invalid -- <b>doc.invalidate(path, errorMsg, value, [kind])</b>
 		</ol>
 
 

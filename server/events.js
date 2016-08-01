@@ -1,10 +1,15 @@
 /**
- * Event listener for HTTP server "error" event.
+ * Server events
  */
 
 var chalk = require('chalk');
 
-module.exports = function (port) {
+
+
+/**
+ * Event listener for HTTP server "error" event.
+ */
+module.exports.onError = function (port) {
     'use strict';
 
     //onError callback function for server.on('error', onError);
@@ -35,4 +40,25 @@ module.exports = function (port) {
     };
 
     return onError;
+};
+
+
+
+/**
+ * Event listener for HTTP server "listening" event.
+ */
+module.exports.onListening = function (server) {
+    'use strict';
+
+    //onError callback function for server.on('listening', onListening);
+    var onListening = function () {
+        var addr = server.address();
+        var bind = typeof addr === 'string'
+            ? 'pipe ' + addr
+            : 'port ' + addr.port;
+
+        console.log('Listening on ' + bind);
+    };
+
+    return onListening;
 };

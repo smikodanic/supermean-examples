@@ -7,7 +7,7 @@ var config = require('../../../config');
 var express = require('express');
 var router = express.Router();
 var passport = require('passport');
-
+var chalk = require('chalk');
 
 /***** COMMON MIDDLEWARES ***/
 
@@ -135,9 +135,9 @@ router.get('/google/return', passport.authenticate('google', {
 endpoint: GET /examples/auth/passport/page1 */
 router.get('/page1', function (req, res, next) {
     'use strict';
-    // console.log("req.cookies: ", req.cookies);
-    // console.log("req.session: ", req.session); //req.session.passport.user
-    // console.log("req.user: ", req.user);
+    console.log(chalk.green("req.sessionID: ", req.sessionID));
+    console.log(chalk.green("req.session: ", JSON.stringify(req.session, null, 2))); //req.session.passport.user
+    console.log(chalk.green("req.user: ", req.user));
     next();
 }, ensureLogin, function (req, res) {
     'use strict';

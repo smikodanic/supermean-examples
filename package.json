@@ -28,6 +28,7 @@
     "rootpath": "^0.1.2",
     "serve-favicon": "^2.2.1",
     "session-file-store": "0.0.3",
+    "session-memory-store": "^0.2.2",
     "vhost": "^3.0.2"
   },
   "devDependencies": {

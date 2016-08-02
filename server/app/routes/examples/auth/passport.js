@@ -217,6 +217,7 @@ router.get('/badlogin', function (req, res) {
 endpoint: GET /examples/auth/passport/logout */
 router.get('/logout', function (req, res) {
     'use strict';
+    req.session.destroy(); //remove session and delete session file on FileStore
     req.logout();
     res.redirect('/examples/auth/passport');
 });

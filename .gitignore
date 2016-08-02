@@ -7,3 +7,6 @@ bower_components
 # SASS cache files
 .gulp-scss-cache/*
 .sass-cache/*
+
+#tmp files
+server/tmp/*

@@ -36,8 +36,7 @@ var storing = new FileStore(fileStoreOptions);
 module.exports = function (app) {
     'use strict';
 
-    /* Serialize function stores data to session: req.session.passport.user .
-     * Also it creates token for session cookie (passport_supermean: s%3AZdP2jZyPhB3PCHp3gmAQ0QuSzwSw-bqz.NHBQfGR%2B9bq9BDUJvOp2Kh1ObKTareex21UAEXRwh7k). */
+    /* Serialize function stores data to session: req.session.passport.user .*/
     passport.serializeUser(function (user, cb) {
         console.log(user);
         cb(null, user);
@@ -52,7 +51,7 @@ module.exports = function (app) {
     app.use(session({
         name: 'passport_supermean', //cookie name
         secret: 'somesecret', //secret which encrypt the browser cookie & server session
-        resave: false,
+        resave: false, //Forces the session to be saved back to the session store, even if the session was never modified during the request.
         saveUninitialized: false, //if 'false' then session cookie is not created unless req.session.username = 'value' is set
         store: storing
     }));

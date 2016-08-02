@@ -19,7 +19,7 @@ var Sch = new Schema({
 
 
 
-/* =-=-=-= METGODS (instance methods) [var instance = new Model(); instance.findYounger();] =.=.=.= */
+/* =-=-=-= METHODS (instance methods) [var instance = new Model(); instance.findYounger();] =.=.=.= */
 var meth_schadditions = require('./_methods/meth_schadditions');
 Sch.methods.findYounger = meth_schadditions.findYounger;
 

@@ -31,6 +31,7 @@ var ensureLogin = require('connect-ensure-login').ensureLoggedIn('badlogin');
 endpoint: GET /examples/auth/passport */
 router.get('/', function (req, res) {
     'use strict';
+
     var vdata = {
         title: 'superMEAN examples - passportJS - Login Form',
         desc: 'Supermean example for passportJS. Login form with Local, Facebook, Twitter and G+ strategies.',
@@ -205,6 +206,11 @@ router.get('/badlogin', function (req, res) {
     };
 
     res.render('examples/auth/passport/badlogin', vdata);
+
+    //remove session and delete session file on FileStore
+    setTimeout(function () {
+        req.session.destroy();
+    }, 1300);
 });
 
 

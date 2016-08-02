@@ -23,44 +23,11 @@
 
 var passport = require('passport');
 var session = require('express-session');
-
-
-////////////  storing session in memory (RAM) (not recommended for production, althought it's express-seesion default)
-var MemoryStore = require('session-memory-store')(session);
-var memoryStoreOptions = {
-    expires: 3 * 60 * 60, //session will expires after 3 hours
-    checkperiod: 10 * 60 //every 10 second check if session is expired
-};
-// var storing = new MemoryStore(memoryStoreOptions);
-
-
-////////////  storing session in file (hard drive)
-var FileStore = require('session-file-store')(session);
-var fileStoreOptions = {
-    path: 'server/tmp/session', //directory where sessions will be stored
-    ttl: 3 * 60 * 60, //session will expires after 3 hours
-    logFn: console.log //logging function
-};
-var storing = new FileStore(fileStoreOptions);
-
-
-
+var storing = require('./session_storage/fileStore')(session);
 
 
 module.exports = function (app) {
     'use strict';
-
-    /* Set req.session.passport .*/
-    passport.serializeUser(function (user, cb) {
-        console.log(user);
-        cb(null, user);
-    });
-
-    /* Get user from req.session.passport */
-    passport.deserializeUser(function (user, cb) {
-        cb(null, user);
-    });
-
 
     //creating session-cookie
     app.use(session({
@@ -72,7 +39,25 @@ module.exports = function (app) {
     }));
 
 
-    app.use(passport.initialize());
-    app.use(passport.session()); // persistent login sessions
+    app.use(passport.initialize()); //initialize passport module
+
+
+    // REQUIRED FOR PERSISTENT LOGIN SESSION
+    //
+    /* passport.session() is shortcut for passport.authenticate('session')
+     * Passport will treat session authentication as yet another authentication strategy, which will compare 'user' sent from html form with req.session.passport.user .
+     * That means 'session' strategy will not use 'user' from database or config.auth.local.username but from req.session.passport.user .*/
+    app.use(passport.session());
+    // app.use(passport.authenticate('session')); // or use this
+
+    /* Set req.session.passport on sucessful login .*/
+    passport.serializeUser(function (user, done) {
+        done(null, user);
+    });
+
+    /* Get user from req.session.passport */
+    passport.deserializeUser(function (user, done) {
+        done(null, user);
+    });
 
 };

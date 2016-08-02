@@ -13,6 +13,7 @@ module.exports = function () {
                 'node_modules/**',
                 'bower_components/**',
                 'client/**',
+                'server/tmp/**',
                 '.gulp/**',
                 '.*/**'
             ],

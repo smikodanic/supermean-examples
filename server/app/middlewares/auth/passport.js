@@ -4,7 +4,21 @@
  * This is required to passport work properly.
  * http://passportjs.org/docs
  *
- * Notice: serialize and deserialize functions must be provided to passport for sessions to work.
+ * Notice:
+ *   Serialize and deserialize functions must be provided to passport for sessions to work.
+ *   Serialize sets req.session.passport, while deserialze take 'user' from req.session.passport .
+ *   req.session:  {
+        "cookie": {
+          "originalMaxAge": null,
+          "expires": null,
+          "httpOnly": true,
+          "path": "/"
+        },
+        "passport": {
+          "user": "someuser"
+        },
+        "__lastAccess": 1470136042719
+    }
  */
 
 var passport = require('passport');
@@ -36,12 +50,13 @@ var storing = new FileStore(fileStoreOptions);
 module.exports = function (app) {
     'use strict';
 
-    /* Serialize function stores data to session: req.session.passport.user .*/
+    /* Set req.session.passport .*/
     passport.serializeUser(function (user, cb) {
         console.log(user);
         cb(null, user);
     });
 
+    /* Get user from req.session.passport */
     passport.deserializeUser(function (user, cb) {
         cb(null, user);
     });

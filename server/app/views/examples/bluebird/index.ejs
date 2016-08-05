@@ -150,7 +150,8 @@
 			<li><a href="/examples/bluebird/57get" target="_blank">.get</a> - <b>get('propName')</b> get object property or array element with <b>get(0)</b> and sends to nect then()
 			<li><a href="/examples/bluebird/58return" target="_blank">.return</a> - return a value to next then()
 			<li><a href="/examples/bluebird/59throw" target="_blank">.throw</a> - throws an error and send to catch()
-			<li><a href="/examples/bluebird/60reflect" target="_blank">.reflect</a> - always return fulfilled promise
+			<li><a href="/examples/bluebird/60reflect" target="_blank">.reflect with pending</a> - reflect() always return fulfilled promise, but befor promise must not be in pending state
+			<li><a href="/examples/bluebird/60reflect-rejected" target="_blank">.reflect with rejected</a> - promis.reflect().then() will execute then() instead of catch() regardless 'rejected' promise state
 		</ol>
 
 

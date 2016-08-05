@@ -16,10 +16,11 @@ module.exports = function (req, res, next) {
     BPromise.resolve('Something resolved!')
         .then(x => {
             console.log(x);
-            return 'Something returned after 5 secs!';
+            return 'Something returned imeditatelly!';
         })
-        .delay(5000)
         .then(y => console.log(y))
+        .delay(5000)
+        .then(() => console.log('Something after 5 secs'))
         .catch((e) => console.error(e.message));
 
 };
@@ -28,5 +29,6 @@ module.exports = function (req, res, next) {
 CONSOLE:
 
 Something resolved!
-Something returned after 5 secs!
+Something returned imeditatelly!
+Something after 5 secs //this is delayed 5 seconds.
  */

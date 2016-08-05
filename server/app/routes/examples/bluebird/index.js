@@ -115,6 +115,7 @@ router.get('/57get', require('./handlers/57get'));
 router.get('/58return', require('./handlers/58return'));
 router.get('/59throw', require('./handlers/59throw'));
 router.get('/60reflect', require('./handlers/60reflect'));
+router.get('/60reflect-rejected', require('./handlers/60reflect_rejected'));
 
 //errors
 router.get('/70operationalerror', require('./handlers/70operationalerror'));

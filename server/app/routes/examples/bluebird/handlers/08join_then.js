@@ -26,7 +26,7 @@ module.exports = function (req, res, next) {
 
     //rejected promises
     // var promisA = BPromise.reject(new Error('ERR from promisA'));
-    // var promisB = BPromise.reject(new Error('ERR from promisB'));
+    var promisB = BPromise.reject(new Error('ERR from promisB'));
 
     BPromise.join(promisA, promisB, fjaC, function (valA, valB, valC) {
         console.log(valC()); //from function C

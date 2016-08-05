@@ -16,9 +16,9 @@ module.exports = function (req, res, next) {
     var promis = BPromise.reject(new Error('My custom err!'));
 
     promis
-        .reflect()
+        .reflect() //makes promis to be fullfilled, and execute then instead of catch
         .then(y => {
-            console.log('then1: ' + y);
+            console.log('then1: ' + JSON.stringify(y, null, 2));
             console.log(JSON.stringify(promis, null, 2));
         })
         .catch(e => console.error('catch1: ' + e.message));
@@ -27,6 +27,13 @@ module.exports = function (req, res, next) {
 
 /*
 CONSOLE:
-
-
+then1: {
+  "_bitField": 16777216,
+  "_settledValueField": {}
+}
+{
+  "isFulfilled": false,
+  "isRejected": true,
+  "rejectionReason": {}
+}
  */

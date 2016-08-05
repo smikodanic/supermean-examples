@@ -15,11 +15,9 @@ module.exports = function (req, res, next) {
 
     var promis = new BPromise((resolv, rejec) => {});
 
-    promis.reflect();
-
     console.log(JSON.stringify(promis, null, 2));
 
-    promis
+    promis.reflect()
         .then(y => {
             console.log('then1: ' + y);
             console.log(JSON.stringify(promis, null, 2));

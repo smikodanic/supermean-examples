@@ -89,7 +89,12 @@ app.use('/examples/mongoose', require('./routes/examples/mongoose/index.js'));
  */
 app.use(function (req, res) {
     'use strict';
-    res.render('clientApp');
+    console.log('REQQ' + req.url);
+    if (req.url.indexOf('/bower') === -1 && req.url.indexOf('/assets') === -1) {
+        res.render('clientApp');
+    } else {
+        res.status(404).send().end();
+    }
 });
 
 

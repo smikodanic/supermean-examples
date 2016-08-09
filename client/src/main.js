@@ -4,8 +4,8 @@ var clientApp = angular.module('clientApp', [
 ]);
 
 //configuration
-require('./config/html5mode.js')(clientApp);
-require('./config/routes.js')(clientApp);
+clientApp.config(require('./config/html5mode.js'));
+clientApp.config(['$routeProvider', require('./config/routes-ng.js')]);
 
 
-require('./controller_view')(clientApp);
+require('./app')(clientApp);

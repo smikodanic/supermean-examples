@@ -8,17 +8,7 @@ gulp.task('browserify', require('./tasks/browserify.js'));
 gulp.task('htmlmin', require('./tasks/htmlmin.js'));
 gulp.task('on-ctrl-c', require('./tasks/on-ctrl-c.js')(gulp));
 gulp.task('server-pm2', require('./tasks/server-pm2.js')(config));
-
-
-var scss = require('gulp-scss');
-gulp.task('scss', function () {
-    'use strict';
-    gulp.src([
-        'client/src/controller_view/**/*.scss'
-    ])
-        .pipe(scss({bundleExec: true}))
-        .pipe(gulp.dest('client/dist/css'));
-});
+gulp.task('scss', require('./tasks/scss-compass.js')(gulp));
 
 
 

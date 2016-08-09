@@ -12,7 +12,7 @@ module.exports = function () {
 
     return browserify('./client/src/main.js')
         .bundle()
-        .pipe(source('clientApp.js'))
+        .pipe(source('main.js'))
         .pipe(header(banner, {pkg: pkg}))
         .pipe(gulp.dest('./client/dist/js/'))
         .on('error', function (e) {

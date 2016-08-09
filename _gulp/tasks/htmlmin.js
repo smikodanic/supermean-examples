@@ -6,7 +6,7 @@ module.exports = function () {
 
     return gulp
         .src([
-            './client/src/controller_view/**/*.html'
+            './client/src/app/**/*.html'
         ])
         .pipe(htmlmin({collapseWhitespace: true}))
         .pipe(gulp.dest('./client/dist/html/'));

@@ -16,8 +16,7 @@ router.get('/', function (req, res, next) {
     var vdata = {
         title: 'Mongoose Examples',
         desc: 'A list of mongoose examples.',
-        keywords: 'supermean, mean stack, mongoose examples',
-        static_files: config.static_files
+        keywords: 'supermean, mean stack, mongoose examples'
     };
 
     res.render('examples/mongoose/index', vdata);

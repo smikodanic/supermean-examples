@@ -14,8 +14,7 @@ module.exports = function (req, res, next) {
     var vdata = {
         title: 'Mongoose Examples - Setup MongoDB',
         desc: 'How to setup mongo database..',
-        keywords: 'supermean, mean stack, mongoose examples, setup mongo db',
-        static_files: config.static_files
+        keywords: 'supermean, mean stack, mongoose examples, setup mongo db'
     };
 
     res.render('examples/mongoose/00setupmongo', vdata);

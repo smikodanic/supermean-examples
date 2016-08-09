@@ -14,8 +14,7 @@ module.exports = function (req, res, next) {
     var vdata = {
         title: 'Mongoose Examples - Setup Mongoose',
         desc: 'How to setup mongoose in SuperMEAN.',
-        keywords: 'supermean, mean stack, mongoose, setup mongoose',
-        static_files: config.static_files
+        keywords: 'supermean, mean stack, mongoose, setup mongoose'
     };
 
     res.render('examples/mongoose/00setupmongoose', vdata);

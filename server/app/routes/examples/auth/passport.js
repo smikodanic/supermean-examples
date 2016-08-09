@@ -35,8 +35,7 @@ router.get('/', function (req, res) {
     var vdata = {
         title: 'superMEAN examples - passportJS - Login Form',
         desc: 'Supermean example for passportJS. Login form with Local, Facebook, Twitter and G+ strategies.',
-        keywords: 'supermean, mean stack, examples, Local, Facebook, Twitter',
-        static_files: config.static_files
+        keywords: 'supermean, mean stack, examples, Local, Facebook, Twitter'
     };
 
     res.render('examples/auth/passport/index', vdata);
@@ -147,7 +146,6 @@ router.get('/page1', function (req, res, next) {
         title: 'Supermean examples - passportJS local authentication',
         desc: 'Supermean example for passportJS.',
         keywords: 'supermean, mean stack, examples',
-        static_files: config.static_files,
         user: req.user.displayName || req.user,
         user_img: (req.user.photos && req.user.photos[0].value) || ''
     };
@@ -165,7 +163,6 @@ router.get('/page2', ensureLogin, function (req, res) {
         title: 'Supermean examples - passportJS local authentication',
         desc: 'Supermean example for passportJS.',
         keywords: 'supermean, mean stack, examples',
-        static_files: config.static_files,
         user: req.user.displayName || req.user,
         user_img: (req.user.photos && req.user.photos[0].value) || ''
     };
@@ -183,7 +180,6 @@ router.get('/page3', ensureLogin, function (req, res) {
         title: 'Supermean examples - passportJS local authentication',
         desc: 'Supermean example for passportJS.',
         keywords: 'supermean, mean stack, examples',
-        static_files: config.static_files,
         user: req.user.displayName || req.user,
         user_img: (req.user.photos && req.user.photos[0].value) || ''
     };
@@ -201,7 +197,6 @@ router.get('/badlogin', function (req, res) {
         title: 'Supermean examples - Bad Login',
         desc: 'Supermean example for passportJS. Bad Login page.',
         keywords: 'supermean, mean stack, examples',
-        static_files: config.static_files,
         errMsg: req.flash('error')
     };
 

@@ -14,8 +14,7 @@ router.get('/', function (req, res) {
     var vdata = {
         title: 'SuperMEAN - MEAN stack',
         desc: 'SuperMEAN stack: mongodb, expressjs, angularjs and nodejs. Automatic routing from server side to client side.',
-        keywords: 'supermean, mean stack, mongodb, expressjs, angularjs, nodejs',
-        static_files: config.static_files
+        keywords: 'supermean, mean stack, mongodb, expressjs, angularjs, nodejs'
     };
     res.render('public/index', vdata);
 });
@@ -27,8 +26,7 @@ router.get('/404', function (req, res) {
     var vdata = {
         title: 'Page Not Found',
         desc: 'Error 404: web page not found.',
-        keywords: '404, not found',
-        static_files: config.static_files
+        keywords: '404, not found'
     };
     res.status(404).render('_errors/error404', vdata);
 });

@@ -14,8 +14,7 @@ router.get('/', function (req, res, next) {
     var vdata = {
         title: 'List of superMEAN examples',
         desc: 'A list of supermean examples.',
-        keywords: 'supermean, mean stack, examples',
-        static_files: config.static_files
+        keywords: 'supermean, mean stack, examples'
     };
 
     res.render('examples/index', vdata);

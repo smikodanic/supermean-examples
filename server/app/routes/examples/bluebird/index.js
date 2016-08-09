@@ -14,8 +14,7 @@ router.get('/', function (req, res, next) {
     var vdata = {
         title: 'Bluebird Examples',
         desc: 'A list of supermean examples - bluebird promise examples.',
-        keywords: 'supermean, mean stack, bluebird examples',
-        static_files: config.static_files
+        keywords: 'supermean, mean stack, bluebird examples'
     };
 
     res.render('examples/bluebird/index', vdata);

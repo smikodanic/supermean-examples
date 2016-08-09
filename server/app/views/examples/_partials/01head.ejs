@@ -18,9 +18,12 @@
 	<meta name="viewport" content="width=device-width, maximum-scale=1.0">
 
 	<!-- css -->
-	<% static_files.head.css.forEach(function (elem) { %>
-	<link rel="stylesheet" type="text/css" href="<%= elem %>"><% }); %>
+	<link rel="stylesheet" type="text/css" href="/bower/bootstrap/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="/bower/bootstrap/dist/css/bootstrap-theme.min.css">
+	<link rel="stylesheet" type="text/css" href="/bower/font-awesome/css/font-awesome.min.css">
+
 
 	<!-- js (jquery must be loaded before bootstrap.min.js) -->
-	<% static_files.head.js.forEach(function (elem) { %>
-	<script src="<%= elem %>"></script><% }); %>
+	<script src="/bower/jquery/dist/jquery.min.js"></script>
+	<script src="/bower/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script src="/bower/angular/angular.min.js"></script>

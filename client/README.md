@@ -1,2 +1,3 @@
-#One Page Application  
-This directory contains client side files for one page app.
+#Single Page Application
+This directory contains Single Page App files.
+View examples.

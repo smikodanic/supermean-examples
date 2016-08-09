@@ -4,7 +4,7 @@
 module.exports = function (clientApp) {
     'use strict';
     clientApp.config(['$routeProvider', function ($routeProvider) {
-        $routeProvider.when('/example', {
+        $routeProvider.when('/examples-spa', {
             templateUrl: '/client/dist/html/example/example.html',
             controller: 'ExampleCtrl'
         }).when('/404', {

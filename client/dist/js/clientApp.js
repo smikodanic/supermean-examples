@@ -1,3 +1,9 @@
+/*!
+ * SuperMEAN v0.1.0 (http://www.supermean.org)
+ * Copyright 2014-2016 Sasa Mikodanic
+ * Licensed under MIT 
+ */
+
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 /**
  * $location in HTML5 mode
@@ -22,7 +28,7 @@ module.exports = function (clientApp) {
 module.exports = function (clientApp) {
     'use strict';
     clientApp.config(['$routeProvider', function ($routeProvider) {
-        $routeProvider.when('/example', {
+        $routeProvider.when('/examples-spa', {
             templateUrl: '/client/dist/html/example/example.html',
             controller: 'ExampleCtrl'
         }).when('/404', {
@@ -33,6 +39,7 @@ module.exports = function (clientApp) {
         });
     }]);
 };
+
 },{}],3:[function(require,module,exports){
 /*global window*/
 module.exports = function (clientApp) {
@@ -54,9 +61,10 @@ module.exports = function (clientApp) {
     'use strict';
     require('./common/404/404Ctrl.js')(clientApp);
 
-    require('./example/exampleCtrl.js')(clientApp);
+    require('./examples/exampleCtrl.js')(clientApp);
 };
-},{"./common/404/404Ctrl.js":3,"./example/exampleCtrl.js":4}],6:[function(require,module,exports){
+
+},{"./common/404/404Ctrl.js":3,"./examples/exampleCtrl.js":4}],6:[function(require,module,exports){
 /*global angular*/
 var clientApp = angular.module('clientApp', [
     'ngRoute'

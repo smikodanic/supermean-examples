@@ -14,7 +14,7 @@ module.exports = function () {
                 'bower_components/**',
                 'client/**',
                 'server/tmp/**',
-                '.gulp/**',
+                '_gulp/**',
                 '.*/**'
             ],
             delayTime: 10,

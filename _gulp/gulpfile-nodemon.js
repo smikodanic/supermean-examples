@@ -6,18 +6,7 @@ gulp.task('rimraf', require('./tasks/rimraf.js'));
 gulp.task('browserify', require('./tasks/browserify.js'));
 gulp.task('htmlmin', require('./tasks/htmlmin.js'));
 gulp.task('server-nodemon', require('./tasks/server-nodemon.js')());
-
-
-//gulp scss task
-var scss = require('gulp-scss');
-gulp.task('scss', function () {
-    'use strict';
-    gulp.src([
-        'client/src/controller_view/**/*.scss'
-    ])
-        .pipe(scss({bundleExec: true}))
-        .pipe(gulp.dest('client/dist/css'));
-});
+gulp.task('scss', require('./tasks/scss-compass.js')(gulp));
 
 
 //gulp watchers
@@ -40,11 +29,14 @@ gulp.task('watch', function () {
 });
 
 
-//first delete then build /client/dist/ directory
+//first delete then create JS, HTML and CSS files in /client/dist/ directory
 gulp.task('build-dist', ['rimraf'], function () {
     'use strict';
-    gulp.start('browserify', 'htmlmin', 'scss');
+    setTimeout(function () {
+        gulp.start('browserify', 'htmlmin', 'scss');
+    }, 1300);
 });
+
 
 
 //defult gulp task

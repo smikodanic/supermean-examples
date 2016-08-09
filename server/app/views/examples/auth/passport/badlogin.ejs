@@ -2,43 +2,43 @@
 <html lang="en">
 
 <head>
-    <%- include('../../_partials/01head'); -%>
+	<%- include('../../_partials/01head'); -%>
 </head>
 
 <body>
-    <%- include('../../_partials/05header'); -%>
+	<%- include('../../_partials/05header'); -%>
 
-    <ol class="col-sm-7 breadcrumb">
-        <li><a href="/">Home</a></li>
-        <li><a href="/examples">SS Examples</a></li>
-        <li><a href="/examples/auth/passport">PassportJS</a></li>
-    </ol>
-
-
-
-    <main class="col-sm-12 container" style="min-height:350px">
-
-        <h1>PassportJS Login</h1>
-
-       <div class="col-sm-4 well text-center">
-            <%- include('_topmenu'); -%>
-
-            <br>
-            <br>
-            <br>
-
-            <h1>BAD LOGIN Page</h1>
-            <small>Login was unsuccessful.</small>
-            <br><b style="color:red"><%= errMsg %></b>
-            <br>
-            <br><a href="/examples/auth/passport">Try again!</a>
-
-       </div>
+	<ol class="col-sm-7 breadcrumb">
+		<li><a href="/">Home</a></li>
+		<li><a href="/examples">MPA Examples</a></li>
+		<li><a href="/examples/auth/passport">PassportJS</a></li>
+	</ol>
 
 
-    </main>
+
+	<main class="col-sm-12 container" style="min-height:350px">
+
+		<h1>PassportJS Login</h1>
+
+	   <div class="col-sm-4 well text-center">
+			<%- include('_topmenu'); -%>
+
+			<br>
+			<br>
+			<br>
+
+			<h1>BAD LOGIN Page</h1>
+			<small>Login was unsuccessful.</small>
+			<br><b style="color:red"><%= errMsg %></b>
+			<br>
+			<br><a href="/examples/auth/passport">Try again!</a>
+
+	   </div>
 
 
-    <%- include('../../_partials/20footer'); -%>
+	</main>
+
+
+	<%- include('../../_partials/20footer'); -%>
 </body>
 </html>

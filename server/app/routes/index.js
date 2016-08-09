@@ -12,8 +12,8 @@ var router = express.Router();
 router.get('/', function (req, res) {
     'use strict';
     var vdata = {
-        title: 'SuperMEAN - MEAN stack',
-        desc: 'SuperMEAN stack: mongodb, expressjs, angularjs and nodejs. Automatic routing from server side to client side.',
+        title: 'SuperMean - MEAN Stack Framework - API, Single Page App, Multi Page App',
+        desc: 'SuperMEAN is powerfull framework for creating MEAN Stack Applications. Build your API, Single Page App or Multi Page App with this powerfull MEAN Stack.',
         keywords: 'supermean, mean stack, mongodb, expressjs, angularjs, nodejs'
     };
     res.render('public/index', vdata);

@@ -10,5 +10,5 @@ var path = require('path');
 
 module.exports = function (app) {
     'use strict';
-    app.use(favicon(path.join(__dirname + '/../assets/img/favicon.png')));
+    app.use(favicon(path.join(__dirname + '/../assets/img/favicon.ico')));
 };

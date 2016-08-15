@@ -23,8 +23,7 @@ module.exports = function () {
 module.exports = function ($scope) {
     'use strict';
 
-    console.log('workss');
-    $scope.someVar = 'This is $scope variable value.';
+    console.log('SPA List Examples');
 };
 
 },{}],3:[function(require,module,exports){
@@ -63,11 +62,14 @@ module.exports = function ($locationProvider) {
 
 module.exports = function ($stateProvider, $urlRouterProvider) {
     'use strict';
+
     //For any unmatched url, redirect to /404 state
     $stateProvider.state('404', require('../routes-ui/404'));
     $urlRouterProvider.otherwise("/404");
 
-    $stateProvider.state('examples-spa', require('../routes-ui/examples-spa').indx);
+    //spa examples
+    $stateProvider.state('examples-spa', require('../routes-ui/examples-spa').indx); // url: /examples-spa
+    $stateProvider.state('examples-spa/uirouter', require('../routes-ui/examples-spa').uirouter); // url: /examples-spa/uirouter
 
 
 };
@@ -107,10 +109,21 @@ module.exports = {
 };
 
 },{}],8:[function(require,module,exports){
+/* state: 'examples-spa'
+ * url: /examples-spa
+ ************************/
 module.exports.indx = {
     url: '/examples-spa',
     templateUrl: '/client/dist/html/examples-spa/list.html',
     controller: 'ListCtrl'
+};
+
+/* state: 'examples-spa/uirouter'
+ * url: /examples-spa/uirouter
+ ************************/
+module.exports.uirouter = {
+    url: '/examples-spa/uirouter',
+    templateUrl: '/client/dist/html/examples-spa/uirouter/index.html'
 };
 
 },{}]},{},[6]);

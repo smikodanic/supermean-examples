@@ -8,11 +8,14 @@
 
 module.exports = function ($stateProvider, $urlRouterProvider) {
     'use strict';
+
     //For any unmatched url, redirect to /404 state
     $stateProvider.state('404', require('../routes-ui/404'));
     $urlRouterProvider.otherwise("/404");
 
-    $stateProvider.state('examples-spa', require('../routes-ui/examples-spa').indx);
+    //spa examples
+    $stateProvider.state('examples-spa', require('../routes-ui/examples-spa').indx); // url: /examples-spa
+    $stateProvider.state('examples-spa/uirouter', require('../routes-ui/examples-spa').uirouter); // url: /examples-spa/uirouter
 
 
 };

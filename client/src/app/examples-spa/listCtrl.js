@@ -4,6 +4,5 @@
 module.exports = function ($scope) {
     'use strict';
 
-    console.log('workss');
-    $scope.someVar = 'This is $scope variable value.';
+    console.log('SPA List Examples');
 };

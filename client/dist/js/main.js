@@ -6,31 +6,37 @@
 
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 /*global window*/
-module.exports = function (clientApp) {
+
+/**
+ * Controller: 404Ctrl
+ */
+module.exports = function () {
     'use strict';
-    clientApp.controller('404Ctrl', function () {
-        //redirect to server side /server/views/404.ejs
-        window.location.href = '/404';
-    });
+    //redirect to server side /server/views/404.ejs
+    window.location.href = '/404';
 };
+
 },{}],2:[function(require,module,exports){
-module.exports = function (clientApp) {
+/**
+ * Controller: ListCtrl
+ */
+module.exports = function ($scope) {
     'use strict';
-    clientApp.controller('ExampleCtrl', function ($scope) {
-        console.log('workss');
-        $scope.someVar = 'This is $scope variable value.';
-    });
+
+    console.log('workss');
+    $scope.someVar = 'This is $scope variable value.';
 };
 
 },{}],3:[function(require,module,exports){
-module.exports = function (clientApp) {
-    'use strict';
-    require('./common/404/404Ctrl.js')(clientApp);
+//application constants (configuration file)
+module.exports = {
 
-    require('./examples/exampleCtrl.js')(clientApp);
+    API_BASE_URL: 'http://uniapi.com'
+
+
 };
 
-},{"./common/404/404Ctrl.js":1,"./examples/exampleCtrl.js":2}],4:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 /**
  * $location in HTML5 mode
  *
@@ -48,41 +54,63 @@ module.exports = function ($locationProvider) {
 
 },{}],5:[function(require,module,exports){
 /**
- * App routes defined by ngRoute.
- * https://docs.angularjs.org/api/ngRoute
+ * App routes defined by ui-router.
+ * https://github.com/angular-ui/ui-router
  *
- * Must have <script src="/bower/angular-route/angular-route.min.js"></script> included.
+ * Must have <script src="/bower/angular-ui-router/release/angular-ui-router.min.js"></script> included in /server/app/views/clientApp.ejs.
  */
 
 
-module.exports = function ($routeProvider) {
+module.exports = function ($stateProvider, $urlRouterProvider) {
     'use strict';
-    $routeProvider
-        .when('/examples-spa', {
-            templateUrl: '/client/dist/html/examples/example.html',
-            controller: 'ExampleCtrl'
-        })
-        .when('/404', {
-            templateUrl: '/client/dist/html/common/404/404.html',
-            controller: '404Ctrl'
-        })
-        .otherwise({
-            redirectTo: '/404'
-        });
+    //For any unmatched url, redirect to /404 state
+    $stateProvider.state('404', require('../routes-ui/404'));
+    $urlRouterProvider.otherwise("/404");
+
+    $stateProvider.state('examples-spa', require('../routes-ui/examples-spa').indx);
+
 
 };
 
-},{}],6:[function(require,module,exports){
+},{"../routes-ui/404":7,"../routes-ui/examples-spa":8}],6:[function(require,module,exports){
 /*global angular*/
 var clientApp = angular.module('clientApp', [
-    'ngRoute'
+    // 'ngRoute',
+    'ui.router'
 ]);
 
-//configuration
-clientApp.config(require('./config/html5mode.js'));
-clientApp.config(['$routeProvider', require('./config/routes-ng.js')]);
+
+// CONFIG
+clientApp.constant('APPCONF', require('./config/constants'));
+clientApp.config(require('./config/html5mode'));
 
 
-require('./app')(clientApp);
+// ROUTES
+// clientApp.config(['$routeProvider', require('./config/routes-ng')]);
+clientApp.config(require('./config/routes-ui'));
 
-},{"./app":3,"./config/html5mode.js":4,"./config/routes-ng.js":5}]},{},[6]);
+
+
+
+// CONTROLLERS
+clientApp.controller('404Ctrl', require('./app/_common/404/404Ctrl'));
+clientApp.controller('ListCtrl', require('./app/examples-spa/listCtrl'));
+
+
+
+
+},{"./app/_common/404/404Ctrl":1,"./app/examples-spa/listCtrl":2,"./config/constants":3,"./config/html5mode":4,"./config/routes-ui":5}],7:[function(require,module,exports){
+module.exports = {
+    url: '/404',
+    templateUrl: '/client/dist/html/_common/404/404.html',
+    controller: '404Ctrl'
+};
+
+},{}],8:[function(require,module,exports){
+module.exports.indx = {
+    url: '/examples-spa',
+    templateUrl: '/client/dist/html/examples-spa/list.html',
+    controller: 'ListCtrl'
+};
+
+},{}]},{},[6]);

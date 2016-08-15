@@ -10,8 +10,8 @@ module.exports = function ($routeProvider) {
     'use strict';
     $routeProvider
         .when('/examples-spa', {
-            templateUrl: '/client/dist/html/examples/example.html',
-            controller: 'ExampleCtrl'
+            templateUrl: '/client/dist/html/examples-spa/list.html',
+            controller: 'ListCtrl'
         })
         .when('/404', {
             templateUrl: '/client/dist/html/common/404/404.html',

@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html>
+<html ng-app="clientApp">
 <head>
 	<base href="/"> <!-- https://docs.angularjs.org/error/$location/nobase -->
 	<meta charset="UTF-8">
@@ -14,11 +14,14 @@
 	<link rel="stylesheet" type="text/css" href="/client/dist/css/main.css">
 </head>
 
-<body ng-app="clientApp" ng-view>
+<body>
+
+	<div class="container-fluid" ui-view></div>
+
 
 	<!-- JS -->
 	<script src="/bower/angular/angular.min.js"></script>
-	<script src="/bower/angular-route/angular-route.min.js"></script>
+	<script src="/bower/angular-ui-router/release/angular-ui-router.min.js"></script>
 
 	<!-- JS compiled by browserify -->
 	<script src="/client/dist/js/main.js"></script>

@@ -1,0 +1,114 @@
+<header class="row" ng-include="'/client/dist/html/examples-spa/_partials/05header.html'"></header>
+
+<div class="row">
+	<div class="col-sm-8">
+		<ol class="col-sm-7 breadcrumb">
+  			<li><a href="/">Home</a></li>
+  			<li><a href="/examples-spa">SPA Examples</a></li>
+  			<li class="active">UI Router</li>
+		</ol>
+	</div>
+</div>
+
+<section class="row main-block">
+	<div class="col-sm-12">
+		<h1>UI Router Examples</h1>
+		<p>Examples which shows how to use UI router.</p>
+
+
+
+
+
+
+		<!-- $urlRouterProvider -->
+		<br><br>
+		<h3>$urlRouterProvider</h3>
+		<p>$urlRouterProvider methods are used in /client/src/config/routes-ui.js</p>
+		<ol>
+
+<li><a href="examples-spa/uirouter/urlrouteprovider-when1" target="_blank">$urlRouterProvider.when(url, handler)</a>
+	<br>- when() is watching $location changes and execute handler callback when URL matches.
+	Can be called with &lt;a href=""&gt; without defining ui-sref state.
+<pre>
+$urlRouterProvider.when('/examples-spa/uirouter/urlrouteprovider-when1', function () {
+   console.log('#1 --- From $urlRouterProvider.when() handler!');
+});
+</pre>
+</li>
+
+<li><a ui-sref="examples-spa_uirouter_urlrouteprovider-when2" target="_blank">$urlRouterProvider.when(url, handler) with defined state</a>
+	<br>- link defined by <b>ui-sref="examples-spa_uirouter_urlrouteprovider-when2"</b>
+	<br>- only stateProvider can load template
+<pre>
+$urlRouterProvider.when('/examples-spa/uirouter/urlrouteprovider-when2', function ($state) {
+    $state.go('examples-spa_uirouter_urlrouteprovider_when2'); //redirect to state provider and load template
+    console.log('#2 --- From $urlRouterProvider.when() handler!');
+});
+</pre>
+</li>
+
+<li><a href="/something/wrong" target="_blank">$urlRouterProvider.otherwise(url)</a>
+	<br>- Defines url path that is used when an invalid route is requested. Usually it is '/404'.
+<pre>
+404Ctrl.js
+============================
+module.exports = function () {
+    'use strict';
+    //redirect to server side /server/views/404.ejs
+    window.location.href = '/404';
+};
+</pre>
+</li>
+
+
+<li><a ui-sref="examples-spa_uirouter_urlrouteprovider-rule" target="_blank">$urlRouterProvider.rule(handler)</a>
+	<br>- rule() is executed on each URL change. It can be used for transforming url into lowercased letters.
+<pre>
+$urlRouterProvider.rule(function ($injector, $location) { //enables uppercase letters in URL (browser address bar)
+    var path = $location.path();
+    var normalized = path.toLowerCase();
+
+    if (path !== normalized) {
+        console.log("rule 1 applied");
+        return normalized;
+    }
+    return null;
+});
+</pre>
+</li>
+
+		</ol>
+
+
+
+
+
+
+		<!-- $stateProvider -->
+		<br><br>
+		<h3>$stateProvider</h3>
+		<p>
+			$stateProvider methods are also used in /client/src/config/routes-ui.js . Use ui-sref to define state.
+			<br>- $stateProvider.state() is defining state's url, template (view), controller, ...etc. Use ui-sref state inside template.
+			<br>- URL can be changed without changing templates e.g. ui-sref
+		</p>
+		<ol>
+
+<li><a ui-sref="examples-spa_uirouter_stateprovider-state-basic" target="_blank">$stateProvider.state(stateName, configObj) - basic</a>
+	- basic example which defines template and controller (url, template, templateUrl and controller) </li>
+<li><a ui-sref="examples-spa_uirouter_stateprovider-state-resolve" target="_blank">$stateProvider.state(stateName, configObj) - resolve</a>
+	- resolve is object which injects varaibles into defined controller (resolve) </li>
+<li><a ui-sref="examples-spa_uirouter_stateprovider-state-views" target="_blank">$stateProvider.state(stateName, configObj) - views</a>
+	- view can define many named views for ui-view="viewName" (views) </li>
+
+
+		</ol>
+
+
+
+
+	</div>
+</section>
+
+
+<footer class="row" ng-include="'/client/dist/html/examples-spa/_partials/20footer.html'"></footer>

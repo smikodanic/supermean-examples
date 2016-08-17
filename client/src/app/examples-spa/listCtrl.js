@@ -1,5 +1,5 @@
 /**
- * Controller: ListCtrl
+ * Controller: examples-spa_listCtrl
  */
 module.exports = function ($scope) {
     'use strict';

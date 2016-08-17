@@ -52,6 +52,7 @@ module.exports = function ($locationProvider) {
 };
 
 },{}],5:[function(require,module,exports){
+/*global window*/
 /**
  * App routes defined by ui-router.
  * https://github.com/angular-ui/ui-router
@@ -64,8 +65,10 @@ module.exports = function ($stateProvider, $urlRouterProvider) {
     'use strict';
 
     //For any unmatched url, redirect to /404 state
-    $stateProvider.state('404', require('../routes-ui/404'));
+    $urlRouterProvider.when("/", function () {window.location.href = '/';}); //go to server-side
+    $urlRouterProvider.when("/examples", function () {window.location.href = '/examples';}); //go to server-side
     $urlRouterProvider.otherwise("/404");
+    $stateProvider.state('404', require('../routes-ui/404'));
 
     //spa examples
     $stateProvider.state('examples-spa', require('../routes-ui/examples-spa').indx); // url: /examples-spa

@@ -3,6 +3,6 @@
  ************************/
 module.exports.list = {
     url: '/examples-spa',
-    templateUrl: '/client/dist/html/examples-spa/list.html',
-    controller: 'examples-spa_listCtrl'
+    templateUrl: '/client/dist/html/examples-spa/listSPAexamples.html',
+    controller: 'ListSPAexamplesCtrl'
 };

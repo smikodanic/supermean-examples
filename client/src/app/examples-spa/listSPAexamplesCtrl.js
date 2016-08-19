@@ -4,5 +4,5 @@
 module.exports = function ($scope) {
     'use strict';
 
-    console.log('SPA List Examples');
+    console.log('A list of SPA Examples.');
 };

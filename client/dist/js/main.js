@@ -149,7 +149,7 @@ module.exports = function ($stateProvider, $urlRouterProvider) {
         controller: 'StateControllerAliasCtrl'
     });
 
-    // controller: 'SomeCtrl'
+    // controllerProvider:
     //// uri: /examples-spa/uirouter/state-controlleralias
     $stateProvider.state('examples-spa_uirouter_stateControllerProvider', {
         url: '/examples-spa/uirouter/statecontrollerprovider/:ctrlString',
@@ -166,7 +166,7 @@ module.exports = function ($stateProvider, $urlRouterProvider) {
         template: 'url: "/examples-spa/uirouter/stateurlregex/{bookSlug:[a-z-]+" <br> This will not work because of number: <a href="/examples-spa/uirouter/stateurlregex/book2">/examples-spa/uirouter/stateurlregex/book2</a>'
     });
 
-    // url: (int)
+    // url: (int url params)
     //// uri: /examples-spa/uirouter/stateurlint/325
     $stateProvider.state('examples-spa_uirouter_stateUrlint', {
         url: '/examples-spa/uirouter/stateurlint/{myParam: int}',
@@ -176,7 +176,7 @@ module.exports = function ($stateProvider, $urlRouterProvider) {
         }
     });
 
-    // url: (string)
+    // url: (string url params)
     //// uri: /examples-spa/uirouter/stateurlint/someString
     $stateProvider.state('examples-spa_uirouter_stateUrlstring', {
         url: '/examples-spa/uirouter/stateurlstring/{myParam: string}',
@@ -186,7 +186,7 @@ module.exports = function ($stateProvider, $urlRouterProvider) {
         }
     });
 
-    // url: (date)
+    // url: (date url params)
     //// uri: /examples-spa/uirouter/stateurlint/someString
     $stateProvider.state('examples-spa_uirouter_stateUrldate', {
         url: '/examples-spa/uirouter/stateurldate/{myParam: date}',
@@ -197,7 +197,7 @@ module.exports = function ($stateProvider, $urlRouterProvider) {
     });
 
 
-    // resolve:
+    // resolve: (resolve injectable service)
     //// uri: /examples-spa/uirouter/stateresolve
     $stateProvider.state('examples-spa_uirouter_stateResolve', {
         url: '/examples-spa/uirouter/stateresolve',
@@ -247,6 +247,139 @@ module.exports = function ($stateProvider, $urlRouterProvider) {
         }
     });
 
+    // views:
+    //// uri: /examples-spa/uirouter/stateviews
+    $stateProvider.state('examples-spa_uirouter_stateViews', {
+        url: '/examples-spa/uirouter/stateviews',
+        views: {
+            '': { // the main template will be placed here (relatively named)
+                template: '<div ui-view="myView1"></div>'
+            },
+            'myView1@examples-spa_uirouter_stateViews': { // the child views will be defined here (absolutely named)
+                template: 'From <b>myView1@examples-spa_uirouter_stateViews</b>! (Will appear when state "examples-spa_uirouter_stateViews" is active)'
+            }
+        }
+    });
+
+    // Nested States: simple parent-child example
+    //// parent uri: /examples-spa/uirouter/stateviewsparent
+    //// child uri: /examples-spa/uirouter/stateviewsparent/mychild
+    $stateProvider
+        .state('myParent', {
+            url: '/examples-spa/uirouter/stateviewsparent',
+            template: '<h2>myParent state</h2> <div ui-view></div>'
+        })
+        .state('myParent.myChild', {
+            url: '/mychild', //will be added and final result is: /examples-spa/uirouter/stateviewsparent/mychild
+            // url: '^/mychild', // http://localhost:3005/mychild
+            template: '<h4>myChild state</h4>'
+        });
+
+    // Nested States: complex parent-child example with named views
+    //// uri: /examples-spa/uirouter/stateviewsparent2
+    //// uri: /examples-spa/uirouter/stateviewsparent2/mychild
+    $stateProvider
+        .state('myParent2', {
+            url: '/examples-spa/uirouter/stateviewsparent2',
+            template: '<h2>myParent2 state</h2> <h4 ui-view="myHead"></h4> <div ui-view></div>'
+        })
+        .state('myParent2.myChild', {
+            url: '/mychild', // /examples-spa/uirouter/stateviewsparent2/mychild
+            views: {
+                'myHead@myParent2': {
+                    template: 'myChild2 state'
+                },
+                '@myParent2': {
+                    template: '<p>Some paragraph text !!!</p>'
+                }
+            }
+        });
+
+    // parent:
+    //// uri: /examples-spa/uirouter/stateviewsparentchild
+    $stateProvider
+        .state('myParent3', {
+            url: '/examples-spa/uirouter/stateviewsparent3',
+            template: '<h2>myParent3 state</h2> <div ui-view></div>'
+        })
+        .state('myChild3', {
+            parent: 'myParent3',
+            url: '/mychild3',
+            template: '<h4>myChild3 state</h4> Parent state defined by <b>parent:</b> <div style="color:red" ui-view></div>'
+        })
+        .state('myChild3.myGrandChild', {
+            url: '/mygrandchild',
+            template: 'myGrandChild state'
+        });
+
+
+
+
+
+    /******* $state examples ********
+     ********************************/
+    // .go()
+    $stateProvider
+        .state('sR', {
+            url: '/examples-spa/uirouter/statego-root',
+            template: '<h2>state Root</h2> <div ui-view></div>'
+        })
+        .state('sR.s1', {
+            url: '/s1',
+            template: 'state: s1 <div ui-view></div>'
+        })
+        .state('sR.s1.s11', {
+            url: '/s11',
+            template: 'state s11'
+        })
+        .state('sR.s1.s12', {
+            url: '/s12',
+            template: 'state s12  <div ui-view></div>',
+            controller: function ($state) {
+                // $state.go('.s121'); //go to sR.s1.s12.s121
+                // $state.go('sR.s1.s11'); //go to sR.s1.s11
+                $state.go('^.^.s1.s11'); //go to sR.s1.s11
+            }
+        })
+        .state('sR.s1.s12.s121', {
+            url: '/s121',
+            template: 'state s121'
+        });
+
+    //.get()
+    $stateProvider
+        .state('stateGet', {
+            url: '/examples-spa/uirouter/stateget',
+            template: '<h2>state.get(\'stateGet\')</h2> {{getData}}',
+            controller: function ($scope, $state) {
+                $scope.getData = $state.get('stateGet');
+                console.log(JSON.stringify($scope.getData, null, 2));
+            }
+        });
+
+    //.href()
+    $stateProvider
+        .state('stateHref', {
+            url: '/examples-spa/uirouter/statehref/{myParam}/:broj',
+            template: '<h2>state.href(\'stateHref\')</h2> <a href="{{hrefData}}">{{hrefData}}</a>',
+            controller: function ($scope, $state) {
+                $scope.hrefData = $state.href('stateHref', {broj: 23}); // /23 will be aded to current url
+                console.log(JSON.stringify($scope.hrefData, null, 2));
+            }
+        });
+
+    //properties
+    //.href()
+    $stateProvider
+        .state('stateProps', {
+            url: '/examples-spa/uirouter/stateprops/{myId: int}',
+            template: '<h2>$state.params &amp; $state.current</h2> Open console!',
+            controller: function ($state, $stateParams) {
+                console.info('$state.params\n' + JSON.stringify($state.params, null, 2));
+                console.info('$state.current\n' + JSON.stringify($state.current, null, 2));
+                console.info('$stateParams\n' + JSON.stringify($stateParams, null, 2));
+            }
+        });
 
 
 

@@ -87,6 +87,7 @@ module.exports = function ($stateProvider, $urlRouterProvider) {
      */
     $stateProvider.state('examples-spa', require('../routes-ui/examples-spa').list); // url: /examples-spa
     $stateProvider.state('examples-spa_uirouter', require('../routes-ui/examples-spa_uirouter').list); // url: /examples-spa/uirouter
+    $stateProvider.state('examples-spa_qa', require('../routes-ui/examples-spa_q')); // url: /examples-spa/q
 
 
 
@@ -439,7 +440,7 @@ module.exports = function ($stateProvider, $urlRouterProvider) {
 
 
 
-},{"../routes-ui/404":8,"../routes-ui/examples-spa":9,"../routes-ui/examples-spa_uirouter":10}],7:[function(require,module,exports){
+},{"../routes-ui/404":8,"../routes-ui/examples-spa":9,"../routes-ui/examples-spa_q":10,"../routes-ui/examples-spa_uirouter":11}],7:[function(require,module,exports){
 /*global angular*/
 var clientApp = angular.module('clientApp', [
     // 'ngRoute',
@@ -489,6 +490,16 @@ module.exports.list = {
 };
 
 },{}],10:[function(require,module,exports){
+/* state: 'examples-spa_q'
+ * url: /examples-spa/q
+ ************************/
+module.exports = {
+    url: '/examples-spa/q',
+    templateUrl: '/client/dist/html/examples-spa/q/list.html'
+};
+
+
+},{}],11:[function(require,module,exports){
 /* state: 'examples-spa_uirouter'
  * url: /examples-spa/uirouter
  ************************/

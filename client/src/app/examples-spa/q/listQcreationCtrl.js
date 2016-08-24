@@ -31,7 +31,7 @@ module.exports = function ($scope, $q, $timeout) {
                 console.error(err.stack);
             })
             .finally(function () {
-                $scope.resultOut = JSON.stringify(promis, null, 2);
+                $scope.$parent.resultOut = JSON.stringify(promis, null, 2);
                 // console.log(JSON.stringify(promis, null, 2));
             });
 
@@ -74,7 +74,7 @@ module.exports = function ($scope, $q, $timeout) {
                 console.error(err.stack);
             })
             .finally(() => {
-                $scope.resultOut = JSON.stringify(promis, null, 2);
+                $scope.$parent.resultOut = JSON.stringify(promis, null, 2);
                 // console.log(JSON.stringify(promis, null, 2));
             });
 
@@ -114,7 +114,7 @@ module.exports = function ($scope, $q, $timeout) {
         }).finally(function () {
             console.log('Timer closed! intervalId=' + JSON.stringify(intervalID, null, 2));
             clearInterval(intervalID);
-            $scope.resultOut = JSON.stringify(promis, null, 2);
+            $scope.$parent.resultOut = JSON.stringify(promis, null, 2);
         });
 
         // .progress() will not work !!!
@@ -151,7 +151,7 @@ module.exports = function ($scope, $q, $timeout) {
                 console.error(err.stack); //err.name | err.message
             })
             .finally(function () {
-                $scope.resultOut = JSON.stringify(promis, null, 2);
+                $scope.$parent.resultOut = JSON.stringify(promis, null, 2);
                 // console.log(JSON.stringify(promis, null, 2));
             });
     };

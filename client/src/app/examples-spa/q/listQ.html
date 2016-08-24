@@ -37,13 +37,13 @@
 
 	<div class="row">
 
-		<div class="col-sm-7" ng-controller="ListQcreationCtrl">
-			<!-- example list -->
+		<div class="col-sm-7">
+
 			<h3>Promise creation</h3>
-			<ol>
+			<ol ng-controller="ListQcreationCtrl">
 				<li>
 					<a href="#" ng-click="creationResolver()">$q(function(resolve, reject) { ... })</a>
-					- creation with resolver function
+					- creation with resolver function: function(resolve, reject) {...}
 				</li>
 				<li>
 					<a href="#" ng-click="creationDefer()">$q.defer()</a>
@@ -63,7 +63,28 @@
 					- direct creation with $q.resolve(value) or $q.reject(reason)
 				</li>
 			</ol>
+
+			<h3>Methods</h3>
+			<ol ng-controller="ListQmethodsCtrl">
+				<li>
+					<a href="#" ng-click="method_all()">.all([promis1, promis2, ...])</a>
+					- all promises must be resolved (fulfilled) to execute next .then(funtion (valArr) {}). Resolved values are returned in array valArr.
+				</li>
+				<li>
+					<a href="#" ng-click="method_race()">.race([promis1, promis2, ...])</a>
+					- wait for first promise to be fulfilled or rejected and returns a value of that promise. <b>NOT WORKING !!!</b>
+				</li>
+
+				<li>
+					<a href="#" ng-click="method_then()">.then()</a>
+					- return and throw inside then()
+				</li>
+			</ol>
+
+
 		</div>
+
+
 
 
 

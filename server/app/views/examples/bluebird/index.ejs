@@ -99,7 +99,7 @@
 			<li><a href="/examples/bluebird/22filterspread" target="_blank">BPromise.filter with spread</a> - <b>var arr = [promisA, promisB, valueA, valueB]; BPromise.filter(arr, function (elemArr, indexArr, lengthArr) { ... }).spread(function (val1, val2) { ... })</b> Usage of spread() instead of then().
 			<li><a href="/examples/bluebird/23each" target="_blank">BPromise.each</a> - <b>BPromise.each([promisA, promisB, valueA, valueB], function (elemArr, indexArr, lengthArr) { ... }).then(function (valArr) { ... })</b> Iterate each promise and returns to then() not changed array of values. If any promise in the input array is rejected the returned promise is rejected as well.
 			<li><a href="/examples/bluebird/24mapseries" target="_blank">BPromise.mapseries</a> - <b>BPromise.mapSeries([promisA, promisB, valueA, valueB], function (elemArr, indexArr, lengthArr) { ... }).then(function (valArr) { ... })</b> Iterate each promise and returns to then() not changed array of values. If any promise in the input array is rejected the returned promise is rejected as well.
-			<li><a href="/examples/bluebird/25race" target="_blank">BPromise.race</a> - <b>BPromise.race([promisA, promisB, valueA, valueB]).then(function (val) { ... })</b> W
+			<li><a href="/examples/bluebird/25race" target="_blank">BPromise.race</a> - <b>BPromise.race([promisA, promisB, valueA, valueB]).then(function (val) { ... })</b> Wait for first promise to be fulfilled or rejected and returns a value of that promise
 		</ol>
 
 

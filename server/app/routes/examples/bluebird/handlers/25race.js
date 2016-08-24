@@ -18,13 +18,13 @@ module.exports = function (req, res, next) {
     var promisArr = [];
     promisArr[0] = new BPromise(function (resolve, reject) {
         setTimeout(function () {
-            reject(new Error('Rejection after 3 seconds!'));
+            reject(new Error('Rejected after 3 seconds!'));
         }, 3000);
     });
     promisArr[1] = new BPromise(function (resolve, reject) { //3
         setTimeout(function () {
-            resolve('Fullfilment after 5 seconds!');
-        }, 3000);
+            resolve('Fulfiled after 5 seconds!');
+        }, 5000);
     });
 
 

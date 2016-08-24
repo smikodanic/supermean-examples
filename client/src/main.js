@@ -28,4 +28,5 @@ clientApp.controller('StateControllerAliasCtrl', require('./app/examples-spa/uir
 
 //********* $q promise examples
 clientApp.controller('ListQcreationCtrl', require('./app/examples-spa/q/listQcreationCtrl'));
+clientApp.controller('ListQmethodsCtrl', require('./app/examples-spa/q/listQmethodsCtrl'));
 

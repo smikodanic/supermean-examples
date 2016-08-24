@@ -28,12 +28,10 @@ module.exports = function ($scope) {
 
 },{}],3:[function(require,module,exports){
 /**
- * Controller: examples-spa_listCtrl
+ * Controller: ListQcreationCtrl
  */
 module.exports = function ($scope, $q, $timeout) {
     'use strict';
-
-    console.log('A list of Q Examples.');
 
     /*
      * Create $q promise with $q(function (resolve, reject) {...})
@@ -216,13 +214,140 @@ module.exports = function ($scope, $q, $timeout) {
 };
 
 },{}],4:[function(require,module,exports){
+/**
+ * Controller: ListQmethodsCtrl
+ */
+module.exports = function ($scope, $q, $timeout) {
+    'use strict';
+
+    /* Method: all()
+     * All promises must be fulfilled. Returned is array of resolved promises. If one promis is rejected catch() is executed instead of then().
+     */
+    $scope.method_all = function () {
+
+        var promis1 = $q.resolve('PROMIS 1');
+        var promis2 = $q.resolve('PROMIS 2');
+
+        var promis = $q.all([promis1, promis2]);
+
+        promis
+            .then(function (data) {
+                console.log(JSON.stringify(data, null, 2));
+            })
+            // .spread(function (val1, val2) { //spread will not work !!!
+            //     console.log(val1 + val2);
+            // })
+            .catch(function (err) {
+                console.log(err.stack);
+            })
+            .finally(function () {
+                $scope.$parent.resultOut = promis;
+            });
+
+    };
+/*
+console:
+[
+  "PROMIS 1",
+  "PROMIS 2"
+]
+ */
+
+
+
+    /* Method: race() NOT WORKING!!!
+     * Wait for the first promise to be resolved or rejected. Returned value is the vaue of that promise.
+     */
+    $scope.method_race = function () {
+
+        var promisArr = [];
+
+        promisArr[0] = $q(function (resolve, reject) {
+            $timeout(function () {
+                resolve('PROMIS 0 fulfilled!');
+            }, 2000);
+        });
+
+
+        promisArr[1] = $q(function (resolve, reject) {
+            $timeout(function () {
+                reject(new Error('PROMIS 1 rejected!'));
+            }, 4000);
+        });
+
+
+        $q.race(promisArr)
+            .then(function (data) {
+                console.log(JSON.stringify(data, null, 2));
+            })
+            .catch(function (err) {
+                console.log(err.stack);
+            })
+            .finally(function () {
+                $scope.$parent.resultOut = promis1;
+            });
+
+    };
+
+
+    /* Method: then()
+     * return value or throw error from then().
+     *
+     * Notice: catch() is not needed in Q as it is needed in Bluebird promises.
+     */
+    $scope.method_then = function () {
+
+        var promis = $q.resolve('My PROMIS');
+
+        promis
+            .then(function (val1) {
+                console.log(val1);
+                return 'Something returned from then!'; //return value to next then()
+            })
+            .then(function (val2) {
+                console.log(val2);
+                var error = new Error('Something thrown from then!');
+                throw error; //throws error
+            });
+            // .catch(function (err) {
+            //     console.error(err.stack);
+            // });
+
+    };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+};
+
+},{}],5:[function(require,module,exports){
 /* Controller: 'StateControllerAliasCtrl' */
 module.exports = function ($scope) {
     'use strict';
     $scope.myVar = 'Variable from $scope !'
 };
 
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 //application constants (configuration file)
 module.exports = {
 
@@ -231,7 +356,7 @@ module.exports = {
 
 };
 
-},{}],6:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 /**
  * $location in HTML5 mode
  *
@@ -247,7 +372,7 @@ module.exports = function ($locationProvider) {
     // $locationProvider.html5Mode(false); //http://localhost:3000/something#/example
 };
 
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 /*global window*/
 /**
  * App routes defined by ui-router.
@@ -277,6 +402,7 @@ module.exports = function ($stateProvider, $urlRouterProvider) {
     $stateProvider.state('examples-spa', require('../routes-ui/examples-spa').list); // url: /examples-spa
     $stateProvider.state('examples-spa_uirouter', require('../routes-ui/examples-spa_uirouter').list); // url: /examples-spa/uirouter
     $stateProvider.state('examples-spa_qa', require('../routes-ui/examples-spa_q')); // url: /examples-spa/q
+    $stateProvider.state('examples-spa_login', require('../routes-ui/examples-spa_login')); // url: /examples-spa/login
 
 
 
@@ -629,7 +755,7 @@ module.exports = function ($stateProvider, $urlRouterProvider) {
 
 
 
-},{"../routes-ui/404":9,"../routes-ui/examples-spa":10,"../routes-ui/examples-spa_q":11,"../routes-ui/examples-spa_uirouter":12}],8:[function(require,module,exports){
+},{"../routes-ui/404":10,"../routes-ui/examples-spa":11,"../routes-ui/examples-spa_login":12,"../routes-ui/examples-spa_q":13,"../routes-ui/examples-spa_uirouter":14}],9:[function(require,module,exports){
 /*global angular*/
 var clientApp = angular.module('clientApp', [
     // 'ngRoute',
@@ -660,16 +786,17 @@ clientApp.controller('StateControllerAliasCtrl', require('./app/examples-spa/uir
 
 //********* $q promise examples
 clientApp.controller('ListQcreationCtrl', require('./app/examples-spa/q/listQcreationCtrl'));
+clientApp.controller('ListQmethodsCtrl', require('./app/examples-spa/q/listQmethodsCtrl'));
 
 
-},{"./app/_common/404/404Ctrl":1,"./app/examples-spa/listSPAexamplesCtrl":2,"./app/examples-spa/q/listQcreationCtrl":3,"./app/examples-spa/uirouter/stateControllerAliasCtrl":4,"./config/constants":5,"./config/html5mode":6,"./config/routes-ui":7}],9:[function(require,module,exports){
+},{"./app/_common/404/404Ctrl":1,"./app/examples-spa/listSPAexamplesCtrl":2,"./app/examples-spa/q/listQcreationCtrl":3,"./app/examples-spa/q/listQmethodsCtrl":4,"./app/examples-spa/uirouter/stateControllerAliasCtrl":5,"./config/constants":6,"./config/html5mode":7,"./config/routes-ui":8}],10:[function(require,module,exports){
 module.exports = {
     url: '/404',
     templateUrl: '/client/dist/html/_common/404/404.html',
     controller: '404Ctrl'
 };
 
-},{}],10:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 /* state: 'examples-spa'
  * url: /examples-spa
  ************************/
@@ -679,7 +806,17 @@ module.exports.list = {
     controller: 'ListSPAexamplesCtrl'
 };
 
-},{}],11:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
+/* state: 'examples-spa_q'
+ * url: /examples-spa/q
+ ************************/
+module.exports = {
+    url: '/examples-spa/login',
+    templateUrl: '/client/dist/html/examples-spa/login/listLogin.html'
+};
+
+
+},{}],13:[function(require,module,exports){
 /* state: 'examples-spa_q'
  * url: /examples-spa/q
  ************************/
@@ -689,7 +826,7 @@ module.exports = {
 };
 
 
-},{}],12:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 /* state: 'examples-spa_uirouter'
  * url: /examples-spa/uirouter
  ************************/
@@ -699,4 +836,4 @@ module.exports.list = {
 };
 
 
-},{}]},{},[8]);
+},{}]},{},[9]);

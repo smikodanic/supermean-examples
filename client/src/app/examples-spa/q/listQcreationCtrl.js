@@ -1,10 +1,8 @@
 /**
- * Controller: examples-spa_listCtrl
+ * Controller: ListQcreationCtrl
  */
 module.exports = function ($scope, $q, $timeout) {
     'use strict';
-
-    console.log('A list of Q Examples.');
 
     /*
      * Create $q promise with $q(function (resolve, reject) {...})

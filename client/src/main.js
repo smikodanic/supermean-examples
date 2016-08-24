@@ -27,5 +27,5 @@ clientApp.controller('ListSPAexamplesCtrl', require('./app/examples-spa/listSPAe
 clientApp.controller('StateControllerAliasCtrl', require('./app/examples-spa/uirouter/stateControllerAliasCtrl'));
 
 //********* $q promise examples
-clientApp.controller('ListQCtrl', require('./app/examples-spa/q/listQCtrl'));
+clientApp.controller('ListQcreationCtrl', require('./app/examples-spa/q/listQcreationCtrl'));
 

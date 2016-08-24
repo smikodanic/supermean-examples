@@ -659,10 +659,10 @@ clientApp.controller('ListSPAexamplesCtrl', require('./app/examples-spa/listSPAe
 clientApp.controller('StateControllerAliasCtrl', require('./app/examples-spa/uirouter/stateControllerAliasCtrl'));
 
 //********* $q promise examples
-clientApp.controller('ListQCtrl', require('./app/examples-spa/q/listQCtrl'));
+clientApp.controller('ListQcreationCtrl', require('./app/examples-spa/q/listQcreationCtrl'));
 
 
-},{"./app/_common/404/404Ctrl":1,"./app/examples-spa/listSPAexamplesCtrl":2,"./app/examples-spa/q/listQCtrl":3,"./app/examples-spa/uirouter/stateControllerAliasCtrl":4,"./config/constants":5,"./config/html5mode":6,"./config/routes-ui":7}],9:[function(require,module,exports){
+},{"./app/_common/404/404Ctrl":1,"./app/examples-spa/listSPAexamplesCtrl":2,"./app/examples-spa/q/listQcreationCtrl":3,"./app/examples-spa/uirouter/stateControllerAliasCtrl":4,"./config/constants":5,"./config/html5mode":6,"./config/routes-ui":7}],9:[function(require,module,exports){
 module.exports = {
     url: '/404',
     templateUrl: '/client/dist/html/_common/404/404.html',
@@ -685,8 +685,7 @@ module.exports.list = {
  ************************/
 module.exports = {
     url: '/examples-spa/q',
-    templateUrl: '/client/dist/html/examples-spa/q/listQ.html',
-    controller: 'ListQCtrl'
+    templateUrl: '/client/dist/html/examples-spa/q/listQ.html'
 };
 
 

@@ -27,13 +27,202 @@ module.exports = function ($scope) {
 };
 
 },{}],3:[function(require,module,exports){
+/**
+ * Controller: examples-spa_listCtrl
+ */
+module.exports = function ($scope, $q, $timeout) {
+    'use strict';
+
+    console.log('A list of Q Examples.');
+
+    /*
+     * Create $q promise with $q(function (resolve, reject) {...})
+     */
+    $scope.creationResolver = function () {
+        // var x = 5; //resolved
+        var x = 15; //rejected
+
+        //promise created with resolver function
+        var promis = $q(function (resolve, reject) {
+            if (x < 10) {
+                resolve(x);
+            } else {
+                var reason = new Error('x is greater then 10!');
+                reject(reason);
+            }
+        });
+
+        promis
+            .then(function (data) {
+                console.log(data);
+            })
+            .catch(function (err) {
+                console.error(err.stack);
+            })
+            .finally(function () {
+                $scope.resultOut = JSON.stringify(promis, null, 2);
+                // console.log(JSON.stringify(promis, null, 2));
+            });
+
+
+        //This will also work!!!
+        // promis.then(function (data) {
+        //     console.log(data);
+        // }, function (err) {
+        //     console.error(err.stack);
+        // });
+
+    };
+
+
+
+    /*
+     * Create $q promise with $q.defer();
+     */
+    $scope.creationDefer = function () {
+        // var x = 5; //resolved
+        var x = 15; //rejected
+
+        var def = $q.defer();
+
+        if (x < 10) {
+            def.resolve(x);
+        } else {
+            var reason = new Error('x is greater then 10!');
+            def.reject(reason);
+        }
+
+        var promis = def.promise;
+
+        //used ES6 arrow functions
+        promis
+            .then((data) => {
+                console.log(data);
+            })
+            .catch((err) => {
+                console.error(err.stack);
+            })
+            .finally(() => {
+                $scope.resultOut = JSON.stringify(promis, null, 2);
+                // console.log(JSON.stringify(promis, null, 2));
+            });
+
+    };
+
+
+    /* progress bar example.
+     * Usage of def.notify();
+     */
+
+    $scope.creationDeferNotify = function () {
+
+        var def = $q.defer();
+
+        $scope.progressPerct = '0%';
+        let i = 1;
+        var intervalID = setInterval(function () {
+            def.notify('Promise is in pending state! Not resolved nor rejected: ' + i);
+            var prog = parseInt(((700 * i * 100) / 2100), 10);
+            i++;
+            $scope.progressPerct = prog + '%';
+        }, 700);
+
+        $timeout(function () {
+            def.resolve('Promise resolved!!!');
+            // def.reject(new Error('Promise rejected!!!'));
+        }, 2200);
+
+        var promis = def.promise;
+
+        promis.then(function (data) {
+            console.log(data);
+        }, function (err) {
+            console.error(err.stack);
+        }, function (notif) {
+            console.log(notif, $scope.progressPerct);
+        }).finally(function () {
+            console.log('Timer closed! intervalId=' + JSON.stringify(intervalID, null, 2));
+            clearInterval(intervalID);
+            $scope.resultOut = JSON.stringify(promis, null, 2);
+        });
+
+        // .progress() will not work !!!
+        // promis
+        //     .progress(function (notif) {
+        //         console.log(notif);
+        //     })
+        //     .then(function (data) {
+        //         console.log(data);
+        //     })
+        //     .catch(function (err) {
+        //         console.error(err.stack);
+        //     })
+        //     .finally(function () {
+        //         $scope.resultOut = JSON.stringify(promis, null, 2);
+        //         // console.log(JSON.stringify(promis, null, 2));
+        //     });
+
+    };
+
+
+    /*
+     * Create $q promise directly with $q.resolve() or $q.reject()
+     */
+    $scope.creationResolveReject = function () {
+        // var promis = $q.resolve('Something resolved');
+        var promis = $q.reject(new Error('Something rejected'));
+
+        promis
+            .then(function (data) {
+                console.log(data);
+            })
+            .catch(function (err) {
+                console.error(err.stack); //err.name | err.message
+            })
+            .finally(function () {
+                $scope.resultOut = JSON.stringify(promis, null, 2);
+                // console.log(JSON.stringify(promis, null, 2));
+            });
+    };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+};
+
+},{}],4:[function(require,module,exports){
 /* Controller: 'StateControllerAliasCtrl' */
 module.exports = function ($scope) {
     'use strict';
     $scope.myVar = 'Variable from $scope !'
 };
 
-},{}],4:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 //application constants (configuration file)
 module.exports = {
 
@@ -42,7 +231,7 @@ module.exports = {
 
 };
 
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 /**
  * $location in HTML5 mode
  *
@@ -58,7 +247,7 @@ module.exports = function ($locationProvider) {
     // $locationProvider.html5Mode(false); //http://localhost:3000/something#/example
 };
 
-},{}],6:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 /*global window*/
 /**
  * App routes defined by ui-router.
@@ -440,7 +629,7 @@ module.exports = function ($stateProvider, $urlRouterProvider) {
 
 
 
-},{"../routes-ui/404":8,"../routes-ui/examples-spa":9,"../routes-ui/examples-spa_q":10,"../routes-ui/examples-spa_uirouter":11}],7:[function(require,module,exports){
+},{"../routes-ui/404":9,"../routes-ui/examples-spa":10,"../routes-ui/examples-spa_q":11,"../routes-ui/examples-spa_uirouter":12}],8:[function(require,module,exports){
 /*global angular*/
 var clientApp = angular.module('clientApp', [
     // 'ngRoute',
@@ -469,17 +658,18 @@ clientApp.controller('ListSPAexamplesCtrl', require('./app/examples-spa/listSPAe
 //********* ui-router examples
 clientApp.controller('StateControllerAliasCtrl', require('./app/examples-spa/uirouter/stateControllerAliasCtrl'));
 
+//********* $q promise examples
+clientApp.controller('ListQCtrl', require('./app/examples-spa/q/listQCtrl'));
 
 
-
-},{"./app/_common/404/404Ctrl":1,"./app/examples-spa/listSPAexamplesCtrl":2,"./app/examples-spa/uirouter/stateControllerAliasCtrl":3,"./config/constants":4,"./config/html5mode":5,"./config/routes-ui":6}],8:[function(require,module,exports){
+},{"./app/_common/404/404Ctrl":1,"./app/examples-spa/listSPAexamplesCtrl":2,"./app/examples-spa/q/listQCtrl":3,"./app/examples-spa/uirouter/stateControllerAliasCtrl":4,"./config/constants":5,"./config/html5mode":6,"./config/routes-ui":7}],9:[function(require,module,exports){
 module.exports = {
     url: '/404',
     templateUrl: '/client/dist/html/_common/404/404.html',
     controller: '404Ctrl'
 };
 
-},{}],9:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 /* state: 'examples-spa'
  * url: /examples-spa
  ************************/
@@ -489,17 +679,18 @@ module.exports.list = {
     controller: 'ListSPAexamplesCtrl'
 };
 
-},{}],10:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 /* state: 'examples-spa_q'
  * url: /examples-spa/q
  ************************/
 module.exports = {
     url: '/examples-spa/q',
-    templateUrl: '/client/dist/html/examples-spa/q/list.html'
+    templateUrl: '/client/dist/html/examples-spa/q/listQ.html',
+    controller: 'ListQCtrl'
 };
 
 
-},{}],11:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 /* state: 'examples-spa_uirouter'
  * url: /examples-spa/uirouter
  ************************/
@@ -509,4 +700,4 @@ module.exports.list = {
 };
 
 
-},{}]},{},[7]);
+},{}]},{},[8]);

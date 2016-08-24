@@ -26,5 +26,6 @@ clientApp.controller('ListSPAexamplesCtrl', require('./app/examples-spa/listSPAe
 //********* ui-router examples
 clientApp.controller('StateControllerAliasCtrl', require('./app/examples-spa/uirouter/stateControllerAliasCtrl'));
 
-
+//********* $q promise examples
+clientApp.controller('ListQCtrl', require('./app/examples-spa/q/listQCtrl'));
 

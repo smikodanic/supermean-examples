@@ -3,6 +3,7 @@
  ************************/
 module.exports = {
     url: '/examples-spa/q',
-    templateUrl: '/client/dist/html/examples-spa/q/list.html'
+    templateUrl: '/client/dist/html/examples-spa/q/listQ.html',
+    controller: 'ListQCtrl'
 };
 

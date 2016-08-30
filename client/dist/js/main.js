@@ -403,6 +403,7 @@ module.exports = function ($stateProvider, $urlRouterProvider) {
     $stateProvider.state('examples-spa_uirouter', require('../routes-ui/examples-spa_uirouter').list); // url: /examples-spa/uirouter
     $stateProvider.state('examples-spa_qa', require('../routes-ui/examples-spa_q')); // url: /examples-spa/q
     $stateProvider.state('examples-spa_login', require('../routes-ui/examples-spa_login')); // url: /examples-spa/login
+    $stateProvider.state('examples-spa_login_basic', require('../routes-ui/examples-spa_login').basic); // url: /examples-spa/login
 
 
 
@@ -807,12 +808,21 @@ module.exports.list = {
 };
 
 },{}],12:[function(require,module,exports){
-/* state: 'examples-spa_q'
- * url: /examples-spa/q
+/* state: 'examples-spa_login'
+ * url: /examples-spa/login
  ************************/
 module.exports = {
     url: '/examples-spa/login',
     templateUrl: '/client/dist/html/examples-spa/login/listLogin.html'
+};
+
+/* state: 'examples-spa_login_basic'
+ * url: /examples-spa/login/basic
+ ************************/
+module.exports.basic = {
+    url: '/examples-spa/login/basic',
+    templateUrl: '/client/dist/html/examples-spa/login/loginForm.html',
+    controller: 'BasicAuthCtrl'
 };
 
 

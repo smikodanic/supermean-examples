@@ -30,3 +30,5 @@ clientApp.controller('StateControllerAliasCtrl', require('./app/examples-spa/uir
 clientApp.controller('ListQcreationCtrl', require('./app/examples-spa/q/listQcreationCtrl'));
 clientApp.controller('ListQmethodsCtrl', require('./app/examples-spa/q/listQmethodsCtrl'));
 
+//********* login examples
+clientApp.controller('PageCtrl', require('./app/examples-spa/login/pageCtrl'));

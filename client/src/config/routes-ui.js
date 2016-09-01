@@ -28,7 +28,9 @@ module.exports = function ($stateProvider, $urlRouterProvider) {
     $stateProvider.state('examples-spa_uirouter', require('../routes-ui/examples-spa_uirouter').list); // url: /examples-spa/uirouter
     $stateProvider.state('examples-spa_qa', require('../routes-ui/examples-spa_q')); // url: /examples-spa/q
     $stateProvider.state('examples-spa_login', require('../routes-ui/examples-spa_login')); // url: /examples-spa/login
-    $stateProvider.state('examples-spa_login_basic', require('../routes-ui/examples-spa_login').basic); // url: /examples-spa/login
+    $stateProvider.state('examples-spa_login_pageform', require('../routes-ui/examples-spa_login').pageform); // url: /examples-spa/login/pageform
+    $stateProvider.state('examples-spa_login_page1', require('../routes-ui/examples-spa_login').page1); // url: /examples-spa/login/page1
+    $stateProvider.state('examples-spa_login_page2', require('../routes-ui/examples-spa_login').page2); // url: /examples-spa/login/page2
 
 
 

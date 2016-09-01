@@ -28,6 +28,16 @@ module.exports = function ($scope) {
 
 },{}],3:[function(require,module,exports){
 /**
+ * Controller: pageCtrl
+ */
+module.exports = function ($scope) {
+    'use strict';
+
+    console.log('Page CTRL started.');
+};
+
+},{}],4:[function(require,module,exports){
+/**
  * Controller: ListQcreationCtrl
  */
 module.exports = function ($scope, $q, $timeout) {
@@ -213,7 +223,7 @@ module.exports = function ($scope, $q, $timeout) {
 
 };
 
-},{}],4:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 /**
  * Controller: ListQmethodsCtrl
  */
@@ -340,14 +350,14 @@ console:
 
 };
 
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 /* Controller: 'StateControllerAliasCtrl' */
 module.exports = function ($scope) {
     'use strict';
     $scope.myVar = 'Variable from $scope !'
 };
 
-},{}],6:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 //application constants (configuration file)
 module.exports = {
 
@@ -356,7 +366,7 @@ module.exports = {
 
 };
 
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 /**
  * $location in HTML5 mode
  *
@@ -372,7 +382,7 @@ module.exports = function ($locationProvider) {
     // $locationProvider.html5Mode(false); //http://localhost:3000/something#/example
 };
 
-},{}],8:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 /*global window*/
 /**
  * App routes defined by ui-router.
@@ -403,7 +413,9 @@ module.exports = function ($stateProvider, $urlRouterProvider) {
     $stateProvider.state('examples-spa_uirouter', require('../routes-ui/examples-spa_uirouter').list); // url: /examples-spa/uirouter
     $stateProvider.state('examples-spa_qa', require('../routes-ui/examples-spa_q')); // url: /examples-spa/q
     $stateProvider.state('examples-spa_login', require('../routes-ui/examples-spa_login')); // url: /examples-spa/login
-    $stateProvider.state('examples-spa_login_basic', require('../routes-ui/examples-spa_login').basic); // url: /examples-spa/login
+    $stateProvider.state('examples-spa_login_pageform', require('../routes-ui/examples-spa_login').pageform); // url: /examples-spa/login/pageform
+    $stateProvider.state('examples-spa_login_page1', require('../routes-ui/examples-spa_login').page1); // url: /examples-spa/login/page1
+    $stateProvider.state('examples-spa_login_page2', require('../routes-ui/examples-spa_login').page2); // url: /examples-spa/login/page2
 
 
 
@@ -756,7 +768,7 @@ module.exports = function ($stateProvider, $urlRouterProvider) {
 
 
 
-},{"../routes-ui/404":10,"../routes-ui/examples-spa":11,"../routes-ui/examples-spa_login":12,"../routes-ui/examples-spa_q":13,"../routes-ui/examples-spa_uirouter":14}],9:[function(require,module,exports){
+},{"../routes-ui/404":11,"../routes-ui/examples-spa":12,"../routes-ui/examples-spa_login":13,"../routes-ui/examples-spa_q":14,"../routes-ui/examples-spa_uirouter":15}],10:[function(require,module,exports){
 /*global angular*/
 var clientApp = angular.module('clientApp', [
     // 'ngRoute',
@@ -789,15 +801,17 @@ clientApp.controller('StateControllerAliasCtrl', require('./app/examples-spa/uir
 clientApp.controller('ListQcreationCtrl', require('./app/examples-spa/q/listQcreationCtrl'));
 clientApp.controller('ListQmethodsCtrl', require('./app/examples-spa/q/listQmethodsCtrl'));
 
+//********* login examples
+clientApp.controller('PageCtrl', require('./app/examples-spa/login/pageCtrl'));
 
-},{"./app/_common/404/404Ctrl":1,"./app/examples-spa/listSPAexamplesCtrl":2,"./app/examples-spa/q/listQcreationCtrl":3,"./app/examples-spa/q/listQmethodsCtrl":4,"./app/examples-spa/uirouter/stateControllerAliasCtrl":5,"./config/constants":6,"./config/html5mode":7,"./config/routes-ui":8}],10:[function(require,module,exports){
+},{"./app/_common/404/404Ctrl":1,"./app/examples-spa/listSPAexamplesCtrl":2,"./app/examples-spa/login/pageCtrl":3,"./app/examples-spa/q/listQcreationCtrl":4,"./app/examples-spa/q/listQmethodsCtrl":5,"./app/examples-spa/uirouter/stateControllerAliasCtrl":6,"./config/constants":7,"./config/html5mode":8,"./config/routes-ui":9}],11:[function(require,module,exports){
 module.exports = {
     url: '/404',
     templateUrl: '/client/dist/html/_common/404/404.html',
     controller: '404Ctrl'
 };
 
-},{}],11:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 /* state: 'examples-spa'
  * url: /examples-spa
  ************************/
@@ -807,7 +821,7 @@ module.exports.list = {
     controller: 'ListSPAexamplesCtrl'
 };
 
-},{}],12:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 /* state: 'examples-spa_login'
  * url: /examples-spa/login
  ************************/
@@ -816,17 +830,57 @@ module.exports = {
     templateUrl: '/client/dist/html/examples-spa/login/listLogin.html'
 };
 
-/* state: 'examples-spa_login_basic'
- * url: /examples-spa/login/basic
+/* state: 'examples-spa_login_pageform'
+ * url: /examples-spa/login/pageform
  ************************/
-module.exports.basic = {
-    url: '/examples-spa/login/basic',
-    templateUrl: '/client/dist/html/examples-spa/login/loginForm.html',
-    controller: 'BasicAuthCtrl'
+module.exports.pageform = {
+    url: '/examples-spa/login/pageform',
+    views: {
+        '': {
+            templateUrl: '/client/dist/html/examples-spa/login/pageform.html',
+            controller: 'PageCtrl'
+        },
+        'pagemenu@examples-spa_login_pageform': {
+            templateUrl: '/client/dist/html/examples-spa/login/_pagemenu.html'
+        }
+    }
+};
+
+/* state: 'examples-spa_login_page1'
+ * url: /examples-spa/login/page1
+ ************************/
+module.exports.page1 = {
+    url: '/examples-spa/login/page1',
+    views: {
+        '': {
+            templateUrl: '/client/dist/html/examples-spa/login/page1.html',
+            controller: 'PageCtrl'
+        },
+        'pagemenu@examples-spa_login_page1': {
+            templateUrl: '/client/dist/html/examples-spa/login/_pagemenu.html'
+        }
+    }
 };
 
 
-},{}],13:[function(require,module,exports){
+/* state: 'examples-spa_login_page2'
+ * url: /examples-spa/login/page2
+ ************************/
+module.exports.page2 = {
+    url: '/examples-spa/login/page2',
+    views: {
+        '': {
+            templateUrl: '/client/dist/html/examples-spa/login/page2.html',
+            controller: 'PageCtrl'
+        },
+        'pagemenu@examples-spa_login_page2': {
+            templateUrl: '/client/dist/html/examples-spa/login/_pagemenu.html'
+        }
+    }
+};
+
+
+},{}],14:[function(require,module,exports){
 /* state: 'examples-spa_q'
  * url: /examples-spa/q
  ************************/
@@ -836,7 +890,7 @@ module.exports = {
 };
 
 
-},{}],14:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 /* state: 'examples-spa_uirouter'
  * url: /examples-spa/uirouter
  ************************/
@@ -846,4 +900,4 @@ module.exports.list = {
 };
 
 
-},{}]},{},[9]);
+},{}]},{},[10]);

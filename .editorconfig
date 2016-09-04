@@ -20,7 +20,11 @@ indent_size = 4
 indent_style = space
 indent_size = 4
 
-[*.{ejs, html}]
+[*.html]
+indent_style = tab
+indent_size = 4
+
+[*.ejs]
 indent_style = tab
 indent_size = 4
 

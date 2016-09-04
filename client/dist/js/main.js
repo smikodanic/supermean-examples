@@ -30,10 +30,21 @@ module.exports = function ($scope) {
 /**
  * Controller: pageCtrl
  */
-module.exports = function ($scope) {
+module.exports = function ($scope, basicAuth) {
     'use strict';
 
-    console.log('Page CTRL started.');
+
+    $scope.basicLogin = function () {
+
+        basicAuth.sendCredentials($scope.username, $scope.password)
+            .then(function (respons) {
+                console.log(JSON.stringify(respons, null, 2));
+            }, function (err) {
+                console.error(err);
+            });
+
+    };
+
 };
 
 },{}],4:[function(require,module,exports){
@@ -361,7 +372,7 @@ module.exports = function ($scope) {
 //application constants (configuration file)
 module.exports = {
 
-    API_BASE_URL: 'http://uniapi.com'
+    API_BASE_URL: 'http://localhost:9005'
 
 
 };
@@ -768,7 +779,133 @@ module.exports = function ($stateProvider, $urlRouterProvider) {
 
 
 
-},{"../routes-ui/404":11,"../routes-ui/examples-spa":12,"../routes-ui/examples-spa_login":13,"../routes-ui/examples-spa_q":14,"../routes-ui/examples-spa_uirouter":15}],10:[function(require,module,exports){
+},{"../routes-ui/404":13,"../routes-ui/examples-spa":14,"../routes-ui/examples-spa_login":15,"../routes-ui/examples-spa_q":16,"../routes-ui/examples-spa_uirouter":17}],10:[function(require,module,exports){
+module.exports = function () {
+    'use strict';
+
+    var keyStr = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
+
+    return {
+        encode: function (input) {
+            var output = "";
+            var chr1, chr2, chr3 = "";
+            var enc1, enc2, enc3, enc4 = "";
+            var i = 0;
+
+            do {
+                chr1 = input.charCodeAt(i++);
+                chr2 = input.charCodeAt(i++);
+                chr3 = input.charCodeAt(i++);
+
+                enc1 = chr1 >> 2;
+                enc2 = ((chr1 & 3) << 4) | (chr2 >> 4);
+                enc3 = ((chr2 & 15) << 2) | (chr3 >> 6);
+                enc4 = chr3 & 63;
+
+                if (isNaN(chr2)) {
+                    enc3 = enc4 = 64;
+                } else if (isNaN(chr3)) {
+                    enc4 = 64;
+                }
+
+                output = output +
+                    keyStr.charAt(enc1) +
+                    keyStr.charAt(enc2) +
+                    keyStr.charAt(enc3) +
+                    keyStr.charAt(enc4);
+                chr1 = chr2 = chr3 = "";
+                enc1 = enc2 = enc3 = enc4 = "";
+            } while (i < input.length);
+
+            return output;
+        },
+
+        decode: function (input) {
+            var output = "";
+            var chr1, chr2, chr3 = "";
+            var enc1, enc2, enc3, enc4 = "";
+            var i = 0;
+
+            // remove all characters that are not A-Z, a-z, 0-9, +, /, or =
+            var base64test = /[^A-Za-z0-9\+\/\=]/g;
+            if (base64test.exec(input)) {
+                console.error("There were invalid base64 characters in the input text.\n" +
+                    "Valid base64 characters are A-Z, a-z, 0-9, '+', '/',and '='\n" +
+                    "Expect errors in decoding.");
+            }
+            input = input.replace(/[^A-Za-z0-9\+\/\=]/g, "");
+
+            do {
+                enc1 = keyStr.indexOf(input.charAt(i++));
+                enc2 = keyStr.indexOf(input.charAt(i++));
+                enc3 = keyStr.indexOf(input.charAt(i++));
+                enc4 = keyStr.indexOf(input.charAt(i++));
+
+                chr1 = (enc1 << 2) | (enc2 >> 4);
+                chr2 = ((enc2 & 15) << 4) | (enc3 >> 2);
+                chr3 = ((enc3 & 3) << 6) | enc4;
+
+                output = output + String.fromCharCode(chr1);
+
+                if (enc3 != 64) {
+                    output = output + String.fromCharCode(chr2);
+                }
+                if (enc4 != 64) {
+                    output = output + String.fromCharCode(chr3);
+                }
+
+                chr1 = chr2 = chr3 = "";
+                enc1 = enc2 = enc3 = enc4 = "";
+
+            } while (i < input.length);
+
+            return output;
+        }
+    };
+
+};
+
+},{}],11:[function(require,module,exports){
+/**
+ * Services for Basic Authentication
+ */
+
+module.exports = function ($http, APPCONF, base64) {
+    'use strict';
+
+    var basicAuth = {};
+
+    /**
+     * Send username and password to validate.
+     * @param  {String} u - username
+     * @param  {String} p -password
+     * @return {Object}   - API object
+     */
+    basicAuth.sendCredentials = function (u, p) {
+
+        //encoding
+        var input = u + ':' + p;
+        var input64 = base64.encode(input);
+
+        //$http config
+        var http_config = {
+            headers: {
+                Authorization: 'Basic ' + input64
+            }
+        };
+        // console.log(JSON.stringify(http_config, null, 2));
+
+
+        return $http.get(APPCONF.API_BASE_URL + '/examples/auth/passport/basicstrategy', http_config);
+
+    };
+
+
+    return basicAuth;
+
+};
+
+},{}],12:[function(require,module,exports){
 /*global angular*/
 var clientApp = angular.module('clientApp', [
     // 'ngRoute',
@@ -804,14 +941,20 @@ clientApp.controller('ListQmethodsCtrl', require('./app/examples-spa/q/listQmeth
 //********* login examples
 clientApp.controller('PageCtrl', require('./app/examples-spa/login/pageCtrl'));
 
-},{"./app/_common/404/404Ctrl":1,"./app/examples-spa/listSPAexamplesCtrl":2,"./app/examples-spa/login/pageCtrl":3,"./app/examples-spa/q/listQcreationCtrl":4,"./app/examples-spa/q/listQmethodsCtrl":5,"./app/examples-spa/uirouter/stateControllerAliasCtrl":6,"./config/constants":7,"./config/html5mode":8,"./config/routes-ui":9}],11:[function(require,module,exports){
+
+/******************* SERVICES *******************
+ **********************************************/
+clientApp.factory('basicAuth', require('./lib/factory/basicAuth'));
+clientApp.factory('base64', require('./lib/factory/base64'));
+
+},{"./app/_common/404/404Ctrl":1,"./app/examples-spa/listSPAexamplesCtrl":2,"./app/examples-spa/login/pageCtrl":3,"./app/examples-spa/q/listQcreationCtrl":4,"./app/examples-spa/q/listQmethodsCtrl":5,"./app/examples-spa/uirouter/stateControllerAliasCtrl":6,"./config/constants":7,"./config/html5mode":8,"./config/routes-ui":9,"./lib/factory/base64":10,"./lib/factory/basicAuth":11}],13:[function(require,module,exports){
 module.exports = {
     url: '/404',
     templateUrl: '/client/dist/html/_common/404/404.html',
     controller: '404Ctrl'
 };
 
-},{}],12:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 /* state: 'examples-spa'
  * url: /examples-spa
  ************************/
@@ -821,7 +964,7 @@ module.exports.list = {
     controller: 'ListSPAexamplesCtrl'
 };
 
-},{}],13:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 /* state: 'examples-spa_login'
  * url: /examples-spa/login
  ************************/
@@ -880,7 +1023,7 @@ module.exports.page2 = {
 };
 
 
-},{}],14:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 /* state: 'examples-spa_q'
  * url: /examples-spa/q
  ************************/
@@ -890,7 +1033,7 @@ module.exports = {
 };
 
 
-},{}],15:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 /* state: 'examples-spa_uirouter'
  * url: /examples-spa/uirouter
  ************************/
@@ -900,4 +1043,4 @@ module.exports.list = {
 };
 
 
-},{}]},{},[10]);
+},{}]},{},[12]);

@@ -32,3 +32,9 @@ clientApp.controller('ListQmethodsCtrl', require('./app/examples-spa/q/listQmeth
 
 //********* login examples
 clientApp.controller('PageCtrl', require('./app/examples-spa/login/pageCtrl'));
+
+
+/******************* SERVICES *******************
+ **********************************************/
+clientApp.factory('basicAuth', require('./lib/factory/basicAuth'));
+clientApp.factory('base64', require('./lib/factory/base64'));

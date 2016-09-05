@@ -5,6 +5,17 @@
  */
 
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+/*
+ AngularJS v1.5.8
+ (c) 2010-2016 Google, Inc. http://angularjs.org
+ License: MIT
+*/
+(function(n,c){'use strict';function l(b,a,g){var d=g.baseHref(),k=b[0];return function(b,e,f){var g,h;f=f||{};h=f.expires;g=c.isDefined(f.path)?f.path:d;c.isUndefined(e)&&(h="Thu, 01 Jan 1970 00:00:00 GMT",e="");c.isString(h)&&(h=new Date(h));e=encodeURIComponent(b)+"="+encodeURIComponent(e);e=e+(g?";path="+g:"")+(f.domain?";domain="+f.domain:"");e+=h?";expires="+h.toUTCString():"";e+=f.secure?";secure":"";f=e.length+1;4096<f&&a.warn("Cookie '"+b+"' possibly not set or overflowed because it was too large ("+
+f+" > 4096 bytes)!");k.cookie=e}}c.module("ngCookies",["ng"]).provider("$cookies",[function(){var b=this.defaults={};this.$get=["$$cookieReader","$$cookieWriter",function(a,g){return{get:function(d){return a()[d]},getObject:function(d){return(d=this.get(d))?c.fromJson(d):d},getAll:function(){return a()},put:function(d,a,m){g(d,a,m?c.extend({},b,m):b)},putObject:function(d,b,a){this.put(d,c.toJson(b),a)},remove:function(a,k){g(a,void 0,k?c.extend({},b,k):b)}}}]}]);c.module("ngCookies").factory("$cookieStore",
+["$cookies",function(b){return{get:function(a){return b.getObject(a)},put:function(a,c){b.putObject(a,c)},remove:function(a){b.remove(a)}}}]);l.$inject=["$document","$log","$browser"];c.module("ngCookies").provider("$$cookieWriter",function(){this.$get=l})})(window,window.angular);
+
+
+},{}],2:[function(require,module,exports){
 /*global window*/
 
 /**
@@ -16,7 +27,7 @@ module.exports = function () {
     window.location.href = '/404';
 };
 
-},{}],2:[function(require,module,exports){
+},{}],3:[function(require,module,exports){
 /**
  * Controller: examples-spa_listCtrl
  */
@@ -26,7 +37,7 @@ module.exports = function ($scope) {
     console.log('A list of SPA Examples.');
 };
 
-},{}],3:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 /**
  * Controller: pageCtrl
  */
@@ -38,7 +49,16 @@ module.exports = function ($scope, basicAuth) {
 
         basicAuth.sendCredentials($scope.username, $scope.password)
             .then(function (respons) {
+                if (respons.data.isSuccess) {
+                    basicAuth.setCookie('authAPI', respons.data.putLocally);
+                }
+
+
                 console.log(JSON.stringify(respons, null, 2));
+                setTimeout(function () {
+                    console.log('KUKI \n' + JSON.stringify(basicAuth.getCookie('authAPI'), null, 2));
+                }, 3000);
+
             }, function (err) {
                 console.error(err);
             });
@@ -47,7 +67,7 @@ module.exports = function ($scope, basicAuth) {
 
 };
 
-},{}],4:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 /**
  * Controller: ListQcreationCtrl
  */
@@ -234,7 +254,7 @@ module.exports = function ($scope, $q, $timeout) {
 
 };
 
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 /**
  * Controller: ListQmethodsCtrl
  */
@@ -361,14 +381,14 @@ console:
 
 };
 
-},{}],6:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 /* Controller: 'StateControllerAliasCtrl' */
 module.exports = function ($scope) {
     'use strict';
     $scope.myVar = 'Variable from $scope !'
 };
 
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 //application constants (configuration file)
 module.exports = {
 
@@ -377,7 +397,7 @@ module.exports = {
 
 };
 
-},{}],8:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 /**
  * $location in HTML5 mode
  *
@@ -393,7 +413,7 @@ module.exports = function ($locationProvider) {
     // $locationProvider.html5Mode(false); //http://localhost:3000/something#/example
 };
 
-},{}],9:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 /*global window*/
 /**
  * App routes defined by ui-router.
@@ -779,7 +799,7 @@ module.exports = function ($stateProvider, $urlRouterProvider) {
 
 
 
-},{"../routes-ui/404":13,"../routes-ui/examples-spa":14,"../routes-ui/examples-spa_login":15,"../routes-ui/examples-spa_q":16,"../routes-ui/examples-spa_uirouter":17}],10:[function(require,module,exports){
+},{"../routes-ui/404":14,"../routes-ui/examples-spa":15,"../routes-ui/examples-spa_login":16,"../routes-ui/examples-spa_q":17,"../routes-ui/examples-spa_uirouter":18}],11:[function(require,module,exports){
 module.exports = function () {
     'use strict';
 
@@ -865,12 +885,14 @@ module.exports = function () {
 
 };
 
-},{}],11:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 /**
  * Services for Basic Authentication
+ *
+ * Notice: $cookies require 'ngCookies' module to be included
  */
 
-module.exports = function ($http, APPCONF, base64) {
+module.exports = function ($http, $rootScope, APPCONF, base64, $cookies) {
     'use strict';
 
     var basicAuth = {};
@@ -895,9 +917,24 @@ module.exports = function ($http, APPCONF, base64) {
         };
         // console.log(JSON.stringify(http_config, null, 2));
 
+        //create auth data to be stored in cookie
+        $rootScope.authData = {
+            username: u,
+            header: http_config.headers.Authorization
+        };
+
 
         return $http.get(APPCONF.API_BASE_URL + '/examples/auth/passport/basicstrategy', http_config);
 
+    };
+
+
+    basicAuth.setCookie = function (cookieKey, obj) {
+        $cookies.putObject(cookieKey, obj);
+    };
+
+    basicAuth.getCookie = function (cookieKey) {
+        return $cookies.getObject(cookieKey);
     };
 
 
@@ -905,11 +942,17 @@ module.exports = function ($http, APPCONF, base64) {
 
 };
 
-},{}],12:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 /*global angular*/
+
+/******************* START APP AND LOAD MODULES *******************
+ **********************************************/
+require('../../bower_components/angular-cookies/angular-cookies.min.js');
+
 var clientApp = angular.module('clientApp', [
     // 'ngRoute',
-    'ui.router'
+    'ui.router',
+    'ngCookies'
 ]);
 
 
@@ -947,14 +990,14 @@ clientApp.controller('PageCtrl', require('./app/examples-spa/login/pageCtrl'));
 clientApp.factory('basicAuth', require('./lib/factory/basicAuth'));
 clientApp.factory('base64', require('./lib/factory/base64'));
 
-},{"./app/_common/404/404Ctrl":1,"./app/examples-spa/listSPAexamplesCtrl":2,"./app/examples-spa/login/pageCtrl":3,"./app/examples-spa/q/listQcreationCtrl":4,"./app/examples-spa/q/listQmethodsCtrl":5,"./app/examples-spa/uirouter/stateControllerAliasCtrl":6,"./config/constants":7,"./config/html5mode":8,"./config/routes-ui":9,"./lib/factory/base64":10,"./lib/factory/basicAuth":11}],13:[function(require,module,exports){
+},{"../../bower_components/angular-cookies/angular-cookies.min.js":1,"./app/_common/404/404Ctrl":2,"./app/examples-spa/listSPAexamplesCtrl":3,"./app/examples-spa/login/pageCtrl":4,"./app/examples-spa/q/listQcreationCtrl":5,"./app/examples-spa/q/listQmethodsCtrl":6,"./app/examples-spa/uirouter/stateControllerAliasCtrl":7,"./config/constants":8,"./config/html5mode":9,"./config/routes-ui":10,"./lib/factory/base64":11,"./lib/factory/basicAuth":12}],14:[function(require,module,exports){
 module.exports = {
     url: '/404',
     templateUrl: '/client/dist/html/_common/404/404.html',
     controller: '404Ctrl'
 };
 
-},{}],14:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 /* state: 'examples-spa'
  * url: /examples-spa
  ************************/
@@ -964,7 +1007,7 @@ module.exports.list = {
     controller: 'ListSPAexamplesCtrl'
 };
 
-},{}],15:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 /* state: 'examples-spa_login'
  * url: /examples-spa/login
  ************************/
@@ -1023,7 +1066,7 @@ module.exports.page2 = {
 };
 
 
-},{}],16:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 /* state: 'examples-spa_q'
  * url: /examples-spa/q
  ************************/
@@ -1033,7 +1076,7 @@ module.exports = {
 };
 
 
-},{}],17:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 /* state: 'examples-spa_uirouter'
  * url: /examples-spa/uirouter
  ************************/
@@ -1043,4 +1086,4 @@ module.exports.list = {
 };
 
 
-},{}]},{},[12]);
+},{}]},{},[13]);

@@ -1,7 +1,13 @@
 /*global angular*/
+
+/******************* START APP AND LOAD MODULES *******************
+ **********************************************/
+require('../../bower_components/angular-cookies/angular-cookies.min.js');
+
 var clientApp = angular.module('clientApp', [
     // 'ngRoute',
-    'ui.router'
+    'ui.router',
+    'ngCookies'
 ]);
 
 

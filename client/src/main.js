@@ -27,7 +27,6 @@ clientApp.config(require('./config/html5mode'));
 
 
 /*********************************** RUN  ***********************************
-Run this functions when clientApp is loaded. For example on browser load.
 Only instances ($http) and constants can be injected into run blocks.
 This is to prevent further system configuration during application run time.
  ****************************************************************************/

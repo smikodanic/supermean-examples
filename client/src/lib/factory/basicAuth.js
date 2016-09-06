@@ -70,8 +70,11 @@ module.exports = function ($http, APPCONF, base64, $cookies, $location, $state, 
      * @return {Boolean} - returns true or false
      */
     basicAuth.logout = function (redirectUrl) {
-        $location.path(redirectUrl);
         basicAuth.delCookie('authAPI');
+
+        $timeout(function () {
+            $location.path(redirectUrl);
+        }, 0);
     };
 
 
@@ -90,9 +93,7 @@ module.exports = function ($http, APPCONF, base64, $cookies, $location, $state, 
 
             //redirect if 'authAPI' cookie doesn't exists
             if (!basicAuth.isAuthenticated()) {
-                $timeout(function () {
-                    basicAuth.logout('/examples-spa/login/pageform');
-                }, 0);
+                basicAuth.logout('/examples-spa/login/pageform');
             }
 
         }

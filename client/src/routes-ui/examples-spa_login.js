@@ -40,13 +40,10 @@ module.exports.page1 = {
     },
 
     resolve: {
-        authentication: function (basicAuth, $timeout) {
+        authentication: function (basicAuth) {
             'use strict';
             if (!basicAuth.isAuthenticated()) {
-                $timeout(function () {
-                    basicAuth.logout('/examples-spa/login/pageform');
-                    // $state.go('examples-spa_login_pageform'); //or use this
-                }, 0);
+                basicAuth.logout('/examples-spa/login/pageform');
             }
         }
     }

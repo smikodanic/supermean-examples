@@ -970,8 +970,11 @@ module.exports = function ($http, APPCONF, base64, $cookies, $location, $state, 
      * @return {Boolean} - returns true or false
      */
     basicAuth.logout = function (redirectUrl) {
-        $location.path(redirectUrl);
         basicAuth.delCookie('authAPI');
+
+        $timeout(function () {
+            $location.path(redirectUrl);
+        }, 0);
     };
 
 
@@ -990,9 +993,7 @@ module.exports = function ($http, APPCONF, base64, $cookies, $location, $state, 
 
             //redirect if 'authAPI' cookie doesn't exists
             if (!basicAuth.isAuthenticated()) {
-                $timeout(function () {
-                    basicAuth.logout('/examples-spa/login/pageform');
-                }, 0);
+                basicAuth.logout('/examples-spa/login/pageform');
             }
 
         }
@@ -1055,7 +1056,6 @@ clientApp.config(require('./config/html5mode'));
 
 
 /*********************************** RUN  ***********************************
-Run this functions when clientApp is loaded. For example on browser load.
 Only instances ($http) and constants can be injected into run blocks.
 This is to prevent further system configuration during application run time.
  ****************************************************************************/
@@ -1154,13 +1154,10 @@ module.exports.page1 = {
     },
 
     resolve: {
-        authentication: function (basicAuth, $timeout) {
+        authentication: function (basicAuth) {
             'use strict';
             if (!basicAuth.isAuthenticated()) {
-                $timeout(function () {
-                    basicAuth.logout('/examples-spa/login/pageform');
-                    // $state.go('examples-spa_login_pageform'); //or use this
-                }, 0);
+                basicAuth.logout('/examples-spa/login/pageform');
             }
         }
     }

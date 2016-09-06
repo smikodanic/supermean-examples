@@ -4,7 +4,7 @@
 module.exports = function ($scope, basicAuth, $state) {
     'use strict';
 
-    console.log(JSON.stringify($state.get('examples-spa_login_page1'), null, 2));
+    console.info('Current state \n', JSON.stringify($state.get($state.current.name), null, 2));
 
 
     $scope.basicLogin = function () {

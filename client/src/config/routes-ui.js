@@ -31,6 +31,7 @@ module.exports = function ($stateProvider, $urlRouterProvider) {
     $stateProvider.state('examples-spa_login_pageform', require('../routes-ui/examples-spa_login').pageform); // url: /examples-spa/login/pageform
     $stateProvider.state('examples-spa_login_page1', require('../routes-ui/examples-spa_login').page1); // url: /examples-spa/login/page1
     $stateProvider.state('examples-spa_login_page2', require('../routes-ui/examples-spa_login').page2); // url: /examples-spa/login/page2
+    $stateProvider.state('examples-spa_login_page3', require('../routes-ui/examples-spa_login').page3); // url: /examples-spa/login/page3
 
 
 

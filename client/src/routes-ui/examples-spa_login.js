@@ -70,6 +70,25 @@ module.exports.page2 = {
         }
     },
 
-    authenticationRequired: true
+    authRequired: true
+};
+
+
+/* state: 'examples-spa_login_page3'
+ * url: /examples-spa/login/page3
+ ***********************************/
+module.exports.page3 = {
+    url: '/examples-spa/login/page3',
+    views: {
+        '': {
+            templateUrl: '/client/dist/html/examples-spa/login/page3.html',
+            controller: 'PageCtrl'
+        },
+        'pagemenu@examples-spa_login_page3': {
+            templateUrl: '/client/dist/html/examples-spa/login/_pagemenu.html'
+        }
+    },
+
+    authRequired: false
 };
 

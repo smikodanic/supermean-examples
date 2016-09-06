@@ -4,7 +4,7 @@
  * Notice: $cookies require 'ngCookies' module to be included
  */
 
-module.exports = function ($http, APPCONF, base64, $cookies, $location) {
+module.exports = function ($http, APPCONF, base64, $cookies, $location, $state, $timeout) {
     'use strict';
 
     var basicAuth = {};
@@ -72,6 +72,30 @@ module.exports = function ($http, APPCONF, base64, $cookies, $location) {
     basicAuth.logout = function (redirectUrl) {
         $location.path(redirectUrl);
         basicAuth.delCookie('authAPI');
+    };
+
+
+    /**
+     * Protect state / route from unauthorized access.
+     * Implement inside main.js run() method --> $rootScope.$on('$stateChangeSuccess', basicAuth.onstateChangeSuccess);
+     * @param  {String} redirectUrl -url after successful login
+     * @return {Boolean} - returns true or false
+     */
+    basicAuth.onstateChangeSuccess = function (event, toState, toParams, fromState, fromParams) {
+        console.log('authRequired: ', JSON.stringify($state.current.authRequired, null, 2));
+        //check authentication if it's defined inside state with     authRequired: true
+        //see '/routes-ui/examples-spa_login.js'
+        if ($state.current.authRequired) {
+            console.log(JSON.stringify(basicAuth.isAuthenticated(), null, 2));
+
+            //redirect if 'authAPI' cookie doesn't exists
+            if (!basicAuth.isAuthenticated()) {
+                $timeout(function () {
+                    basicAuth.logout('/examples-spa/login/pageform');
+                }, 0);
+            }
+
+        }
     };
 
 

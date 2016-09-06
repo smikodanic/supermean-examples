@@ -3,8 +3,27 @@
 
 	<div class="col-sm-12">
 		<h2>Page 2</h2>
-		<p style="color:green">
-			Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quaerat velit sit mollitia quia est nobis consequatur deserunt voluptates ipsum ipsa unde, repellat atque quos, suscipit cupiditate inventore assumenda voluptatibus. Velit.
-		</p>
+		<p class="alert alert-warning">Authentication required on this page !!!</p>
 	</div>
+
+<b>Auth solved in /src/lib/factory/basicAuth.js:</b>
+<pre>
+    basicAuth.onstateChangeSuccess = function (event, toState, toParams, fromState, fromParams) {
+        console.log('authRequired: ', JSON.stringify($state.current.authRequired, null, 2));
+        //check authentication if it's defined inside state with     authRequired: true
+        //see '/routes-ui/examples-spa_login.js'
+        if ($state.current.authRequired) {
+            console.log(JSON.stringify(basicAuth.isAuthenticated(), null, 2));
+
+            //redirect if 'authAPI' cookie doesn't exists
+            if (!basicAuth.isAuthenticated()) {
+                $timeout(function () {
+                    basicAuth.logout('/examples-spa/login/pageform');
+                }, 0);
+            }
+
+        }
+    };
+</pre>
+
 </div>

@@ -11,14 +11,34 @@ var clientApp = angular.module('clientApp', [
 ]);
 
 
-/******************* CONFIG *******************
- **********************************************/
-clientApp.constant('APPCONF', require('./config/constants'));
+
+/**************************** CONSTANT **************************
+ ****************************************************************/
+clientApp.constant('APPCONF', require('./config/constAPPCONF'));
+// clientApp.constant('myMATH', require('./config/constantsMath'));
+
+
+
+/******************************************* CONFIG *******************************************
+Only providers ($httpProvider) and constants can be injected into configuration blocks.
+This is to prevent accidental instantiation of services before they have been fully configured.
+ **********************************************************************************************/
 clientApp.config(require('./config/html5mode'));
 
 
-/******************* ROUTES *******************
- **********************************************/
+/*********************************** RUN  ***********************************
+Run this functions when clientApp is loaded. For example on browser load.
+Only instances ($http) and constants can be injected into run blocks.
+This is to prevent further system configuration during application run time.
+ ****************************************************************************/
+clientApp.run(function ($rootScope, basicAuth) {
+    'use strict';
+    $rootScope.$on('$stateChangeSuccess', basicAuth.onstateChangeSuccess);
+});
+
+
+/****************************** ROUTES ******************************
+ ********************************************************************/
 // clientApp.config(['$routeProvider', require('./config/routes-ng')]);
 clientApp.config(require('./config/routes-ui'));
 
@@ -40,7 +60,8 @@ clientApp.controller('ListQmethodsCtrl', require('./app/examples-spa/q/listQmeth
 clientApp.controller('PageCtrl', require('./app/examples-spa/login/pageCtrl'));
 
 
-/******************* SERVICES *******************
- **********************************************/
+
+/***************************** SERVICES ***************************
+ ******************************************************************/
 clientApp.factory('basicAuth', require('./lib/factory/basicAuth'));
 clientApp.factory('base64', require('./lib/factory/base64'));

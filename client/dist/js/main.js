@@ -44,7 +44,7 @@ module.exports = function ($scope) {
 module.exports = function ($scope, basicAuth, $state) {
     'use strict';
 
-    console.log(JSON.stringify($state.get('examples-spa_login_page1'), null, 2));
+    console.info('Current state \n', JSON.stringify($state.get($state.current.name), null, 2));
 
 
     $scope.basicLogin = function () {
@@ -458,6 +458,7 @@ module.exports = function ($stateProvider, $urlRouterProvider) {
     $stateProvider.state('examples-spa_login_pageform', require('../routes-ui/examples-spa_login').pageform); // url: /examples-spa/login/pageform
     $stateProvider.state('examples-spa_login_page1', require('../routes-ui/examples-spa_login').page1); // url: /examples-spa/login/page1
     $stateProvider.state('examples-spa_login_page2', require('../routes-ui/examples-spa_login').page2); // url: /examples-spa/login/page2
+    $stateProvider.state('examples-spa_login_page3', require('../routes-ui/examples-spa_login').page3); // url: /examples-spa/login/page3
 
 
 
@@ -903,7 +904,7 @@ module.exports = function () {
  * Notice: $cookies require 'ngCookies' module to be included
  */
 
-module.exports = function ($http, APPCONF, base64, $cookies, $location) {
+module.exports = function ($http, APPCONF, base64, $cookies, $location, $state, $timeout) {
     'use strict';
 
     var basicAuth = {};
@@ -975,6 +976,30 @@ module.exports = function ($http, APPCONF, base64, $cookies, $location) {
 
 
     /**
+     * Protect state / route from unauthorized access.
+     * Implement inside main.js run() method --> $rootScope.$on('$stateChangeSuccess', basicAuth.onstateChangeSuccess);
+     * @param  {String} redirectUrl -url after successful login
+     * @return {Boolean} - returns true or false
+     */
+    basicAuth.onstateChangeSuccess = function (event, toState, toParams, fromState, fromParams) {
+        console.log('authRequired: ', JSON.stringify($state.current.authRequired, null, 2));
+        //check authentication if it's defined inside state with     authRequired: true
+        //see '/routes-ui/examples-spa_login.js'
+        if ($state.current.authRequired) {
+            console.log(JSON.stringify(basicAuth.isAuthenticated(), null, 2));
+
+            //redirect if 'authAPI' cookie doesn't exists
+            if (!basicAuth.isAuthenticated()) {
+                $timeout(function () {
+                    basicAuth.logout('/examples-spa/login/pageform');
+                }, 0);
+            }
+
+        }
+    };
+
+
+    /**
      * Determine if app is authenticated or not.
      * Authenticated is when cookie 'authAPI' exists.
      * @return {Boolean} - returns true or false
@@ -1014,14 +1039,34 @@ var clientApp = angular.module('clientApp', [
 ]);
 
 
-/******************* CONFIG *******************
- **********************************************/
-clientApp.constant('APPCONF', require('./config/constants'));
+
+/**************************** CONSTANT **************************
+ ****************************************************************/
+clientApp.constant('APPCONF', require('./config/constAPPCONF'));
+// clientApp.constant('myMATH', require('./config/constantsMath'));
+
+
+
+/******************************************* CONFIG *******************************************
+Only providers ($httpProvider) and constants can be injected into configuration blocks.
+This is to prevent accidental instantiation of services before they have been fully configured.
+ **********************************************************************************************/
 clientApp.config(require('./config/html5mode'));
 
 
-/******************* ROUTES *******************
- **********************************************/
+/*********************************** RUN  ***********************************
+Run this functions when clientApp is loaded. For example on browser load.
+Only instances ($http) and constants can be injected into run blocks.
+This is to prevent further system configuration during application run time.
+ ****************************************************************************/
+clientApp.run(function ($rootScope, basicAuth) {
+    'use strict';
+    $rootScope.$on('$stateChangeSuccess', basicAuth.onstateChangeSuccess);
+});
+
+
+/****************************** ROUTES ******************************
+ ********************************************************************/
 // clientApp.config(['$routeProvider', require('./config/routes-ng')]);
 clientApp.config(require('./config/routes-ui'));
 
@@ -1043,12 +1088,13 @@ clientApp.controller('ListQmethodsCtrl', require('./app/examples-spa/q/listQmeth
 clientApp.controller('PageCtrl', require('./app/examples-spa/login/pageCtrl'));
 
 
-/******************* SERVICES *******************
- **********************************************/
+
+/***************************** SERVICES ***************************
+ ******************************************************************/
 clientApp.factory('basicAuth', require('./lib/factory/basicAuth'));
 clientApp.factory('base64', require('./lib/factory/base64'));
 
-},{"../../bower_components/angular-cookies/angular-cookies.min.js":1,"./app/_common/404/404Ctrl":2,"./app/examples-spa/listSPAexamplesCtrl":3,"./app/examples-spa/login/pageCtrl":4,"./app/examples-spa/q/listQcreationCtrl":5,"./app/examples-spa/q/listQmethodsCtrl":6,"./app/examples-spa/uirouter/stateControllerAliasCtrl":7,"./config/constants":8,"./config/html5mode":9,"./config/routes-ui":10,"./lib/factory/base64":11,"./lib/factory/basicAuth":12}],14:[function(require,module,exports){
+},{"../../bower_components/angular-cookies/angular-cookies.min.js":1,"./app/_common/404/404Ctrl":2,"./app/examples-spa/listSPAexamplesCtrl":3,"./app/examples-spa/login/pageCtrl":4,"./app/examples-spa/q/listQcreationCtrl":5,"./app/examples-spa/q/listQmethodsCtrl":6,"./app/examples-spa/uirouter/stateControllerAliasCtrl":7,"./config/constAPPCONF":8,"./config/html5mode":9,"./config/routes-ui":10,"./lib/factory/base64":11,"./lib/factory/basicAuth":12}],14:[function(require,module,exports){
 module.exports = {
     url: '/404',
     templateUrl: '/client/dist/html/_common/404/404.html',
@@ -1138,7 +1184,26 @@ module.exports.page2 = {
         }
     },
 
-    authenticationRequired: true
+    authRequired: true
+};
+
+
+/* state: 'examples-spa_login_page3'
+ * url: /examples-spa/login/page3
+ ***********************************/
+module.exports.page3 = {
+    url: '/examples-spa/login/page3',
+    views: {
+        '': {
+            templateUrl: '/client/dist/html/examples-spa/login/page3.html',
+            controller: 'PageCtrl'
+        },
+        'pagemenu@examples-spa_login_page3': {
+            templateUrl: '/client/dist/html/examples-spa/login/_pagemenu.html'
+        }
+    },
+
+    authRequired: false
 };
 
 

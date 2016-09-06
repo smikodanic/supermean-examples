@@ -4,18 +4,18 @@
  * Notice: $cookies require 'ngCookies' module to be included
  */
 
-module.exports = function ($http, $rootScope, APPCONF, base64, $cookies) {
+module.exports = function ($http, APPCONF, base64, $cookies) {
     'use strict';
 
     var basicAuth = {};
 
     /**
-     * Send username and password to validate.
+     * Check credentials (username, password) and set cookie if credentails are correct.
      * @param  {String} u - username
      * @param  {String} p -password
      * @return {Object}   - API object
      */
-    basicAuth.sendCredentials = function (u, p) {
+    basicAuth.checkCredentials = function (u, p) {
 
         //encoding
         var input = u + ':' + p;
@@ -29,14 +29,15 @@ module.exports = function ($http, $rootScope, APPCONF, base64, $cookies) {
         };
         // console.log(JSON.stringify(http_config, null, 2));
 
-        //create auth data to be stored in cookie
-        $rootScope.authData = {
-            username: u,
-            header: http_config.headers.Authorization
-        };
+        //delete cookie (on bad login old cookie will be deleted)
+        basicAuth.delCookie('authAPI');
 
-
-        return $http.get(APPCONF.API_BASE_URL + '/examples/auth/passport/basicstrategy', http_config);
+        return $http.get(APPCONF.API_BASE_URL + '/examples/auth/passport/basicstrategy', http_config)
+            .then(function (respons) {
+                if (respons.data.isSuccess) {
+                    basicAuth.setCookie('authAPI', respons.data.putLocally);
+                }
+            });
 
     };
 
@@ -47,6 +48,10 @@ module.exports = function ($http, $rootScope, APPCONF, base64, $cookies) {
 
     basicAuth.getCookie = function (cookieKey) {
         return $cookies.getObject(cookieKey);
+    };
+
+    basicAuth.delCookie = function (cookieKey) {
+        return $cookies.remove(cookieKey);
     };
 
 

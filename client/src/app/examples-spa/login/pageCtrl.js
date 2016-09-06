@@ -9,7 +9,7 @@ module.exports = function ($scope, basicAuth) {
         $scope.errMsg = '';
 
         basicAuth
-            .checkCredentials($scope.username, $scope.password)
+            .login($scope.username, $scope.password, '/examples-spa/login/page1')
             .catch(function (err) {
                 $scope.errMsg = err.data.message;
                 console.error(err.data.stack);

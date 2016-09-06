@@ -48,6 +48,9 @@ module.exports = function ($http, APPCONF, base64, $cookies, $location) {
     };
 
 
+    /*
+     * Cookie manipulators
+     */
     basicAuth.setCookie = function (cookieKey, obj) {
         $cookies.putObject(cookieKey, obj);
     };
@@ -59,6 +62,39 @@ module.exports = function ($http, APPCONF, base64, $cookies, $location) {
     basicAuth.delCookie = function (cookieKey) {
         return $cookies.remove(cookieKey);
     };
+
+
+    /**
+     * Logout and redirect to another page.
+     * @param  {String} redirectUrl -url after successful login
+     * @return {Boolean} - returns true or false
+     */
+    basicAuth.logout = function (redirectUrl) {
+        $location.path(redirectUrl);
+        basicAuth.delCookie('authAPI');
+    };
+
+
+    /**
+     * Determine if app is authenticated or not.
+     * Authenticated is when cookie 'authAPI' exists.
+     * @return {Boolean} - returns true or false
+     */
+    basicAuth.isAuthenticated = function () {
+        if (basicAuth.getCookie('authAPI')) {
+            return !!basicAuth.getCookie('authAPI').username;
+        } else {
+            return false;
+        }
+    };
+
+
+
+
+
+
+
+
 
 
     return basicAuth;

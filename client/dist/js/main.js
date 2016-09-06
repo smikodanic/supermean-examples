@@ -41,8 +41,10 @@ module.exports = function ($scope) {
 /**
  * Controller: pageCtrl
  */
-module.exports = function ($scope, basicAuth) {
+module.exports = function ($scope, basicAuth, $state) {
     'use strict';
+
+    console.log(JSON.stringify($state.get('examples-spa_login_page1'), null, 2));
 
 
     $scope.basicLogin = function () {
@@ -70,6 +72,9 @@ module.exports = function ($scope, basicAuth) {
 
 
 
+    $scope.logout = function () {
+        basicAuth.logout('/examples-spa/login/pageform');
+    };
 
 };
 
@@ -942,6 +947,9 @@ module.exports = function ($http, APPCONF, base64, $cookies, $location) {
     };
 
 
+    /*
+     * Cookie manipulators
+     */
     basicAuth.setCookie = function (cookieKey, obj) {
         $cookies.putObject(cookieKey, obj);
     };
@@ -953,6 +961,39 @@ module.exports = function ($http, APPCONF, base64, $cookies, $location) {
     basicAuth.delCookie = function (cookieKey) {
         return $cookies.remove(cookieKey);
     };
+
+
+    /**
+     * Logout and redirect to another page.
+     * @param  {String} redirectUrl -url after successful login
+     * @return {Boolean} - returns true or false
+     */
+    basicAuth.logout = function (redirectUrl) {
+        $location.path(redirectUrl);
+        basicAuth.delCookie('authAPI');
+    };
+
+
+    /**
+     * Determine if app is authenticated or not.
+     * Authenticated is when cookie 'authAPI' exists.
+     * @return {Boolean} - returns true or false
+     */
+    basicAuth.isAuthenticated = function () {
+        if (basicAuth.getCookie('authAPI')) {
+            return !!basicAuth.getCookie('authAPI').username;
+        } else {
+            return false;
+        }
+    };
+
+
+
+
+
+
+
+
 
 
     return basicAuth;
@@ -1051,6 +1092,8 @@ module.exports.pageform = {
 
 /* state: 'examples-spa_login_page1'
  * url: /examples-spa/login/page1
+ *
+ * Authentication solved with resolve property.
  ************************/
 module.exports.page1 = {
     url: '/examples-spa/login/page1',
@@ -1062,12 +1105,26 @@ module.exports.page1 = {
         'pagemenu@examples-spa_login_page1': {
             templateUrl: '/client/dist/html/examples-spa/login/_pagemenu.html'
         }
+    },
+
+    resolve: {
+        authentication: function (basicAuth, $timeout) {
+            'use strict';
+            if (!basicAuth.isAuthenticated()) {
+                $timeout(function () {
+                    basicAuth.logout('/examples-spa/login/pageform');
+                    // $state.go('examples-spa_login_pageform'); //or use this
+                }, 0);
+            }
+        }
     }
 };
 
 
 /* state: 'examples-spa_login_page2'
  * url: /examples-spa/login/page2
+ *
+ * Authentication solved with     authenticationRequired: true
  ************************/
 module.exports.page2 = {
     url: '/examples-spa/login/page2',
@@ -1079,7 +1136,9 @@ module.exports.page2 = {
         'pagemenu@examples-spa_login_page2': {
             templateUrl: '/client/dist/html/examples-spa/login/_pagemenu.html'
         }
-    }
+    },
+
+    authenticationRequired: true
 };
 
 

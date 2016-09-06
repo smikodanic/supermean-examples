@@ -1,8 +1,10 @@
 /**
  * Controller: pageCtrl
  */
-module.exports = function ($scope, basicAuth) {
+module.exports = function ($scope, basicAuth, $state) {
     'use strict';
+
+    console.log(JSON.stringify($state.get('examples-spa_login_page1'), null, 2));
 
 
     $scope.basicLogin = function () {
@@ -30,5 +32,8 @@ module.exports = function ($scope, basicAuth) {
 
 
 
+    $scope.logout = function () {
+        basicAuth.logout('/examples-spa/login/pageform');
+    };
 
 };

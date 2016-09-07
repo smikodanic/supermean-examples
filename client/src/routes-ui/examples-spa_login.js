@@ -86,6 +86,6 @@ module.exports.page3 = {
         }
     },
 
-    authRequired: true
+    authRequired: false
 };
 

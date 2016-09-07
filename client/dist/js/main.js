@@ -55,8 +55,13 @@ module.exports = function ($scope, basicAuth, $state, $http, APPCONF) {
         basicAuth
             .login($scope.username, $scope.password, '/examples-spa/login/page1')
             .catch(function (err) {
-                $scope.errMsg = err.data.message;
-                console.error(err.data.stack);
+                if (err.data) {
+                    $scope.errMsg = err.data.message;
+                    console.error(err.data.stack);
+                } else {
+                    $scope.errMsg = 'Bad API request: ' + APPCONF.API_BASE_URL + '/examples-spa/login/page1';
+                }
+
             });
 
     };
@@ -421,7 +426,8 @@ module.exports = function ($scope) {
 //application constants (configuration file)
 module.exports = {
 
-    API_BASE_URL: 'http://localhost:9005'
+    API_BASE_URL: 'http://192.168.1.101:9005',
+    // API_BASE_URL: 'http://localhost:9005'
 
 
 };
@@ -1320,7 +1326,7 @@ module.exports.page3 = {
         }
     },
 
-    authRequired: true
+    authRequired: false
 };
 
 

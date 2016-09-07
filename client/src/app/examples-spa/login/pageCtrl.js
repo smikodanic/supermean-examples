@@ -15,8 +15,13 @@ module.exports = function ($scope, basicAuth, $state, $http, APPCONF) {
         basicAuth
             .login($scope.username, $scope.password, '/examples-spa/login/page1')
             .catch(function (err) {
-                $scope.errMsg = err.data.message;
-                console.error(err.data.stack);
+                if (err.data) {
+                    $scope.errMsg = err.data.message;
+                    console.error(err.data.stack);
+                } else {
+                    $scope.errMsg = 'Bad API request: ' + APPCONF.API_BASE_URL + '/examples-spa/login/page1';
+                }
+
             });
 
     };

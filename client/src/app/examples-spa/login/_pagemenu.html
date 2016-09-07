@@ -16,6 +16,8 @@
     <!-- Navbar -->
     <div class="collapse navbar-collapse" id="nv">
       	<ul class="nav navbar-nav navbar-left">
+        	<li><a href="/examples-spa/login/pageform">Login</a></li>
+
 			<li class="dropdown">
           		<a class="dropdown-toggle" data-toggle="dropdown" href="#">Pages Require Authentication<span class="caret"></span></a>
           		<ul class="dropdown-menu">
@@ -31,7 +33,14 @@
                 </ul>
 			</li>
 
-        	<li><a href="/examples-spa/login/pageform">Login</a></li>
+			<li class="dropdown">
+          		<a class="dropdown-toggle" data-toggle="dropdown" href="#">Get with $http<span class="caret"></span></a>
+          		<ul class="dropdown-menu">
+					<li><a href="#" ng-click="basicGetsomedata()">API Data protected by Basic Auth</a></li>
+                </ul>
+			</li>
+
+			<li><a style="color:green">{{someData}}</a></li>
       	</ul>
 
 		<ul class="nav navbar-nav navbar-right">

@@ -41,12 +41,14 @@ module.exports = function ($scope) {
 /**
  * Controller: pageCtrl
  */
-module.exports = function ($scope, basicAuth, $state) {
+module.exports = function ($scope, basicAuth, $state, $http, APPCONF) {
     'use strict';
 
-    console.info('Current state \n', JSON.stringify($state.get($state.current.name), null, 2));
+    //show current state object
+    // console.info('Current state \n', JSON.stringify($state.get($state.current.name), null, 2));
 
-
+    /******** BASIC AUTHENTICATION ********/
+    //click on login button
     $scope.basicLogin = function () {
         $scope.errMsg = '';
 
@@ -58,6 +60,22 @@ module.exports = function ($scope, basicAuth, $state) {
             });
 
     };
+
+    //request some protected data from API
+    $scope.basicGetsomedata = function () {
+        $http
+            .get(APPCONF.API_BASE_URL + '/examples/auth/passport/basicstrategy/getsomedata')
+            .then(function (res) {
+                $scope.someData = res.data.data.msg;
+                console.log('basicGetsomedata\n', JSON.stringify(res, null, 2));
+            })
+            .catch(function (err) {
+                console.error(JSON.stringify(err, null, 2));
+            });
+    };
+
+
+
 
 
 
@@ -811,7 +829,7 @@ module.exports = function ($stateProvider, $urlRouterProvider) {
 
 
 
-},{"../routes-ui/404":14,"../routes-ui/examples-spa":15,"../routes-ui/examples-spa_login":16,"../routes-ui/examples-spa_q":17,"../routes-ui/examples-spa_uirouter":18}],11:[function(require,module,exports){
+},{"../routes-ui/404":15,"../routes-ui/examples-spa":16,"../routes-ui/examples-spa_login":17,"../routes-ui/examples-spa_q":18,"../routes-ui/examples-spa_uirouter":19}],11:[function(require,module,exports){
 module.exports = function () {
     'use strict';
 
@@ -948,24 +966,45 @@ module.exports = function ($http, APPCONF, base64, $cookies, $location, $state, 
     };
 
 
-    /*
-     * Cookie manipulators
+    /**
+     * Set 'obj' inside cookie.
+     * @param {String} cookieKey - 'authAPI'
+     * @param {Object} obj       - {"username": "john", "authHeader": "Basic am9objp0ZXN0"}
      */
     basicAuth.setCookie = function (cookieKey, obj) {
         $cookies.putObject(cookieKey, obj);
     };
 
+    /**
+     * Return object from cookie.
+     * @param {String} cookieKey - 'authAPI'
+     * @return {Object}          - {"username": "john", "authHeader": "Basic am9objp0ZXN0"} || {"username": "", "authHeader": ""}
+     */
     basicAuth.getCookie = function (cookieKey) {
-        return $cookies.getObject(cookieKey);
+        var cookieObj = $cookies.getObject(cookieKey);
+
+        if (cookieObj) {
+            return cookieObj;
+        } else {
+            return {
+                username: '',
+                authHeader: ''
+            };
+        }
     };
 
+    /**
+     * Delete cookie, usually on logout.
+     * @param {String} cookieKey - 'authAPI'
+     */
     basicAuth.delCookie = function (cookieKey) {
-        return $cookies.remove(cookieKey);
+        $cookies.remove(cookieKey);
     };
 
 
     /**
      * Logout and redirect to another page.
+     * Use it in controller when user clicks on logout button.
      * @param  {String} redirectUrl -url after successful login
      * @return {Boolean} - returns true or false
      */
@@ -974,22 +1013,24 @@ module.exports = function ($http, APPCONF, base64, $cookies, $location, $state, 
 
         $timeout(function () {
             $location.path(redirectUrl);
-        }, 0);
+        }, 34);
     };
 
 
     /**
-     * Protect state / route from unauthorized access.
+     * Protect UI-router's state from unauthorized access.
      * Implement inside main.js run() method --> $rootScope.$on('$stateChangeSuccess', basicAuth.onstateChangeSuccess);
      * @param  {String} redirectUrl -url after successful login
      * @return {Boolean} - returns true or false
      */
-    basicAuth.onstateChangeSuccess = function (event, toState, toParams, fromState, fromParams) {
-        console.log('authRequired: ', JSON.stringify($state.current.authRequired, null, 2));
+    basicAuth.protectUIRouterState = function (event, toState, toParams, fromState, fromParams) {
+        event.preventDefault();
+
+        // console.log('authRequired: ', JSON.stringify($state.current.authRequired, null, 2));
+
         //check authentication if it's defined inside state with     authRequired: true
         //see '/routes-ui/examples-spa_login.js'
         if ($state.current.authRequired) {
-            console.log(JSON.stringify(basicAuth.isAuthenticated(), null, 2));
 
             //redirect if 'authAPI' cookie doesn't exists
             if (!basicAuth.isAuthenticated()) {
@@ -1000,8 +1041,9 @@ module.exports = function ($http, APPCONF, base64, $cookies, $location, $state, 
     };
 
 
+
     /**
-     * Determine if app is authenticated or not.
+     * Determine if app is authenticated or not. E.g. if user is logged in or not.
      * Authenticated is when cookie 'authAPI' exists.
      * @return {Boolean} - returns true or false
      */
@@ -1016,18 +1058,75 @@ module.exports = function ($http, APPCONF, base64, $cookies, $location, $state, 
 
 
 
-
-
-
-
-
-
     return basicAuth;
 
 };
 
 },{}],13:[function(require,module,exports){
+/**
+ * API Request interceptor
+ *
+ * clientApp.factory('interceptApiRequest', require('./lib/factory/interceptApiRequest'));
+ *
+ * Notice: $injector is required to inject basicAuth, because config() accepts providers only not services.
+ */
+
+module.exports = function ($injector) {
+    'use strict';
+
+    var interceptApiRequest = {};
+
+    /**
+     * REQUEST INTERCEPTOR
+     *
+     * @param  {Object} config    - $http config parameter
+     *     *** $http.get('/someUrl', config).then(successCallback, errorCallback);
+     *     *** $http.post('/someUrl', data, config).then(successCallback, errorCallback);
+     */
+    interceptApiRequest.request = function (config) {
+        var basicAuth = $injector.get('basicAuth'); //get basicAuth factory
+
+        //Intercept with 'Authorization' header only when cookie is set, e.g. when user is logged in.
+        //When user is not logged in don't add 'Authorization' header.
+        if (basicAuth.getCookie('authAPI').authHeader) {
+            config.headers['Authorization'] = basicAuth.getCookie('authAPI').authHeader; // 'Basic am9objp0ZXN0'
+        }
+
+        // console.log('$http config\n', JSON.stringify(config, null, 2));
+
+        return config;
+    };
+
+
+    interceptApiRequest.requestError = function(config) {
+        return config;
+    },
+
+    interceptApiRequest.response = function(res) {
+        return res;
+    },
+
+    interceptApiRequest.responseError = function(res) {
+        throw res;
+    }
+
+
+
+
+
+    return interceptApiRequest;
+
+};
+
+},{}],14:[function(require,module,exports){
 /*global angular*/
+
+/////BASIC AUTH MODULE
+angular.module('smAuth', [])
+    .controller('LoginCtrl', function ($scope) {
+        'use strict';
+        $scope.mojenesto = 'mojenesto';
+    });
 
 /******************* START APP AND LOAD MODULES *******************
  **********************************************/
@@ -1036,7 +1135,8 @@ require('../../bower_components/angular-cookies/angular-cookies.min.js');
 var clientApp = angular.module('clientApp', [
     // 'ngRoute',
     'ui.router',
-    'ngCookies'
+    'ngCookies',
+    'smAuth'
 ]);
 
 
@@ -1054,21 +1154,38 @@ This is to prevent accidental instantiation of services before they have been fu
  **********************************************************************************************/
 clientApp.config(require('./config/html5mode'));
 
+//protect API endpoints
+clientApp.config(function ($httpProvider) {
+    'use strict';
+    $httpProvider.interceptors.push('interceptApiRequest');
+});
+
+
+
+
 
 /*********************************** RUN  ***********************************
+Run on single page app start. For example on browser's reload.
 Only instances ($http) and constants can be injected into run blocks.
 This is to prevent further system configuration during application run time.
  ****************************************************************************/
+
+//protect pages e.g. ui-router's states
 clientApp.run(function ($rootScope, basicAuth) {
     'use strict';
-    $rootScope.$on('$stateChangeSuccess', basicAuth.onstateChangeSuccess);
+    $rootScope.$on('$stateChangeSuccess', basicAuth.protectUIRouterState);
 });
+
+
+
 
 
 /****************************** ROUTES ******************************
  ********************************************************************/
 // clientApp.config(['$routeProvider', require('./config/routes-ng')]);
 clientApp.config(require('./config/routes-ui'));
+
+
 
 
 
@@ -1089,19 +1206,22 @@ clientApp.controller('PageCtrl', require('./app/examples-spa/login/pageCtrl'));
 
 
 
+
+
 /***************************** SERVICES ***************************
  ******************************************************************/
 clientApp.factory('basicAuth', require('./lib/factory/basicAuth'));
 clientApp.factory('base64', require('./lib/factory/base64'));
+clientApp.factory('interceptApiRequest', require('./lib/factory/interceptApiRequest'));
 
-},{"../../bower_components/angular-cookies/angular-cookies.min.js":1,"./app/_common/404/404Ctrl":2,"./app/examples-spa/listSPAexamplesCtrl":3,"./app/examples-spa/login/pageCtrl":4,"./app/examples-spa/q/listQcreationCtrl":5,"./app/examples-spa/q/listQmethodsCtrl":6,"./app/examples-spa/uirouter/stateControllerAliasCtrl":7,"./config/constAPPCONF":8,"./config/html5mode":9,"./config/routes-ui":10,"./lib/factory/base64":11,"./lib/factory/basicAuth":12}],14:[function(require,module,exports){
+},{"../../bower_components/angular-cookies/angular-cookies.min.js":1,"./app/_common/404/404Ctrl":2,"./app/examples-spa/listSPAexamplesCtrl":3,"./app/examples-spa/login/pageCtrl":4,"./app/examples-spa/q/listQcreationCtrl":5,"./app/examples-spa/q/listQmethodsCtrl":6,"./app/examples-spa/uirouter/stateControllerAliasCtrl":7,"./config/constAPPCONF":8,"./config/html5mode":9,"./config/routes-ui":10,"./lib/factory/base64":11,"./lib/factory/basicAuth":12,"./lib/factory/interceptApiRequest":13}],15:[function(require,module,exports){
 module.exports = {
     url: '/404',
     templateUrl: '/client/dist/html/_common/404/404.html',
     controller: '404Ctrl'
 };
 
-},{}],15:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 /* state: 'examples-spa'
  * url: /examples-spa
  ************************/
@@ -1111,7 +1231,7 @@ module.exports.list = {
     controller: 'ListSPAexamplesCtrl'
 };
 
-},{}],16:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 /* state: 'examples-spa_login'
  * url: /examples-spa/login
  ************************/
@@ -1200,11 +1320,11 @@ module.exports.page3 = {
         }
     },
 
-    authRequired: false
+    authRequired: true
 };
 
 
-},{}],17:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 /* state: 'examples-spa_q'
  * url: /examples-spa/q
  ************************/
@@ -1214,7 +1334,7 @@ module.exports = {
 };
 
 
-},{}],18:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 /* state: 'examples-spa_uirouter'
  * url: /examples-spa/uirouter
  ************************/
@@ -1224,4 +1344,4 @@ module.exports.list = {
 };
 
 
-},{}]},{},[13]);
+},{}]},{},[14]);

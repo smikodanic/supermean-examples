@@ -1,5 +1,12 @@
 /*global angular*/
 
+/////BASIC AUTH MODULE
+angular.module('smAuth', [])
+    .controller('LoginCtrl', function ($scope) {
+        'use strict';
+        $scope.mojenesto = 'mojenesto';
+    });
+
 /******************* START APP AND LOAD MODULES *******************
  **********************************************/
 require('../../bower_components/angular-cookies/angular-cookies.min.js');
@@ -7,7 +14,8 @@ require('../../bower_components/angular-cookies/angular-cookies.min.js');
 var clientApp = angular.module('clientApp', [
     // 'ngRoute',
     'ui.router',
-    'ngCookies'
+    'ngCookies',
+    'smAuth'
 ]);
 
 
@@ -25,21 +33,38 @@ This is to prevent accidental instantiation of services before they have been fu
  **********************************************************************************************/
 clientApp.config(require('./config/html5mode'));
 
+//protect API endpoints
+clientApp.config(function ($httpProvider) {
+    'use strict';
+    $httpProvider.interceptors.push('interceptApiRequest');
+});
+
+
+
+
 
 /*********************************** RUN  ***********************************
+Run on single page app start. For example on browser's reload.
 Only instances ($http) and constants can be injected into run blocks.
 This is to prevent further system configuration during application run time.
  ****************************************************************************/
+
+//protect pages e.g. ui-router's states
 clientApp.run(function ($rootScope, basicAuth) {
     'use strict';
-    $rootScope.$on('$stateChangeSuccess', basicAuth.onstateChangeSuccess);
+    $rootScope.$on('$stateChangeSuccess', basicAuth.protectUIRouterState);
 });
+
+
+
 
 
 /****************************** ROUTES ******************************
  ********************************************************************/
 // clientApp.config(['$routeProvider', require('./config/routes-ng')]);
 clientApp.config(require('./config/routes-ui'));
+
+
 
 
 
@@ -60,7 +85,10 @@ clientApp.controller('PageCtrl', require('./app/examples-spa/login/pageCtrl'));
 
 
 
+
+
 /***************************** SERVICES ***************************
  ******************************************************************/
 clientApp.factory('basicAuth', require('./lib/factory/basicAuth'));
 clientApp.factory('base64', require('./lib/factory/base64'));
+clientApp.factory('interceptApiRequest', require('./lib/factory/interceptApiRequest'));

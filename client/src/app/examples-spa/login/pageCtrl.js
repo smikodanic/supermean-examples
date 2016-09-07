@@ -1,12 +1,14 @@
 /**
  * Controller: pageCtrl
  */
-module.exports = function ($scope, basicAuth, $state) {
+module.exports = function ($scope, basicAuth, $state, $http, APPCONF) {
     'use strict';
 
-    console.info('Current state \n', JSON.stringify($state.get($state.current.name), null, 2));
+    //show current state object
+    // console.info('Current state \n', JSON.stringify($state.get($state.current.name), null, 2));
 
-
+    /******** BASIC AUTHENTICATION ********/
+    //click on login button
     $scope.basicLogin = function () {
         $scope.errMsg = '';
 
@@ -18,6 +20,22 @@ module.exports = function ($scope, basicAuth, $state) {
             });
 
     };
+
+    //request some protected data from API
+    $scope.basicGetsomedata = function () {
+        $http
+            .get(APPCONF.API_BASE_URL + '/examples/auth/passport/basicstrategy/getsomedata')
+            .then(function (res) {
+                $scope.someData = res.data.data.msg;
+                console.log('basicGetsomedata\n', JSON.stringify(res, null, 2));
+            })
+            .catch(function (err) {
+                console.error(JSON.stringify(err, null, 2));
+            });
+    };
+
+
+
 
 
 

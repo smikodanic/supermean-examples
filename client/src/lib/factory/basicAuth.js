@@ -48,24 +48,45 @@ module.exports = function ($http, APPCONF, base64, $cookies, $location, $state, 
     };
 
 
-    /*
-     * Cookie manipulators
+    /**
+     * Set 'obj' inside cookie.
+     * @param {String} cookieKey - 'authAPI'
+     * @param {Object} obj       - {"username": "john", "authHeader": "Basic am9objp0ZXN0"}
      */
     basicAuth.setCookie = function (cookieKey, obj) {
         $cookies.putObject(cookieKey, obj);
     };
 
+    /**
+     * Return object from cookie.
+     * @param {String} cookieKey - 'authAPI'
+     * @return {Object}          - {"username": "john", "authHeader": "Basic am9objp0ZXN0"} || {"username": "", "authHeader": ""}
+     */
     basicAuth.getCookie = function (cookieKey) {
-        return $cookies.getObject(cookieKey);
+        var cookieObj = $cookies.getObject(cookieKey);
+
+        if (cookieObj) {
+            return cookieObj;
+        } else {
+            return {
+                username: '',
+                authHeader: ''
+            };
+        }
     };
 
+    /**
+     * Delete cookie, usually on logout.
+     * @param {String} cookieKey - 'authAPI'
+     */
     basicAuth.delCookie = function (cookieKey) {
-        return $cookies.remove(cookieKey);
+        $cookies.remove(cookieKey);
     };
 
 
     /**
      * Logout and redirect to another page.
+     * Use it in controller when user clicks on logout button.
      * @param  {String} redirectUrl -url after successful login
      * @return {Boolean} - returns true or false
      */
@@ -74,22 +95,24 @@ module.exports = function ($http, APPCONF, base64, $cookies, $location, $state, 
 
         $timeout(function () {
             $location.path(redirectUrl);
-        }, 0);
+        }, 34);
     };
 
 
     /**
-     * Protect state / route from unauthorized access.
+     * Protect UI-router's state from unauthorized access.
      * Implement inside main.js run() method --> $rootScope.$on('$stateChangeSuccess', basicAuth.onstateChangeSuccess);
      * @param  {String} redirectUrl -url after successful login
      * @return {Boolean} - returns true or false
      */
-    basicAuth.onstateChangeSuccess = function (event, toState, toParams, fromState, fromParams) {
-        console.log('authRequired: ', JSON.stringify($state.current.authRequired, null, 2));
+    basicAuth.protectUIRouterState = function (event, toState, toParams, fromState, fromParams) {
+        event.preventDefault();
+
+        // console.log('authRequired: ', JSON.stringify($state.current.authRequired, null, 2));
+
         //check authentication if it's defined inside state with     authRequired: true
         //see '/routes-ui/examples-spa_login.js'
         if ($state.current.authRequired) {
-            console.log(JSON.stringify(basicAuth.isAuthenticated(), null, 2));
 
             //redirect if 'authAPI' cookie doesn't exists
             if (!basicAuth.isAuthenticated()) {
@@ -100,8 +123,9 @@ module.exports = function ($http, APPCONF, base64, $cookies, $location, $state, 
     };
 
 
+
     /**
-     * Determine if app is authenticated or not.
+     * Determine if app is authenticated or not. E.g. if user is logged in or not.
      * Authenticated is when cookie 'authAPI' exists.
      * @return {Boolean} - returns true or false
      */
@@ -112,12 +136,6 @@ module.exports = function ($http, APPCONF, base64, $cookies, $location, $state, 
             return false;
         }
     };
-
-
-
-
-
-
 
 
 

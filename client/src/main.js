@@ -1,11 +1,14 @@
 /*global angular*/
 
-/////BASIC AUTH MODULE
-angular.module('smAuth', [])
-    .controller('LoginCtrl', function ($scope) {
-        'use strict';
-        $scope.mojenesto = 'mojenesto';
-    });
+var ngPassportBasic = require('../../../mynpm/angular-passport/src/main.js').ngPassportBasic;
+ngPassportBasic.constant('NGPASSPORT_CONF', {
+    // API_BASE_URL: 'http://192.168.1.101:9005',
+    API_BASE_URL: 'http://localhost:9005',
+    API_AUTH_PATHNAME: '/examples/auth/passport/basicstrategy',
+    URL_AFTER_SUCCESSFUL_LOGIN: '/examples-spa/login/page1',
+    URL_AFTER_LOGOUT: '/examples-spa/login/pageform'
+});
+
 
 /******************* START APP AND LOAD MODULES *******************
  **********************************************/
@@ -15,7 +18,7 @@ var clientApp = angular.module('clientApp', [
     // 'ngRoute',
     'ui.router',
     'ngCookies',
-    'smAuth'
+    'ngPassport.basicStrategy'
 ]);
 
 
@@ -89,6 +92,3 @@ clientApp.controller('PageCtrl', require('./app/examples-spa/login/pageCtrl'));
 
 /***************************** SERVICES ***************************
  ******************************************************************/
-clientApp.factory('basicAuth', require('./lib/factory/basicAuth'));
-clientApp.factory('base64', require('./lib/factory/base64'));
-clientApp.factory('interceptApiRequest', require('./lib/factory/interceptApiRequest'));

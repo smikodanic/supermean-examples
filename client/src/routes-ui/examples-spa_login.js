@@ -22,6 +22,25 @@ module.exports.pageform = {
     }
 };
 
+
+/* state: 'examples-spa_login_pageform2'
+ * url: /examples-spa/login/pageform2
+ ************************/
+module.exports.pageform2 = {
+    url: '/examples-spa/login/pageform2',
+    views: {
+        '': {
+            templateUrl: '/client/dist/html/examples-spa/login/pageform2.html',
+            controller: 'PageCtrl'
+        },
+        'pagemenu@examples-spa_login_pageform': {
+            templateUrl: '/client/dist/html/examples-spa/login/_pagemenu.html'
+        }
+    }
+};
+
+
+
 /* state: 'examples-spa_login_page1'
  * url: /examples-spa/login/page1
  *

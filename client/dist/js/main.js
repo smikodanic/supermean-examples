@@ -5,6 +5,396 @@
  */
 
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+/**
+ * Controller: 'NgPassportBasicCtrl'
+ */
+
+module.exports = function ($scope, basicAuth, $state) {
+    'use strict';
+    $scope.strategyName = 'Basic';
+
+    //show current state object
+    // console.info('Current state \n', JSON.stringify($state.get($state.current.name), null, 2));
+
+    /******** BASIC AUTHENTICATION ********/
+    //when login button is clicked
+    $scope.login = function () {
+        $scope.errMsg = '';
+
+        basicAuth
+            .login($scope.username, $scope.password)
+            .catch(function (err) {
+                if (err.data) {
+                    $scope.errMsg = err.data.message;
+                    console.error(err.data.stack);
+                } else {
+                    $scope.errMsg = 'Bad API request: ' + NGPASSPORT_CONF.API_BASE_URL + NGPASSPORT_CONF.URL_AFTER_SUCCESSFUL_LOGIN;
+                }
+
+            });
+
+    };
+
+    //when logout button is clicked
+    $scope.logout = function () {
+        basicAuth.logout();
+    };
+};
+
+},{}],2:[function(require,module,exports){
+module.exports = function (ctrl) {
+    'use strict';
+
+    return function ($templateCache) {
+
+        var ngpassportForm = {
+            restrict: 'E',
+            replace: true,
+            controller: ctrl,
+            scope: {templateurl: '='},
+            link: function (scope, elem, attr) {
+                console.log('template-url: ' + attr.templateUrl); //used <ngpassport-form template-url="formSimple.html"></ngpassport-form>
+            },
+            compile: function (element, attr) {
+                console.log('compile element: ' + JSON.stringify(element, null, 2));
+                console.log('compile attr: ' + JSON.stringify(attr, null, 2));
+            },
+            // template: '<div><form> username: <input type="text" ng-model="username"> <br>password: <input type="password" ng-model="password"> <button type="button" ng-click="login()">Login</button></form>{{errMsg}}</div>',
+            templateUrl: function (tElement, tAttrs) {
+                console.log(JSON.stringify(tAttrs, null, 2));
+                return tAttrs.templateUrl || 'formSimple.html';
+            }
+        };
+
+        return ngpassportForm;
+    };
+};
+
+},{}],3:[function(require,module,exports){
+module.exports = function () {
+    'use strict';
+
+    var keyStr = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
+
+    return {
+        encode: function (input) {
+            var output = "";
+            var chr1, chr2, chr3 = "";
+            var enc1, enc2, enc3, enc4 = "";
+            var i = 0;
+
+            do {
+                chr1 = input.charCodeAt(i++);
+                chr2 = input.charCodeAt(i++);
+                chr3 = input.charCodeAt(i++);
+
+                enc1 = chr1 >> 2;
+                enc2 = ((chr1 & 3) << 4) | (chr2 >> 4);
+                enc3 = ((chr2 & 15) << 2) | (chr3 >> 6);
+                enc4 = chr3 & 63;
+
+                if (isNaN(chr2)) {
+                    enc3 = enc4 = 64;
+                } else if (isNaN(chr3)) {
+                    enc4 = 64;
+                }
+
+                output = output +
+                    keyStr.charAt(enc1) +
+                    keyStr.charAt(enc2) +
+                    keyStr.charAt(enc3) +
+                    keyStr.charAt(enc4);
+                chr1 = chr2 = chr3 = "";
+                enc1 = enc2 = enc3 = enc4 = "";
+            } while (i < input.length);
+
+            return output;
+        },
+
+        decode: function (input) {
+            var output = "";
+            var chr1, chr2, chr3 = "";
+            var enc1, enc2, enc3, enc4 = "";
+            var i = 0;
+
+            // remove all characters that are not A-Z, a-z, 0-9, +, /, or =
+            var base64test = /[^A-Za-z0-9\+\/\=]/g;
+            if (base64test.exec(input)) {
+                console.error("There were invalid base64 characters in the input text.\n" +
+                    "Valid base64 characters are A-Z, a-z, 0-9, '+', '/',and '='\n" +
+                    "Expect errors in decoding.");
+            }
+            input = input.replace(/[^A-Za-z0-9\+\/\=]/g, "");
+
+            do {
+                enc1 = keyStr.indexOf(input.charAt(i++));
+                enc2 = keyStr.indexOf(input.charAt(i++));
+                enc3 = keyStr.indexOf(input.charAt(i++));
+                enc4 = keyStr.indexOf(input.charAt(i++));
+
+                chr1 = (enc1 << 2) | (enc2 >> 4);
+                chr2 = ((enc2 & 15) << 4) | (enc3 >> 2);
+                chr3 = ((enc3 & 3) << 6) | enc4;
+
+                output = output + String.fromCharCode(chr1);
+
+                if (enc3 != 64) {
+                    output = output + String.fromCharCode(chr2);
+                }
+                if (enc4 != 64) {
+                    output = output + String.fromCharCode(chr3);
+                }
+
+                chr1 = chr2 = chr3 = "";
+                enc1 = enc2 = enc3 = enc4 = "";
+
+            } while (i < input.length);
+
+            return output;
+        }
+    };
+
+};
+
+},{}],4:[function(require,module,exports){
+/**
+ * Services for Basic Authentication
+ *
+ * Notice: $cookies require 'ngCookies' module to be included
+ */
+
+module.exports = function ($http, NGPASSPORT_CONF, base64, $cookies, $location, $state, $timeout) {
+    'use strict';
+
+    var basicAuth = {};
+
+    /**
+     * Check credentials (username, password) and set cookie if credentails are correct.
+     * @param  {String} u - username
+     * @param  {String} p -password
+     * @return {Object}   - API object
+     */
+    basicAuth.login = function (u, p) {
+
+        //encoding
+        var input = u + ':' + p;
+        var input64 = base64.encode(input);
+
+        //$http config
+        var http_config = {
+            headers: {
+                Authorization: 'Basic ' + input64
+            }
+        };
+        // console.log(JSON.stringify(http_config, null, 2));
+
+        //delete cookie (on bad login old cookie will be deleted)
+        basicAuth.delCookie('authAPI');
+
+        return $http.get(NGPASSPORT_CONF.API_BASE_URL + NGPASSPORT_CONF.API_AUTH_PATHNAME, http_config)
+            .then(function (respons) {
+                if (respons.data.isSuccess) {
+                    basicAuth.setCookie('authAPI', respons.data.putLocally);
+
+                    //redirect to another page
+                    if (NGPASSPORT_CONF.URL_AFTER_SUCCESSFUL_LOGIN) {
+                        $location.path(NGPASSPORT_CONF.URL_AFTER_SUCCESSFUL_LOGIN);
+                    }
+                }
+            });
+
+    };
+
+
+    /**
+     * Logout and redirect to another page.
+     * Use it in controller when user clicks on logout button.
+     * @return {Boolean} - returns true or false
+     */
+    basicAuth.logout = function () {
+        basicAuth.delCookie('authAPI');
+
+        $timeout(function () {
+            $location.path(NGPASSPORT_CONF.URL_AFTER_LOGOUT);
+        }, 34);
+    };
+
+
+    /**
+     * Set 'obj' inside cookie.
+     * @param {String} cookieKey - 'authAPI'
+     * @param {Object} obj       - {"username": "john", "authHeader": "Basic am9objp0ZXN0"}
+     */
+    basicAuth.setCookie = function (cookieKey, obj) {
+        $cookies.putObject(cookieKey, obj);
+    };
+
+
+    /**
+     * Return object from cookie.
+     * @param {String} cookieKey - 'authAPI'
+     * @return {Object}          - {"username": "john", "authHeader": "Basic am9objp0ZXN0"} || {"username": "", "authHeader": ""}
+     */
+    basicAuth.getCookie = function (cookieKey) {
+        var cookieObj = $cookies.getObject(cookieKey);
+
+        if (cookieObj) {
+            return cookieObj;
+        } else {
+            return {
+                username: '',
+                authHeader: ''
+            };
+        }
+    };
+
+
+    /**
+     * Delete cookie, usually on logout.
+     * @param {String} cookieKey - 'authAPI'
+     */
+    basicAuth.delCookie = function (cookieKey) {
+        $cookies.remove(cookieKey);
+    };
+
+
+    /**
+     * Protect UI-router's state from unauthorized access.
+     * Implement inside main.js run() method --> $rootScope.$on('$stateChangeSuccess', basicAuth.onstateChangeSuccess);
+     * @param  {String} redirectUrl -url after successful login
+     * @return {Boolean} - returns true or false
+     */
+    basicAuth.protectUIRouterState = function (event, toState, toParams, fromState, fromParams) {
+        event.preventDefault();
+
+        // console.log('authRequired: ', JSON.stringify($state.current.authRequired, null, 2));
+
+        //check authentication if it's defined inside state with     authRequired: true
+        //see '/routes-ui/examples-spa_login.js'
+        if ($state.current.authRequired) {
+
+            //redirect if 'authAPI' cookie doesn't exists
+            if (!basicAuth.isAuthenticated()) {
+                basicAuth.logout('/examples-spa/login/pageform');
+            }
+
+        }
+    };
+
+
+    /**
+     * Determine if app is authenticated or not. E.g. if user is logged in or not.
+     * Authenticated is when cookie 'authAPI' exists.
+     * @return {Boolean} - returns true or false
+     */
+    basicAuth.isAuthenticated = function () {
+        if (basicAuth.getCookie('authAPI')) {
+            return !!basicAuth.getCookie('authAPI').username;
+        } else {
+            return false;
+        }
+    };
+
+
+
+    return basicAuth;
+
+};
+
+},{}],5:[function(require,module,exports){
+/**
+ * API Request interceptor
+ *
+ * clientApp.factory('interceptApiRequest', require('./lib/factory/interceptApiRequest'));
+ *
+ * Notice: $injector is required to inject basicAuth, because config() accepts providers only not services.
+ */
+
+module.exports = function ($injector) {
+    'use strict';
+
+    var interceptApiRequest = {};
+
+    /**
+     * REQUEST INTERCEPTOR
+     *
+     * @param  {Object} config    - $http config parameter
+     *     *** $http.get('/someUrl', config).then(successCallback, errorCallback);
+     *     *** $http.post('/someUrl', data, config).then(successCallback, errorCallback);
+     */
+    interceptApiRequest.request = function (config) {
+        var basicAuth = $injector.get('basicAuth'); //get basicAuth factory
+
+        //Intercept with 'Authorization' header only when cookie is set, e.g. when user is logged in.
+        //When user is not logged in don't add 'Authorization' header.
+        if (basicAuth.getCookie('authAPI').authHeader) {
+            config.headers['Authorization'] = basicAuth.getCookie('authAPI').authHeader; // 'Basic am9objp0ZXN0'
+        }
+
+        // console.log('$http config\n', JSON.stringify(config, null, 2));
+
+        return config;
+    };
+
+
+    interceptApiRequest.requestError = function(config) {
+        return config;
+    },
+
+    interceptApiRequest.response = function(res) {
+        return res;
+    },
+
+    interceptApiRequest.responseError = function(res) {
+        throw res;
+    }
+
+
+
+
+
+    return interceptApiRequest;
+
+};
+
+},{}],6:[function(require,module,exports){
+/*global angular, window*/
+
+/**
+ * angular.version: 1.5.0
+ */
+
+/***************************** BASIC AUTHETICATION ****************
+ http://passportjs.org/docs/basic-digest
+ ******************************************************************/
+var ngPassportBasic = angular.module('ngPassport.basicStrategy', []);
+
+ngPassportBasic.controller('NgPassportBasicCtrl', require('./controller/ngPassportBasicCtrl'));
+
+ngPassportBasic.factory('basicAuth', require('./factory/basicAuth'));
+ngPassportBasic.factory('base64', require('./factory/base64'));
+ngPassportBasic.factory('interceptApiRequest', require('./factory/interceptApiRequest'));
+
+ngPassportBasic.directive('ngpassportForm', require('./directive/ngpassportForm')('NgPassportBasicCtrl'));
+
+/*when used in browserify (require('angular-passport')) */
+module.exports.ngPassportBasic = ngPassportBasic;
+
+
+/*when included in html file
+<script src=".../dist/js/ngPassport.js"></script>
+<script>
+    ngPassportBasic.constant('NGPASSPORT_CONF', {
+        API_BASE_URL: 'http://localhost:9005',
+        API_AUTH_PATHNAME: '/examples/auth/passport/basicstrategy',
+        URL_AFTER_SUCCESSFUL_LOGIN: '/examples-spa/login/page1',
+        URL_AFTER_LOGOUT: '/examples-spa/login/pageform'
+    });
+</script>
+*/
+window.ngPassportBasic = ngPassportBasic;
+
+},{"./controller/ngPassportBasicCtrl":1,"./directive/ngpassportForm":2,"./factory/base64":3,"./factory/basicAuth":4,"./factory/interceptApiRequest":5}],7:[function(require,module,exports){
 /*
  AngularJS v1.5.8
  (c) 2010-2016 Google, Inc. http://angularjs.org
@@ -15,7 +405,7 @@ f+" > 4096 bytes)!");k.cookie=e}}c.module("ngCookies",["ng"]).provider("$cookies
 ["$cookies",function(b){return{get:function(a){return b.getObject(a)},put:function(a,c){b.putObject(a,c)},remove:function(a){b.remove(a)}}}]);l.$inject=["$document","$log","$browser"];c.module("ngCookies").provider("$$cookieWriter",function(){this.$get=l})})(window,window.angular);
 
 
-},{}],2:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 /*global window*/
 
 /**
@@ -27,7 +417,7 @@ module.exports = function () {
     window.location.href = '/404';
 };
 
-},{}],3:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 /**
  * Controller: examples-spa_listCtrl
  */
@@ -37,34 +427,13 @@ module.exports = function ($scope) {
     console.log('A list of SPA Examples.');
 };
 
-},{}],4:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 /**
  * Controller: pageCtrl
  */
-module.exports = function ($scope, basicAuth, $state, $http, APPCONF) {
+module.exports = function ($scope, $http, APPCONF) {
     'use strict';
 
-    //show current state object
-    // console.info('Current state \n', JSON.stringify($state.get($state.current.name), null, 2));
-
-    /******** BASIC AUTHENTICATION ********/
-    //click on login button
-    $scope.basicLogin = function () {
-        $scope.errMsg = '';
-
-        basicAuth
-            .login($scope.username, $scope.password, '/examples-spa/login/page1')
-            .catch(function (err) {
-                if (err.data) {
-                    $scope.errMsg = err.data.message;
-                    console.error(err.data.stack);
-                } else {
-                    $scope.errMsg = 'Bad API request: ' + APPCONF.API_BASE_URL + '/examples-spa/login/page1';
-                }
-
-            });
-
-    };
 
     //request some protected data from API
     $scope.basicGetsomedata = function () {
@@ -75,33 +444,15 @@ module.exports = function ($scope, basicAuth, $state, $http, APPCONF) {
                 console.log('basicGetsomedata\n', JSON.stringify(res, null, 2));
             })
             .catch(function (err) {
-                console.error(JSON.stringify(err, null, 2));
+                $scope.errMsg = err.data.message;
+                console.error(JSON.stringify(err.data.stack, null, 2));
             });
     };
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    $scope.logout = function () {
-        basicAuth.logout('/examples-spa/login/pageform');
-    };
-
 };
 
-},{}],5:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 /**
  * Controller: ListQcreationCtrl
  */
@@ -288,7 +639,7 @@ module.exports = function ($scope, $q, $timeout) {
 
 };
 
-},{}],6:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 /**
  * Controller: ListQmethodsCtrl
  */
@@ -415,14 +766,14 @@ console:
 
 };
 
-},{}],7:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 /* Controller: 'StateControllerAliasCtrl' */
 module.exports = function ($scope) {
     'use strict';
     $scope.myVar = 'Variable from $scope !'
 };
 
-},{}],8:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 //application constants (configuration file)
 module.exports = {
 
@@ -432,7 +783,7 @@ module.exports = {
 
 };
 
-},{}],9:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 /**
  * $location in HTML5 mode
  *
@@ -448,7 +799,7 @@ module.exports = function ($locationProvider) {
     // $locationProvider.html5Mode(false); //http://localhost:3000/something#/example
 };
 
-},{}],10:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 /*global window*/
 /**
  * App routes defined by ui-router.
@@ -480,6 +831,7 @@ module.exports = function ($stateProvider, $urlRouterProvider) {
     $stateProvider.state('examples-spa_qa', require('../routes-ui/examples-spa_q')); // url: /examples-spa/q
     $stateProvider.state('examples-spa_login', require('../routes-ui/examples-spa_login')); // url: /examples-spa/login
     $stateProvider.state('examples-spa_login_pageform', require('../routes-ui/examples-spa_login').pageform); // url: /examples-spa/login/pageform
+    $stateProvider.state('examples-spa_login_pageform2', require('../routes-ui/examples-spa_login').pageform2); // url: /examples-spa/login/pageform2
     $stateProvider.state('examples-spa_login_page1', require('../routes-ui/examples-spa_login').page1); // url: /examples-spa/login/page1
     $stateProvider.state('examples-spa_login_page2', require('../routes-ui/examples-spa_login').page2); // url: /examples-spa/login/page2
     $stateProvider.state('examples-spa_login_page3', require('../routes-ui/examples-spa_login').page3); // url: /examples-spa/login/page3
@@ -835,304 +1187,18 @@ module.exports = function ($stateProvider, $urlRouterProvider) {
 
 
 
-},{"../routes-ui/404":15,"../routes-ui/examples-spa":16,"../routes-ui/examples-spa_login":17,"../routes-ui/examples-spa_q":18,"../routes-ui/examples-spa_uirouter":19}],11:[function(require,module,exports){
-module.exports = function () {
-    'use strict';
-
-    var keyStr = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
-
-    return {
-        encode: function (input) {
-            var output = "";
-            var chr1, chr2, chr3 = "";
-            var enc1, enc2, enc3, enc4 = "";
-            var i = 0;
-
-            do {
-                chr1 = input.charCodeAt(i++);
-                chr2 = input.charCodeAt(i++);
-                chr3 = input.charCodeAt(i++);
-
-                enc1 = chr1 >> 2;
-                enc2 = ((chr1 & 3) << 4) | (chr2 >> 4);
-                enc3 = ((chr2 & 15) << 2) | (chr3 >> 6);
-                enc4 = chr3 & 63;
-
-                if (isNaN(chr2)) {
-                    enc3 = enc4 = 64;
-                } else if (isNaN(chr3)) {
-                    enc4 = 64;
-                }
-
-                output = output +
-                    keyStr.charAt(enc1) +
-                    keyStr.charAt(enc2) +
-                    keyStr.charAt(enc3) +
-                    keyStr.charAt(enc4);
-                chr1 = chr2 = chr3 = "";
-                enc1 = enc2 = enc3 = enc4 = "";
-            } while (i < input.length);
-
-            return output;
-        },
-
-        decode: function (input) {
-            var output = "";
-            var chr1, chr2, chr3 = "";
-            var enc1, enc2, enc3, enc4 = "";
-            var i = 0;
-
-            // remove all characters that are not A-Z, a-z, 0-9, +, /, or =
-            var base64test = /[^A-Za-z0-9\+\/\=]/g;
-            if (base64test.exec(input)) {
-                console.error("There were invalid base64 characters in the input text.\n" +
-                    "Valid base64 characters are A-Z, a-z, 0-9, '+', '/',and '='\n" +
-                    "Expect errors in decoding.");
-            }
-            input = input.replace(/[^A-Za-z0-9\+\/\=]/g, "");
-
-            do {
-                enc1 = keyStr.indexOf(input.charAt(i++));
-                enc2 = keyStr.indexOf(input.charAt(i++));
-                enc3 = keyStr.indexOf(input.charAt(i++));
-                enc4 = keyStr.indexOf(input.charAt(i++));
-
-                chr1 = (enc1 << 2) | (enc2 >> 4);
-                chr2 = ((enc2 & 15) << 4) | (enc3 >> 2);
-                chr3 = ((enc3 & 3) << 6) | enc4;
-
-                output = output + String.fromCharCode(chr1);
-
-                if (enc3 != 64) {
-                    output = output + String.fromCharCode(chr2);
-                }
-                if (enc4 != 64) {
-                    output = output + String.fromCharCode(chr3);
-                }
-
-                chr1 = chr2 = chr3 = "";
-                enc1 = enc2 = enc3 = enc4 = "";
-
-            } while (i < input.length);
-
-            return output;
-        }
-    };
-
-};
-
-},{}],12:[function(require,module,exports){
-/**
- * Services for Basic Authentication
- *
- * Notice: $cookies require 'ngCookies' module to be included
- */
-
-module.exports = function ($http, APPCONF, base64, $cookies, $location, $state, $timeout) {
-    'use strict';
-
-    var basicAuth = {};
-
-    /**
-     * Check credentials (username, password) and set cookie if credentails are correct.
-     * @param  {String} u - username
-     * @param  {String} p -password
-     * @param  {String} redirectUrl -url after successful login
-     * @return {Object}   - API object
-     */
-    basicAuth.login = function (u, p, redirectUrl) {
-
-        //encoding
-        var input = u + ':' + p;
-        var input64 = base64.encode(input);
-
-        //$http config
-        var http_config = {
-            headers: {
-                Authorization: 'Basic ' + input64
-            }
-        };
-        // console.log(JSON.stringify(http_config, null, 2));
-
-        //delete cookie (on bad login old cookie will be deleted)
-        basicAuth.delCookie('authAPI');
-
-        return $http.get(APPCONF.API_BASE_URL + '/examples/auth/passport/basicstrategy', http_config)
-            .then(function (respons) {
-                if (respons.data.isSuccess) {
-                    basicAuth.setCookie('authAPI', respons.data.putLocally);
-
-                    //redirect to another page
-                    if (redirectUrl) {
-                        $location.path(redirectUrl);
-                    }
-                }
-            });
-
-    };
-
-
-    /**
-     * Set 'obj' inside cookie.
-     * @param {String} cookieKey - 'authAPI'
-     * @param {Object} obj       - {"username": "john", "authHeader": "Basic am9objp0ZXN0"}
-     */
-    basicAuth.setCookie = function (cookieKey, obj) {
-        $cookies.putObject(cookieKey, obj);
-    };
-
-    /**
-     * Return object from cookie.
-     * @param {String} cookieKey - 'authAPI'
-     * @return {Object}          - {"username": "john", "authHeader": "Basic am9objp0ZXN0"} || {"username": "", "authHeader": ""}
-     */
-    basicAuth.getCookie = function (cookieKey) {
-        var cookieObj = $cookies.getObject(cookieKey);
-
-        if (cookieObj) {
-            return cookieObj;
-        } else {
-            return {
-                username: '',
-                authHeader: ''
-            };
-        }
-    };
-
-    /**
-     * Delete cookie, usually on logout.
-     * @param {String} cookieKey - 'authAPI'
-     */
-    basicAuth.delCookie = function (cookieKey) {
-        $cookies.remove(cookieKey);
-    };
-
-
-    /**
-     * Logout and redirect to another page.
-     * Use it in controller when user clicks on logout button.
-     * @param  {String} redirectUrl -url after successful login
-     * @return {Boolean} - returns true or false
-     */
-    basicAuth.logout = function (redirectUrl) {
-        basicAuth.delCookie('authAPI');
-
-        $timeout(function () {
-            $location.path(redirectUrl);
-        }, 34);
-    };
-
-
-    /**
-     * Protect UI-router's state from unauthorized access.
-     * Implement inside main.js run() method --> $rootScope.$on('$stateChangeSuccess', basicAuth.onstateChangeSuccess);
-     * @param  {String} redirectUrl -url after successful login
-     * @return {Boolean} - returns true or false
-     */
-    basicAuth.protectUIRouterState = function (event, toState, toParams, fromState, fromParams) {
-        event.preventDefault();
-
-        // console.log('authRequired: ', JSON.stringify($state.current.authRequired, null, 2));
-
-        //check authentication if it's defined inside state with     authRequired: true
-        //see '/routes-ui/examples-spa_login.js'
-        if ($state.current.authRequired) {
-
-            //redirect if 'authAPI' cookie doesn't exists
-            if (!basicAuth.isAuthenticated()) {
-                basicAuth.logout('/examples-spa/login/pageform');
-            }
-
-        }
-    };
-
-
-
-    /**
-     * Determine if app is authenticated or not. E.g. if user is logged in or not.
-     * Authenticated is when cookie 'authAPI' exists.
-     * @return {Boolean} - returns true or false
-     */
-    basicAuth.isAuthenticated = function () {
-        if (basicAuth.getCookie('authAPI')) {
-            return !!basicAuth.getCookie('authAPI').username;
-        } else {
-            return false;
-        }
-    };
-
-
-
-
-    return basicAuth;
-
-};
-
-},{}],13:[function(require,module,exports){
-/**
- * API Request interceptor
- *
- * clientApp.factory('interceptApiRequest', require('./lib/factory/interceptApiRequest'));
- *
- * Notice: $injector is required to inject basicAuth, because config() accepts providers only not services.
- */
-
-module.exports = function ($injector) {
-    'use strict';
-
-    var interceptApiRequest = {};
-
-    /**
-     * REQUEST INTERCEPTOR
-     *
-     * @param  {Object} config    - $http config parameter
-     *     *** $http.get('/someUrl', config).then(successCallback, errorCallback);
-     *     *** $http.post('/someUrl', data, config).then(successCallback, errorCallback);
-     */
-    interceptApiRequest.request = function (config) {
-        var basicAuth = $injector.get('basicAuth'); //get basicAuth factory
-
-        //Intercept with 'Authorization' header only when cookie is set, e.g. when user is logged in.
-        //When user is not logged in don't add 'Authorization' header.
-        if (basicAuth.getCookie('authAPI').authHeader) {
-            config.headers['Authorization'] = basicAuth.getCookie('authAPI').authHeader; // 'Basic am9objp0ZXN0'
-        }
-
-        // console.log('$http config\n', JSON.stringify(config, null, 2));
-
-        return config;
-    };
-
-
-    interceptApiRequest.requestError = function(config) {
-        return config;
-    },
-
-    interceptApiRequest.response = function(res) {
-        return res;
-    },
-
-    interceptApiRequest.responseError = function(res) {
-        throw res;
-    }
-
-
-
-
-
-    return interceptApiRequest;
-
-};
-
-},{}],14:[function(require,module,exports){
+},{"../routes-ui/404":18,"../routes-ui/examples-spa":19,"../routes-ui/examples-spa_login":20,"../routes-ui/examples-spa_q":21,"../routes-ui/examples-spa_uirouter":22}],17:[function(require,module,exports){
 /*global angular*/
 
-/////BASIC AUTH MODULE
-angular.module('smAuth', [])
-    .controller('LoginCtrl', function ($scope) {
-        'use strict';
-        $scope.mojenesto = 'mojenesto';
-    });
+var ngPassportBasic = require('../../../mynpm/angular-passport/src/main.js').ngPassportBasic;
+ngPassportBasic.constant('NGPASSPORT_CONF', {
+    // API_BASE_URL: 'http://192.168.1.101:9005',
+    API_BASE_URL: 'http://localhost:9005',
+    API_AUTH_PATHNAME: '/examples/auth/passport/basicstrategy',
+    URL_AFTER_SUCCESSFUL_LOGIN: '/examples-spa/login/page1',
+    URL_AFTER_LOGOUT: '/examples-spa/login/pageform'
+});
+
 
 /******************* START APP AND LOAD MODULES *******************
  **********************************************/
@@ -1142,7 +1208,7 @@ var clientApp = angular.module('clientApp', [
     // 'ngRoute',
     'ui.router',
     'ngCookies',
-    'smAuth'
+    'ngPassport.basicStrategy'
 ]);
 
 
@@ -1216,18 +1282,15 @@ clientApp.controller('PageCtrl', require('./app/examples-spa/login/pageCtrl'));
 
 /***************************** SERVICES ***************************
  ******************************************************************/
-clientApp.factory('basicAuth', require('./lib/factory/basicAuth'));
-clientApp.factory('base64', require('./lib/factory/base64'));
-clientApp.factory('interceptApiRequest', require('./lib/factory/interceptApiRequest'));
 
-},{"../../bower_components/angular-cookies/angular-cookies.min.js":1,"./app/_common/404/404Ctrl":2,"./app/examples-spa/listSPAexamplesCtrl":3,"./app/examples-spa/login/pageCtrl":4,"./app/examples-spa/q/listQcreationCtrl":5,"./app/examples-spa/q/listQmethodsCtrl":6,"./app/examples-spa/uirouter/stateControllerAliasCtrl":7,"./config/constAPPCONF":8,"./config/html5mode":9,"./config/routes-ui":10,"./lib/factory/base64":11,"./lib/factory/basicAuth":12,"./lib/factory/interceptApiRequest":13}],15:[function(require,module,exports){
+},{"../../../mynpm/angular-passport/src/main.js":6,"../../bower_components/angular-cookies/angular-cookies.min.js":7,"./app/_common/404/404Ctrl":8,"./app/examples-spa/listSPAexamplesCtrl":9,"./app/examples-spa/login/pageCtrl":10,"./app/examples-spa/q/listQcreationCtrl":11,"./app/examples-spa/q/listQmethodsCtrl":12,"./app/examples-spa/uirouter/stateControllerAliasCtrl":13,"./config/constAPPCONF":14,"./config/html5mode":15,"./config/routes-ui":16}],18:[function(require,module,exports){
 module.exports = {
     url: '/404',
     templateUrl: '/client/dist/html/_common/404/404.html',
     controller: '404Ctrl'
 };
 
-},{}],16:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 /* state: 'examples-spa'
  * url: /examples-spa
  ************************/
@@ -1237,7 +1300,7 @@ module.exports.list = {
     controller: 'ListSPAexamplesCtrl'
 };
 
-},{}],17:[function(require,module,exports){
+},{}],20:[function(require,module,exports){
 /* state: 'examples-spa_login'
  * url: /examples-spa/login
  ************************/
@@ -1261,6 +1324,25 @@ module.exports.pageform = {
         }
     }
 };
+
+
+/* state: 'examples-spa_login_pageform2'
+ * url: /examples-spa/login/pageform2
+ ************************/
+module.exports.pageform2 = {
+    url: '/examples-spa/login/pageform2',
+    views: {
+        '': {
+            templateUrl: '/client/dist/html/examples-spa/login/pageform2.html',
+            controller: 'PageCtrl'
+        },
+        'pagemenu@examples-spa_login_pageform': {
+            templateUrl: '/client/dist/html/examples-spa/login/_pagemenu.html'
+        }
+    }
+};
+
+
 
 /* state: 'examples-spa_login_page1'
  * url: /examples-spa/login/page1
@@ -1330,7 +1412,7 @@ module.exports.page3 = {
 };
 
 
-},{}],18:[function(require,module,exports){
+},{}],21:[function(require,module,exports){
 /* state: 'examples-spa_q'
  * url: /examples-spa/q
  ************************/
@@ -1340,7 +1422,7 @@ module.exports = {
 };
 
 
-},{}],19:[function(require,module,exports){
+},{}],22:[function(require,module,exports){
 /* state: 'examples-spa_uirouter'
  * url: /examples-spa/uirouter
  ************************/
@@ -1350,4 +1432,4 @@ module.exports.list = {
 };
 
 
-},{}]},{},[14]);
+},{}]},{},[17]);

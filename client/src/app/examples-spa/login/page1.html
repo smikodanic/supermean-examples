@@ -3,24 +3,30 @@
 
 	<div class="col-sm-12">
 		<h2>Page 1</h2>
-		<p class="alert alert-warning">Authentication required on this page !!!</p>
+		<p class="alert alert-warning">
+			Login was successful!!!
+			<br>Authentication required on this page !!!
+		</p>
 	</div>
 
 <b>Auth solved in /src/routes-ui/examples_spa_login.js</b>
 <pre>
 resolve: {
-    authentication: function (basicAuth, $timeout) {
-        'use strict';
-        if (!basicAuth.isAuthenticated()) {
-            $timeout(function () {
-                basicAuth.logout('/examples-spa/login/pageform');
-                // $state.go('examples-spa_login_pageform'); //or use this
-            }, 0);
-        }
-    }
+	authentication: function (basicAuth, $timeout) {
+		'use strict';
+		if (!basicAuth.isAuthenticated()) {
+			$timeout(function () {
+				basicAuth.logout('/examples-spa/login/pageform');
+				// $state.go('examples-spa_login_pageform'); //or use this
+			}, 0);
+		}
+	}
 }
 </pre>
 
-<b ng-controller="LoginCtrl">moje nseto: {{mojenesto}}</b>
+
+<div class="col-sm-12">
+	<b ng-controller="NgPassportBasicCtrl" style="color:red">PassportJS strategy name: {{strategyName}}</b>
+</div>
 
 </div>

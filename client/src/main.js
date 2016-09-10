@@ -1,19 +1,15 @@
 /*global angular*/
 
-var ngPassportBasic = require('../../../mynpm/angular-passport/src/main.js').ngPassportBasic;
-ngPassportBasic.constant('NGPASSPORT_CONF', {
-    // API_BASE_URL: 'http://192.168.1.101:9005',
-    API_BASE_URL: 'http://localhost:9005',
-    API_AUTH_PATHNAME: '/examples/auth/passport/basicstrategy',
-    URL_AFTER_SUCCESSFUL_LOGIN: '/examples-spa/login/page1',
-    URL_AFTER_LOGOUT: '/examples-spa/login/pageform'
-});
+/******************* CUSTOM MODULES *******************
+ ******************************************************************/
+require('../../bower_components/angular-ui-router/release/angular-ui-router.min.js'); //ui.router
+require('../../bower_components/angular-cookies/angular-cookies.min.js'); //ngCookies
+require('./ng/modules/angular-passport/ngPassportBasic'); //ngPassport.basicStrategy
 
 
-/******************* START APP AND LOAD MODULES *******************
- **********************************************/
-require('../../bower_components/angular-cookies/angular-cookies.min.js');
 
+/******************* APP MODULE *******************
+ ******************************************************************/
 var clientApp = angular.module('clientApp', [
     // 'ngRoute',
     'ui.router',
@@ -25,8 +21,7 @@ var clientApp = angular.module('clientApp', [
 
 /**************************** CONSTANT **************************
  ****************************************************************/
-clientApp.constant('APPCONF', require('./config/constAPPCONF'));
-// clientApp.constant('myMATH', require('./config/constantsMath'));
+clientApp.constant('APPCONF', require('./ng/constant/APPCONF'));
 
 
 
@@ -34,61 +29,39 @@ clientApp.constant('APPCONF', require('./config/constAPPCONF'));
 Only providers ($httpProvider) and constants can be injected into configuration blocks.
 This is to prevent accidental instantiation of services before they have been fully configured.
  **********************************************************************************************/
-clientApp.config(require('./config/html5mode'));
-
-//protect API endpoints
-clientApp.config(function ($httpProvider) {
-    'use strict';
-    $httpProvider.interceptors.push('interceptApiRequest');
-});
-
-
+clientApp.config(require('./ng/config/html5mode'));
 
 
 
 /*********************************** RUN  ***********************************
 Run on single page app start. For example on browser's reload.
-Only instances ($http) and constants can be injected into run blocks.
+Only instances ($http, $rootScope, someService) and constants can be injected into run blocks.
 This is to prevent further system configuration during application run time.
  ****************************************************************************/
-
-//protect pages e.g. ui-router's states
-clientApp.run(function ($rootScope, basicAuth) {
-    'use strict';
-    $rootScope.$on('$stateChangeSuccess', basicAuth.protectUIRouterState);
+clientApp.run(function () {
+    console.log('RUN on browser reload.');
 });
-
-
 
 
 
 /****************************** ROUTES ******************************
  ********************************************************************/
-// clientApp.config(['$routeProvider', require('./config/routes-ng')]);
-clientApp.config(require('./config/routes-ui'));
-
-
+// clientApp.config(['$routeProvider', require('./ng/config/routes-ng')]); //ngRoute
+clientApp.config(require('./ng/config/routes-ui')); //ui.router
 
 
 
 /******************* CONTROLLERS *******************
  ***************************************************/
-clientApp.controller('404Ctrl', require('./app/_common/404/404Ctrl'));
-clientApp.controller('ListSPAexamplesCtrl', require('./app/examples-spa/listSPAexamplesCtrl'));
+clientApp.controller('404Ctrl', require('./app/404/404Ctrl'));
+clientApp.controller('Examples-spaCtrl', require('./app/examples-spa/examples-spaCtrl'));
 
-//********* ui-router examples
+//ui-router examples
 clientApp.controller('StateControllerAliasCtrl', require('./app/examples-spa/uirouter/stateControllerAliasCtrl'));
 
-//********* $q promise examples
-clientApp.controller('ListQcreationCtrl', require('./app/examples-spa/q/listQcreationCtrl'));
-clientApp.controller('ListQmethodsCtrl', require('./app/examples-spa/q/listQmethodsCtrl'));
+//$q promise examples
+clientApp.controller('QCtrl_creation', require('./app/examples-spa/q/qCtrl_creation'));
+clientApp.controller('QCtrl_methods', require('./app/examples-spa/q/qCtrl_methods'));
 
-//********* login examples
-clientApp.controller('PageCtrl', require('./app/examples-spa/login/pageCtrl'));
-
-
-
-
-
-/***************************** SERVICES ***************************
- ******************************************************************/
+//login examples
+clientApp.controller('TopmenuCtrl', require('./app/examples-spa/login/_common/topmenu/topmenuCtrl'));

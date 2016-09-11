@@ -15,6 +15,15 @@
 	<div class="row">
 		<div class="col-sm-12">
 			<h1>Login Examples</h1>
+
+			<h3>Basic Authentication</h3>
+			<br>1. encode 'username:password' string to base64 (john:test  =>  am9objp0ZXN0)
+			<br>2. send request with header: <b>Authorization: Basic am9objp0ZXN0</b>
+			<br>3. if auth was successful add 'Basic am9objp0ZXN0' to cookie
+			<br><br>
+			<a ui-sref="examples-spa_login_basic_form">See example ...</a>
+
+			<br><br>
 			<p>
 				API auth endpoints are used in these login example.
 				<br>
@@ -28,12 +37,28 @@
 	</div>
 
 	<div class="col-sm-12">
-		<h2>Basic Authentication</h2>
-		/lib/factory/basicAuth.js
-		<br>1. encode 'username:password' string to base64 (john:test  =>  am9objp0ZXN0)
-		<br>2. send request with header: <b>Authorization: Basic am9objp0ZXN0</b>
-		<br>3. if auth was successful add 'Basic am9objp0ZXN0' to cookie
+		<h2>Special conditions</h2>
+		<br>1. Directive will send 'username' and 'password' object properties to API: {username: 'john', password: 'test'} .
+		It is also possible to define some other variable names for example 'user', 'pass' if your API requires so.
+		<br>2. API response object when username and password are correct <u>must have this format</u>:
+		{	"isLoggedIn": true,
+  			"msg": "Basic authentication was succcessfull.",
+  			"putLocally": {
+    			"username": "john",
+    			"authHeader": "Basic am9objp0ZXN0"
+  		}
+  		<br>3. Cookie will be set with 'putLocally' object.
+  		<br>4. configuration
+ngPassportBasic.constant('NGPASSPORT_CONF_BASIC', {
+    API_BASE_URL: 'http://localhost:9005',
+    API_AUTH_PATHNAME: '/examples/auth/passport/basicstrategy',
+    URL_AFTER_SUCCESSFUL_LOGIN: '/examples-spa/login/page1',
+    URL_AFTER_LOGOUT: '/examples-spa/login/form'
+});
+
 	</div>
+
+
 
 </section>
 

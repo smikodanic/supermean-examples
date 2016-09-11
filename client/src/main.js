@@ -1,10 +1,17 @@
 /*global angular*/
 
-/******************* CUSTOM MODULES *******************
+/******************* CUSTOM MODULES *******************************
+Notice:
+    Can be also included in /server/app/views/clientApp.ejs if we don't want to merge everything inside main.js.
+    For example:
+    <script src="/bower/angular-ui-router/release/angular-ui-router.min.js"></script>
+    <script src="/bower/angular-cookies/angular-cookies.min.js"></script>
+    <script src="/assets/js/ngPassport.js"></script>
  ******************************************************************/
 require('../../bower_components/angular-ui-router/release/angular-ui-router.min.js'); //ui.router
 require('../../bower_components/angular-cookies/angular-cookies.min.js'); //ngCookies
-// require('./ng/modules/angular-passport/ngPassportBasic'); //ngPassport.basicStrategy
+require('./ng/modules/angular-passport/ngPassportBasic'); //ngPassport.basicStrategy
+// require('./ng/modules/angular-passport/ngPassportJWT'); //ngPassport.JWTStrategy
 
 
 
@@ -14,7 +21,8 @@ var clientApp = angular.module('clientApp', [
     // 'ngRoute',
     'ui.router',
     'ngCookies',
-    'ngPassport.basicStrategy'
+    'ngPassport.basicStrategy',
+    // 'ngPassport.JWTStrategy'
 ]);
 
 
@@ -39,6 +47,7 @@ Only instances ($http, $rootScope, someService) and constants can be injected in
 This is to prevent further system configuration during application run time.
  ****************************************************************************/
 clientApp.run(function () {
+    'use strict';
     console.log('RUN on browser reload.');
 });
 

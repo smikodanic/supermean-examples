@@ -5,34 +5,19 @@
 		<h2>Page 1</h2>
 		<p class="alert alert-warning">
 			Login was successful!!!
-			<br>Authentication required on this page !!!
+			<br><b>authRequired: true</b> --- Authentication required on this page !!!
 		</p>
 	</div>
 
-<b>Auth solved in /src/routes-ui/examples_spa_login.js</b>
-<pre>
-resolve: {
-	authentication: function (basicAuth, $timeout) {
-		'use strict';
-		if (!basicAuth.isAuthenticated()) {
-			$timeout(function () {
-				basicAuth.logout('/examples-spa/login/pageform');
-				// $state.go('examples-spa_login_pageform'); //or use this
-			}, 0);
-		}
-	}
-}
-</pre>
-
-
 
 	<!-- logout buttons -->
-	<div class="col-sm-12 well">
+	<div class="col-sm-12">
+	<div class="well" style="color:Navy;">
 		<h2>Logout buttons</h2>
 
 		<h4>1. Regular button</h4>
 		<p>
-			This buttom is made by regular HTML tags:
+			This buttom is made by standard HTML tags:
 			<br><code>&lt;button class="btn btn-success" ng-controller="NgPassportBasicCtrl" ng-click="logout()"&gt;Logout&lt;/button&gt;</code>
 			<br><button class="btn btn-success" ng-controller="NgPassportBasicCtrl" ng-click="logout()">Logout</button>
 		</p>
@@ -56,6 +41,7 @@ resolve: {
 			<br>
 			<br><ngpassport-logout template-url="myBootstrapLogout.html">Logout</ngpassport-logout>
 		</p>
+	</div>
 	</div>
 
 </div>

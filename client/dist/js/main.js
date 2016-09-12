@@ -90,7 +90,7 @@ module.exports = function (ctrl) {
             controller: ctrl,
             scope: {templateUrl: '='},
             templateUrl: function (tElement, tAttrs) {
-                return tAttrs.templateUrl || 'formSimple.html'; //used <ngpassport-form template-url="formSimple.html"></ngpassport-form>
+                return tAttrs.templateUrl || 'formSimple.html'; //used <ngpassport-form template-url="myTemplate.html"></ngpassport-form>
             }
         };
 
@@ -834,41 +834,92 @@ module.exports = function (APPCONF) {
     'use strict';
 
     return {
-        url: '/examples-spa/login/form',
+        url: '/examples-spa/login/basic/form',
         views: {
             '': {
-                templateUrl: APPCONF.PATH_DIST_HTML + '/examples-spa/login/form/form.html'
+                templateUrl: APPCONF.PATH_DIST_HTML + '/examples-spa/login/basic/form/form.html'
             },
-            'topmenu@examples-spa_login_form': {
-                templateUrl: APPCONF.PATH_DIST_HTML + '/examples-spa/login/_common/topmenu/topmenu.html',
-                controller: 'TopmenuCtrl'
+            'topmenu@examples-spa_login_basic_form': {
+                templateUrl: APPCONF.PATH_DIST_HTML + '/examples-spa/login/basic/_common/topmenu/topmenu.html',
+                controller: 'TopmenuBasicCtrl'
             }
         }
     };
 };
 
 },{}],21:[function(require,module,exports){
-/* state: 'examples-spa_login_form2'
- * url: /examples-spa/login/form2
+/* state: 'examples-spa_login_basic_page1'
+ * url: /examples-spa/login/basic/page1
  ************************/
 module.exports = function (APPCONF) {
     'use strict';
 
     return {
-        url: '/examples-spa/login/form2',
+        url: '/examples-spa/login/basic/page1',
         views: {
             '': {
-                templateUrl: APPCONF.PATH_DIST_HTML + '/examples-spa/login/form2/form2.html'
+                templateUrl: APPCONF.PATH_DIST_HTML + '/examples-spa/login/basic/page1/page1.html'
             },
-            'topmenu@examples-spa_login_form2': {
-                templateUrl: APPCONF.PATH_DIST_HTML + '/examples-spa/login/_common/topmenu/topmenu.html',
-                controller: 'TopmenuCtrl'
+            'topmenu@examples-spa_login_basic_page1': {
+                templateUrl: APPCONF.PATH_DIST_HTML + '/examples-spa/login/basic/_common/topmenu/topmenu.html',
+                controller: 'TopmenuBasicCtrl'
             }
-        }
+        },
+
+        authRequired: true
+
     };
 };
 
 },{}],22:[function(require,module,exports){
+/* state: 'examples-spa_login_page2'
+ * url: /examples-spa/login/page2
+ ************************/
+module.exports = function (APPCONF) {
+    'use strict';
+
+    return {
+        url: '/examples-spa/login/basic/page2',
+        views: {
+            '': {
+                templateUrl: '/client/dist/html/examples-spa/login/basic/page2/page2.html'
+            },
+            'topmenu@examples-spa_login_basic_page2': {
+                templateUrl: '/client/dist/html/examples-spa/login/basic/_common/topmenu/topmenu.html',
+                controller: 'TopmenuBasicCtrl'
+            }
+        },
+
+        authRequired: true
+
+    };
+};
+
+},{}],23:[function(require,module,exports){
+/* state: 'examples-spa_login_basic_page3'
+ * url: /examples-spa/login/basic/page3
+ ************************/
+module.exports = function (APPCONF) {
+    'use strict';
+
+    return {
+        url: '/examples-spa/login/basic/page3',
+        views: {
+            '': {
+                templateUrl: '/client/dist/html/examples-spa/login/basic/page3/page3.html'
+            },
+            'topmenu@examples-spa_login_basic_page3': {
+                templateUrl: '/client/dist/html/examples-spa/login/basic/_common/topmenu/topmenu.html',
+                controller: 'TopmenuBasicCtrl'
+            }
+        },
+
+        authRequired: false
+
+    };
+};
+
+},{}],24:[function(require,module,exports){
 /* state: 'examples-spa_login'
  * url: /examples-spa/login
  ************************/
@@ -881,85 +932,7 @@ module.exports = function (APPCONF) {
     };
 };
 
-},{}],23:[function(require,module,exports){
-/* state: 'examples-spa_login_page1'
- * url: /examples-spa/login/page1
- ************************/
-module.exports = function (APPCONF) {
-    'use strict';
-
-    return {
-        url: '/examples-spa/login/page1',
-        views: {
-            '': {
-                templateUrl: APPCONF.PATH_DIST_HTML + '/examples-spa/login/page1/page1.html'
-            },
-            'topmenu@examples-spa_login_page1': {
-                templateUrl: APPCONF.PATH_DIST_HTML + '/examples-spa/login/_common/topmenu/topmenu.html',
-                controller: 'TopmenuCtrl'
-            }
-        },
-
-        resolve: {
-            authentication: function (basicAuth) {
-                if (!basicAuth.isAuthenticated()) {
-                    basicAuth.logout('/examples-spa/login/pageform');
-                }
-            }
-        }
-
-    };
-};
-
-},{}],24:[function(require,module,exports){
-/* state: 'examples-spa_login_page2'
- * url: /examples-spa/login/page2
- ************************/
-module.exports = function (APPCONF) {
-    'use strict';
-
-    return {
-        url: '/examples-spa/login/page2',
-        views: {
-            '': {
-                templateUrl: '/client/dist/html/examples-spa/login/page2/page2.html'
-            },
-            'topmenu@examples-spa_login_page2': {
-                templateUrl: '/client/dist/html/examples-spa/login/_common/topmenu/topmenu.html',
-                controller: 'TopmenuCtrl'
-            }
-        },
-
-        authRequired: true
-
-    };
-};
-
 },{}],25:[function(require,module,exports){
-/* state: 'examples-spa_login_page3'
- * url: /examples-spa/login/page3
- ************************/
-module.exports = function (APPCONF) {
-    'use strict';
-
-    return {
-        url: '/examples-spa/login/page3',
-        views: {
-            '': {
-                templateUrl: '/client/dist/html/examples-spa/login/page3/page3.html'
-            },
-            'topmenu@examples-spa_login_page3': {
-                templateUrl: '/client/dist/html/examples-spa/login/_common/topmenu/topmenu.html',
-                controller: 'TopmenuCtrl'
-            }
-        },
-
-        authRequired: false
-
-    };
-};
-
-},{}],26:[function(require,module,exports){
 /**
  * Controller: ListQcreationCtrl
  */
@@ -1146,7 +1119,7 @@ module.exports = function ($scope, $q, $timeout) {
 
 };
 
-},{}],27:[function(require,module,exports){
+},{}],26:[function(require,module,exports){
 /**
  * Controller: ListQmethodsCtrl
  */
@@ -1273,7 +1246,7 @@ console:
 
 };
 
-},{}],28:[function(require,module,exports){
+},{}],27:[function(require,module,exports){
 /* state: 'examples-spa_q'
  * url: /examples-spa/q
  ************************/
@@ -1286,7 +1259,7 @@ module.exports = function (APPCONF) {
     };
 };
 
-},{}],29:[function(require,module,exports){
+},{}],28:[function(require,module,exports){
     /**************************************************************************************
      ********************************* UI-ROUTER EXAMPLES *********************************
      **************************************************************************************/
@@ -1616,14 +1589,14 @@ module.exports = function ($stateProvider, $urlRouterProvider) {
 
 };
 
-},{}],30:[function(require,module,exports){
+},{}],29:[function(require,module,exports){
 /* Controller: 'StateControllerAliasCtrl' */
 module.exports = function ($scope) {
     'use strict';
     $scope.myVar = 'Variable from $scope !'
 };
 
-},{}],31:[function(require,module,exports){
+},{}],30:[function(require,module,exports){
 /* state: 'examples-spa_uirouter'
  * url: /examples-spa/uirouter
  ************************/
@@ -1637,7 +1610,7 @@ module.exports = function (APPCONF) {
 };
 
 
-},{}],32:[function(require,module,exports){
+},{}],31:[function(require,module,exports){
 /*global angular*/
 
 /******************* CUSTOM MODULES *******************************
@@ -1713,9 +1686,9 @@ clientApp.controller('QCtrl_creation', require('./app/examples-spa/q/qCtrl_creat
 clientApp.controller('QCtrl_methods', require('./app/examples-spa/q/qCtrl_methods'));
 
 //login examples
-clientApp.controller('TopmenuCtrl', require('./app/examples-spa/login/_common/topmenu/topmenuCtrl'));
+clientApp.controller('TopmenuBasicCtrl', require('./app/examples-spa/login/basic/_common/topmenu/topmenuCtrl'));
 
-},{"../../bower_components/angular-cookies/angular-cookies.min.js":13,"../../bower_components/angular-ui-router/release/angular-ui-router.min.js":14,"./app/404/404Ctrl":15,"./app/examples-spa/examples-spaCtrl":17,"./app/examples-spa/login/_common/topmenu/topmenuCtrl":19,"./app/examples-spa/q/qCtrl_creation":26,"./app/examples-spa/q/qCtrl_methods":27,"./app/examples-spa/uirouter/stateControllerAliasCtrl":30,"./ng/config/html5mode":33,"./ng/config/routes-ui":34,"./ng/constant/APPCONF":35,"./ng/modules/angular-passport/ngPassportBasic":36}],33:[function(require,module,exports){
+},{"../../bower_components/angular-cookies/angular-cookies.min.js":13,"../../bower_components/angular-ui-router/release/angular-ui-router.min.js":14,"./app/404/404Ctrl":15,"./app/examples-spa/examples-spaCtrl":17,"./app/examples-spa/login/basic/_common/topmenu/topmenuCtrl":19,"./app/examples-spa/q/qCtrl_creation":25,"./app/examples-spa/q/qCtrl_methods":26,"./app/examples-spa/uirouter/stateControllerAliasCtrl":29,"./ng/config/html5mode":32,"./ng/config/routes-ui":33,"./ng/constant/APPCONF":34,"./ng/modules/angular-passport/ngPassportBasic":35}],32:[function(require,module,exports){
 /**
  * $location in HTML5 mode
  *
@@ -1732,7 +1705,7 @@ module.exports = function ($locationProvider) {
     // $locationProvider.html5Mode(false); //http://localhost:3000/something#/example
 };
 
-},{}],34:[function(require,module,exports){
+},{}],33:[function(require,module,exports){
 /*global window*/
 /**
  * App routes defined by ui-router.
@@ -1770,11 +1743,10 @@ module.exports = function ($stateProvider, $urlRouterProvider, APPCONF) {
     $stateProvider.state('examples-spa_uirouter', require('../../app/examples-spa/uirouter/uirouterRte')(APPCONF)); // url: /examples-spa/uirouter
     $stateProvider.state('examples-spa_q', require('../../app/examples-spa/q/qRte')(APPCONF)); // url: /examples-spa/q
     $stateProvider.state('examples-spa_login', require('../../app/examples-spa/login/loginRte')(APPCONF)); // url: /examples-spa/login
-    $stateProvider.state('examples-spa_login_form', require('../../app/examples-spa/login/form/formRte')(APPCONF)); // url: /examples-spa/login/form
-    $stateProvider.state('examples-spa_login_form2', require('../../app/examples-spa/login/form2/form2Rte')(APPCONF)); // url: /examples-spa/login/form2
-    $stateProvider.state('examples-spa_login_page1', require('../../app/examples-spa/login/page1/page1Rte')(APPCONF)); // url: /examples-spa/login/page1
-    $stateProvider.state('examples-spa_login_page2', require('../../app/examples-spa/login/page2/page2Rte')(APPCONF)); // url: /examples-spa/login/page2
-    $stateProvider.state('examples-spa_login_page3', require('../../app/examples-spa/login/page3/page3Rte')(APPCONF)); // url: /examples-spa/login/page3
+    $stateProvider.state('examples-spa_login_basic_form', require('../../app/examples-spa/login/basic/form/formRte')(APPCONF)); // url: /examples-spa/login/basic/form
+    $stateProvider.state('examples-spa_login_basic_page1', require('../../app/examples-spa/login/basic/page1/page1Rte')(APPCONF)); // url: /examples-spa/login/basic/page1
+    $stateProvider.state('examples-spa_login_basic_page2', require('../../app/examples-spa/login/basic/page2/page2Rte')(APPCONF)); // url: /examples-spa/login/basic/page2
+    $stateProvider.state('examples-spa_login_basic_page3', require('../../app/examples-spa/login/basic/page3/page3Rte')(APPCONF)); // url: /examples-spa/login/basic/page3
 
 
 
@@ -1789,7 +1761,7 @@ module.exports = function ($stateProvider, $urlRouterProvider, APPCONF) {
 
 
 
-},{"../../app/404/404Rte":16,"../../app/examples-spa/examples-spaRte":18,"../../app/examples-spa/login/form/formRte":20,"../../app/examples-spa/login/form2/form2Rte":21,"../../app/examples-spa/login/loginRte":22,"../../app/examples-spa/login/page1/page1Rte":23,"../../app/examples-spa/login/page2/page2Rte":24,"../../app/examples-spa/login/page3/page3Rte":25,"../../app/examples-spa/q/qRte":28,"../../app/examples-spa/uirouter/examplesRte":29,"../../app/examples-spa/uirouter/uirouterRte":31}],35:[function(require,module,exports){
+},{"../../app/404/404Rte":16,"../../app/examples-spa/examples-spaRte":18,"../../app/examples-spa/login/basic/form/formRte":20,"../../app/examples-spa/login/basic/page1/page1Rte":21,"../../app/examples-spa/login/basic/page2/page2Rte":22,"../../app/examples-spa/login/basic/page3/page3Rte":23,"../../app/examples-spa/login/loginRte":24,"../../app/examples-spa/q/qRte":27,"../../app/examples-spa/uirouter/examplesRte":28,"../../app/examples-spa/uirouter/uirouterRte":30}],34:[function(require,module,exports){
 //application constants (configuration file)
 module.exports = {
 
@@ -1799,7 +1771,7 @@ module.exports = {
 
 };
 
-},{}],36:[function(require,module,exports){
+},{}],35:[function(require,module,exports){
 var ngPassportBasic = require('../../../../../../mynpm/angular-passport/src/main.js').ngPassportBasic;
 
 /* configure */
@@ -1807,10 +1779,10 @@ ngPassportBasic.constant('NGPASSPORT_CONF_BASIC', {
     // API_BASE_URL: 'http://192.168.1.101:9005',
     API_BASE_URL: 'http://localhost:9005',
     API_AUTH_PATHNAME: '/examples/auth/passport/basicstrategy',
-    URL_AFTER_SUCCESSFUL_LOGIN: '/examples-spa/login/page1',
-    URL_AFTER_LOGOUT: '/examples-spa/login/form'
+    URL_AFTER_SUCCESSFUL_LOGIN: '/examples-spa/login/basic/page1',
+    URL_AFTER_LOGOUT: '/examples-spa/login/basic/form'
 });
 
 module.exports = ngPassportBasic;
 
-},{"../../../../../../mynpm/angular-passport/src/main.js":10}]},{},[32]);
+},{"../../../../../../mynpm/angular-passport/src/main.js":10}]},{},[31]);

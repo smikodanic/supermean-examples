@@ -73,4 +73,4 @@ clientApp.controller('QCtrl_creation', require('./app/examples-spa/q/qCtrl_creat
 clientApp.controller('QCtrl_methods', require('./app/examples-spa/q/qCtrl_methods'));
 
 //login examples
-clientApp.controller('TopmenuCtrl', require('./app/examples-spa/login/_common/topmenu/topmenuCtrl'));
+clientApp.controller('TopmenuBasicCtrl', require('./app/examples-spa/login/basic/_common/topmenu/topmenuCtrl'));

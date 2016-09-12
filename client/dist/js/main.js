@@ -9,7 +9,7 @@
  * Controller: 'NgPassportBasicCtrl'
  */
 
-module.exports = function ($scope, basicAuth, $state) {
+module.exports = function ($scope, basicAuth, $state, NGPASSPORT_CONF_BASIC) {
     'use strict';
     $scope.strategyName = 'Basic';
 
@@ -26,9 +26,9 @@ module.exports = function ($scope, basicAuth, $state) {
             .catch(function (err) {
                 if (err.data) {
                     $scope.errMsg = err.data.message;
-                    console.error(err.data.stack);
+                    console.error('loginERR', err.data.stack);
                 } else {
-                    $scope.errMsg = 'Bad API request: ' + NGPASSPORT_CONF_BASIC.API_BASE_URL + NGPASSPORT_CONF_BASIC.URL_AFTER_SUCCESSFUL_LOGIN;
+                    $scope.errMsg = '500 Internal API Server Error: ' + NGPASSPORT_CONF_BASIC.API_BASE_URL + NGPASSPORT_CONF_BASIC.API_AUTH_PATHNAME;
                 }
 
             });
@@ -65,7 +65,7 @@ module.exports = function ($scope, jwtAuth, $state, NGPASSPORT_CONF_JWT) {
                     $scope.errMsg = err.data.message;
                     console.error(err.data.stack);
                 } else {
-                    $scope.errMsg = 'Bad API request: ' + NGPASSPORT_CONF_JWT.API_BASE_URL + NGPASSPORT_CONF_JWT.URL_AFTER_SUCCESSFUL_LOGIN;
+                    $scope.errMsg = '500 Internal API Server Error: ' + NGPASSPORT_CONF_JWT.API_BASE_URL + NGPASSPORT_CONF_JWT.API_AUTH_PATHNAME;
                 }
 
             });
@@ -773,7 +773,7 @@ module.exports = function (APPCONF) {
 
 },{}],19:[function(require,module,exports){
 /**
- * Controller: pageCtrl
+ * Controller: TopmenuBasicCtrl
  */
 module.exports = function ($scope, $http, APPCONF) {
     'use strict';
@@ -788,38 +788,12 @@ module.exports = function ($scope, $http, APPCONF) {
                 console.log('basicGetsomedata\n', JSON.stringify(res, null, 2));
             })
             .catch(function (err) {
-                $scope.errMsg = err.data.message;
-                console.error(JSON.stringify(err.data.stack, null, 2));
-            });
-    };
-
-
-    //request some protected data from API by JWT Auth
-    $scope.jwtGetsomedata = function () {
-        $http
-            .get(APPCONF.API_BASE_URL + '/examples/auth/passport/jwtstrategy/getsomedata')
-            .then(function (res) {
-                $scope.someData = res.data.msg;
-                console.log('basicGetsomedata\n', JSON.stringify(res, null, 2));
-            })
-            .catch(function (err) {
-                $scope.errMsg = err.data.message;
-                console.error(JSON.stringify(err.data.stack, null, 2));
-            });
-    };
-
-
-    //request some protected data from API by Hash Auth
-    $scope.hashGetsomedata = function () {
-        $http
-            .get(APPCONF.API_BASE_URL + '/examples/auth/passport/hashstrategy/getsomedata')
-            .then(function (res) {
-                $scope.someData = res.data.msg;
-                console.log('basicGetsomedata\n', JSON.stringify(res, null, 2));
-            })
-            .catch(function (err) {
-                $scope.errMsg = err.data.message;
-                console.error(JSON.stringify(err.data.stack, null, 2));
+                if (err.data) {
+                    $scope.errMsg = err.data.message;
+                    console.error(err.data.stack);
+                } else {
+                    $scope.errMsg = '500 Internal API Server Error';
+                }
             });
     };
 

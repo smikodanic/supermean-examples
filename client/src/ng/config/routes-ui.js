@@ -46,6 +46,11 @@ module.exports = function ($stateProvider, $urlRouterProvider, APPCONF) {
     $stateProvider.state('examples-spa_login_jwt_page2', require('../../app/examples-spa/login/jwt/page2/page2Rte')(APPCONF)); // url: /examples-spa/login/jwt/page2
     $stateProvider.state('examples-spa_login_jwt_page3', require('../../app/examples-spa/login/jwt/page3/page3Rte')(APPCONF)); // url: /examples-spa/login/jwt/page3
 
+    $stateProvider.state('examples-spa_login_hash_form', require('../../app/examples-spa/login/hash/form/formRte')(APPCONF)); // url: /examples-spa/login/hash/form
+    $stateProvider.state('examples-spa_login_hash_page1', require('../../app/examples-spa/login/hash/page1/page1Rte')(APPCONF)); // url: /examples-spa/login/hash/page1
+    $stateProvider.state('examples-spa_login_hash_page2', require('../../app/examples-spa/login/hash/page2/page2Rte')(APPCONF)); // url: /examples-spa/login/hash/page2
+    $stateProvider.state('examples-spa_login_hash_page3', require('../../app/examples-spa/login/hash/page3/page3Rte')(APPCONF)); // url: /examples-spa/login/hash/page3
+
 
 
 

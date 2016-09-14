@@ -11,7 +11,8 @@ Notice:
 require('../../bower_components/angular-ui-router/release/angular-ui-router.min.js'); //ui.router
 require('../../bower_components/angular-cookies/angular-cookies.min.js'); //ngCookies
 // require('./ng/modules/angular-passport/ngPassportBasic'); //ngPassport.basicStrategy
-require('./ng/modules/angular-passport/ngPassportJWT'); //ngPassport.JWTStrategy
+// require('./ng/modules/angular-passport/ngPassportJWT'); //ngPassport.JWTStrategy
+require('./ng/modules/angular-passport/ngPassportHash'); //ngPassport.HashStrategy
 
 
 
@@ -22,7 +23,8 @@ var clientApp = angular.module('clientApp', [
     'ui.router',
     'ngCookies',
     // 'ngPassport.basicStrategy',
-    'ngPassport.JWTStrategy'
+    // 'ngPassport.JWTStrategy',
+    'ngPassport.hashStrategy'
 ]);
 
 
@@ -75,3 +77,4 @@ clientApp.controller('QCtrl_methods', require('./app/examples-spa/q/qCtrl_method
 //login examples
 clientApp.controller('TopmenuBasicCtrl', require('./app/examples-spa/login/basic/_common/topmenu/topmenuCtrl'));
 clientApp.controller('TopmenuJWTCtrl', require('./app/examples-spa/login/jwt/_common/topmenu/topmenuCtrl'));
+clientApp.controller('TopmenuHashCtrl', require('./app/examples-spa/login/hash/_common/topmenu/topmenuCtrl'));

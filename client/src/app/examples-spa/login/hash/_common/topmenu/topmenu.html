@@ -1,0 +1,53 @@
+<!-- NAVBAR -->
+<nav class="navbar navbar-default">
+<div class="container-fluid">
+
+	<!-- Navbar button -->
+	<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#nv">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" ui-sref="examples-spa_login"><span class="glyphicon glyphicon-home"></span></a>
+	</div>
+
+	<!-- Navbar -->
+	<div class="collapse navbar-collapse" id="nv">
+		<p class="navbar-text" style="color:Black">HASH Auth &raquo;</p>
+
+		<ul class="nav navbar-nav navbar-left">
+			<li class="dropdown">
+				<a class="dropdown-toggle" data-toggle="dropdown" href="#">Pages Require Authentication<span class="caret"></span></a>
+				<ul class="dropdown-menu">
+					<li><a href="/examples-spa/login/hash/page1">Page 1</a></li>
+					<li><a ui-sref="examples-spa_login_hash_page2">Page 2</a></li>
+				</ul>
+			</li>
+			<li class="dropdown">
+				<a class="dropdown-toggle" data-toggle="dropdown" href="#">Pages Don't Require Authentication<span class="caret"></span></a>
+				<ul class="dropdown-menu">
+					<li><a ui-sref="examples-spa_login_hash_page3">Page 3</a></li>
+				</ul>
+			</li>
+			<li class="dropdown">
+				<a class="dropdown-toggle" data-toggle="dropdown" href="#">Get with $http<span class="caret"></span></a>
+				<ul class="dropdown-menu">
+					<li><a href="#" ng-click="hashGetsomedata()">API Data protected by HASH Auth</a></li>
+				</ul>
+			</li>
+			<li>
+				<p class="navbar-text" style="color:green" ng-show="!errMsg">{{someData}}</p>
+				<p class="navbar-text" style="color:red" ng-show="errMsg">{{errMsg}}</p>
+			</li>
+		</ul>
+
+		<ul class="nav navbar-nav navbar-right">
+			<li><a ui-sref="examples-spa_login_hash_form"><span class="glyphicon glyphicon-log-in"></span></a></li>
+			<li ng-controller="NgPassportHashCtrl"><a href="#" ng-click="logout()"><span class="glyphicon glyphicon-log-out"></span></a></li>
+		</ul>
+	</div>
+
+</div>
+</nav><!-- NAVBAR end -->

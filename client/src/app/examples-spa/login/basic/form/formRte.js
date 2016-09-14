@@ -1,5 +1,5 @@
-/* state: 'examples-spa_login_form'
- * url: /examples-spa/login/form
+/* state: 'examples-spa_login_basic_form'
+ * url: /examples-spa/login/basic/form
  ************************/
 module.exports = function (APPCONF) {
     'use strict';

@@ -1,0 +1,54 @@
+<div class="row">
+	<div class="col-sm-12" ui-view="topmenu"></div>
+
+	<div class="col-sm-12">
+		<h2>Page 1</h2>
+		<p class="alert alert-warning">
+			Login was successful!!!
+			<br><b>authRequired: true</b> --- Authentication required on this page !!!
+		</p>
+	</div>
+
+
+	<!-- logout buttons -->
+	<div class="col-sm-12">
+	<div class="well" style="color:Navy;">
+		<h2>Logout buttons</h2>
+
+		<h4>1. Regular button</h4>
+		<p>
+			This buttom is made by standard HTML tags:
+			<br><code>&lt;button class="btn btn-success" ng-controller="NgPassportHashCtrl" ng-click="logout()"&gt;Logout&lt;/button&gt;</code>
+			<br><button class="btn btn-success" ng-controller="NgPassportHashCtrl" ng-click="logout()">Logout</button>
+		</p>
+
+		<br><br>
+		<h4>2. ngDirective button - default template</h4>
+		<p>
+			This buttom is made by angular directive 'ngpassportLogout' with default template:
+			<br><code>&lt;ngpassport-logout&gt;Logout&lt;/button&gt;</code>
+			<br><ngpassport-logout>Logout</ngpassport-logout>
+			<br>
+			<br><code>&lt;div class="btn btn-danger ngpassport-logout&gt;&lt;/div&gt;</code>
+			<br><div class="btn btn-danger ngpassport-logout"></div>
+		</p>
+
+		<br><br>
+		<h4>3. ngDirective button - custom template</h4>
+		<p>
+			This buttom is made by angular directive 'ngpassportLogout' with custom template which override default template:
+			<br><code>&lt;ngpassport-logout template-url="myBootstrapLogout"&gt;Logout&lt;/button&gt;</code>
+			<br>
+			<br><ngpassport-logout template-url="myBootstrapLogout.html">Logout</ngpassport-logout>
+		</p>
+	</div>
+	</div>
+
+</div>
+
+
+
+<!-- override default form template -->
+<script type="text/ng-template" id="myBootstrapLogout.html">
+   	<a href="#" style="border:1px solid Gray;font-size:21px;padding:5px;" ng-click="logout()"><span class="glyphicon glyphicon-log-out"></span></a>
+</script>

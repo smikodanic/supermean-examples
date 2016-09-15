@@ -1,4 +1,4 @@
-var ngPassportBasic = require('../../../../../../mynpm/angular-passport/src/main.js').ngPassportBasic;
+var ngPassportBasic = require('angular-passport').ngPassportBasic;
 
 /* configure */
 ngPassportBasic.constant('NGPASSPORT_CONF_BASIC', {

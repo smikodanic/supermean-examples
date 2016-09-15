@@ -1,4 +1,4 @@
-var ngPassportJWT = require('../../../../../../mynpm/angular-passport/src/main.js').ngPassportJWT;
+var ngPassportJWT = require('angular-passport').ngPassportJWT;
 
 /* configure */
 ngPassportJWT.constant('NGPASSPORT_CONF_JWT', {

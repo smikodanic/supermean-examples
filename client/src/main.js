@@ -10,9 +10,9 @@ Notice:
  ******************************************************************/
 require('../../bower_components/angular-ui-router/release/angular-ui-router.min.js'); //ui.router
 require('../../bower_components/angular-cookies/angular-cookies.min.js'); //ngCookies
-// require('./ng/modules/angular-passport/ngPassportBasic'); //ngPassport.basicStrategy
-// require('./ng/modules/angular-passport/ngPassportJWT'); //ngPassport.JWTStrategy
-require('./ng/modules/angular-passport/ngPassportHash'); //ngPassport.HashStrategy
+require('./ng/modules/angular-passport/ngPassportBasic'); //ngPassport.basicStrategy
+require('./ng/modules/angular-passport/ngPassportJWT'); //ngPassport.JWTStrategy
+// require('./ng/modules/angular-passport/ngPassportHash'); //ngPassport.HashStrategy
 
 
 
@@ -22,9 +22,9 @@ var clientApp = angular.module('clientApp', [
     // 'ngRoute',
     'ui.router',
     'ngCookies',
-    // 'ngPassport.basicStrategy',
-    // 'ngPassport.JWTStrategy',
-    'ngPassport.hashStrategy'
+    'ngPassport.basicStrategy',
+    'ngPassport.JWTStrategy',
+    // 'ngPassport.hashStrategy'
 ]);
 
 

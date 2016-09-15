@@ -8,6 +8,7 @@
   "homepage": "http://www.supermean.org",
   "main": "server.js",
   "dependencies": {
+    "angular-passport": "^1.1.4",
     "bluebird": "^3.3.5",
     "body-parser": "^1.10.2",
     "chalk": "^0.5.1",

@@ -1,4 +1,4 @@
-var ngPassportHash = require('../../../../../../mynpm/angular-passport/src/main.js').ngPassportHash;
+var ngPassportHash = require('angular-passport').ngPassportHash;
 
 /* configure */
 ngPassportHash.constant('NGPASSPORT_CONF_HASH', {

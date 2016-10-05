@@ -19,10 +19,10 @@ opts.collection = 'refs_story';
 
 //schema definition
 var RefsStorySchema = new Schema({
-    _creator: {type: Number, ref: 'refsPersonMD'}, //'type' must be ssame as RefsPerson._id, e.g. Number
+    _creator: {type: Number, ref: 'refsPersonMD'}, //'type' must be same as RefsPerson._id, e.g. Number
     title: String,
     chapter: Number,
-    fans: [{type: Number, ref: 'refsPersonMD'}] //'type' must be ssame as RefsPerson._id, e.g. Number
+    fans: [{type: Number, ref: 'refsPersonMD'}] //'type' must be same as RefsPerson._id, e.g. Number
 }, opts);
 
 

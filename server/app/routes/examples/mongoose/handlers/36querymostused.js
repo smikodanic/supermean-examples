@@ -12,9 +12,6 @@ Bpromise.promisifyAll(require('mongoose')); //enables execAsync()
 
 
 
-var query = operationsModel.getFindQuery();
-
-
 /*****************************************************************************************
 * GET /examples/mongoose/36querymostused-common?qs=From&limit=2&skip=1&sort=-updated_at *
 *****************************************************************************************
@@ -34,6 +31,7 @@ module.exports.common = function (req, res, next) {
     var qsReg = new RegExp(req.query.qs, 'ig');
 
     //define query
+    var query = operationsModel.getFindQuery();
     query
         .where({str: qsReg})
         .limit(req.query.limit)
@@ -101,6 +99,7 @@ TOTAL: 4
 module.exports.distinct = function (req, res, next) {
     'use strict';
 
+    var query = operationsModel.getFindQuery();
     query.distinct('str');
 
     query.execAsync()
@@ -136,6 +135,7 @@ module.exports.regex = function (req, res, next) {
     var qsReg = new RegExp(req.query.qs, 'ig');
 
     //define query
+    var query = operationsModel.getFindQuery();
     query.regex('str', qsReg);
 
 
@@ -165,6 +165,7 @@ module.exports.select = function (req, res, next) {
     var qsReg = new RegExp(req.query.qs, 'ig');
 
     //define query
+    var query = operationsModel.getFindQuery();
     query.where({'str': qsReg}).select('str dat');
 
 

@@ -27,7 +27,7 @@ module.exports.lean = function () {
         .execAsync()
         .then(function (docOrig) {
 
-            /***** This will not work! Because of lean() docOrig doesn't have save(9 method !!! *****/
+            /***** This will not work! Because of lean() docOrig doesn't have save() method !!! *****/
             // return docOrig.saveAsync();
 
             //saving new doc (make duplicated doc)

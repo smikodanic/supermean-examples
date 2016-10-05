@@ -11,7 +11,7 @@ module.exports = function (req, res, next) {
     'use strict';
 
     var docInput = {
-        num_simple3: 333,
+        num_simple: 333,
         num_minmax: 10 //can be 10,11,12 ..., 20
     };
 

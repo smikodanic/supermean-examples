@@ -22,7 +22,7 @@ var RefsPersonSchema = new Schema({
     _id: Number,
     name: String,
     age: Number,
-    stories: [{type: Schema.Types.ObjectId, ref: 'refsStoryMD'}] //'type' must be ssame as RefsStory._id, e.g. Schema.Types.ObjectId
+    stories: [{type: Schema.Types.ObjectId, ref: 'refsStoryMD'}] //'type' must be same as RefsStory._id, e.g. Schema.Types.ObjectId
 }, opts);
 
 

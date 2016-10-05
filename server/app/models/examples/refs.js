@@ -165,39 +165,16 @@ module.exports.execPopulatePerson = function (person_id) {
 module.exports.removePerson = function (person_id) {
     'use strict';
 
-    //WARNING:This will not activate 'pre' middleware defined in RefsPerson schema because remove() must be applied to dec nto to model.
+    //WARNING:This will not activate 'pre' middleware defined in RefsPerson schema because remove() must be applied to doc, not to model.
     // return refsPersonModel.findByIdAndRemoveAsync(person_id);
 
     return refsPersonModel.findOneAsync({_id: person_id})
         .then(function (personDoc) {
 
             if (personDoc) {
-                return personDoc.remove(); //this removal will activate pre middleware
+                return personDoc.remove(); //this removal will activate pre middleware and story will be deleted too
             } else {
                 throw new Error('person_id does not exists in database!');
-            }
-        });
-};
-
-
-
-/*
- * Delete person doc and all refrenced story docs.
- * Use middleware .pre('remove', delFunction) inside RefsPerson schema.
- */
-module.exports.removePerson = function (person_id) {
-    'use strict';
-
-    //WARNING:This will not activate 'pre' middleware defined in RefsPerson schema because remove() must be applied to dec nto to model.
-    // return refsPersonModel.findByIdAndRemoveAsync(person_id);
-
-    return refsPersonModel.findOneAsync({_id: person_id})
-        .then(function (personDoc) {
-
-            if (personDoc) {
-                return personDoc.remove(); //this removal will activate pre middleware, because personDoc is document
-            } else {
-                throw new Error('person_id does not exists in refs_person collection!');
             }
         });
 };

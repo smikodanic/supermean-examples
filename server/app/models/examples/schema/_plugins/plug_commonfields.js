@@ -18,7 +18,7 @@ module.exports.idWithAutoIncrement = function (sch, schOpts) {
     sch.pre('save', function (next) {
         // console.log(this.constructor.modelName); //'schadditionsMD'
 
-        var doc = this;
+        var doc = this; //this replaces doc to be saved
         this.model(this.constructor.modelName).findOne().sort({id: -1}).exec(function (err, result) {
             if (err) {next(err);}
 

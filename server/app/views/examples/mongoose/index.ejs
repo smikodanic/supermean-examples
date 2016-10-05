@@ -223,7 +223,7 @@
 		<br><b>operational queries:</b> remove, update
 		<br><b>misc:</b> $where, comment, cursor, exists, hint, merge, setOptions|sort, limit, skip, ...|
 		<ol>
-			<li><a href="/examples/mongoose/36querymostused-common" target="_blank">where, limit, skip, sort, count</a> - common used mongoose queries (used req.query to send parameters)
+			<li><a href="/examples/mongoose/36querymostused-common?qs=from%20array&limit=2&skip=1&sort=updated_at" target="_blank">where, limit, skip, sort, count</a> - common used mongoose queries (used req.query to send parameters)
 			<li><a href="/examples/mongoose/36querymostused-distinct" target="_blank">distinct</a> - return non-duplicated values
 			<li><a href="/examples/mongoose/36querymostused-regex?qs=from%20array" target="_blank">regex(field, regExp)</a> - regex search
 			<li><a href="/examples/mongoose/36querymostused-select?qs=from%20array" target="_blank">select('field1 field2 ...')</a> - determine which fields will be shown
@@ -235,14 +235,14 @@
 			<li><a href="/examples/mongoose/39queryarray-elemmatch" target="_blank">.elemMatch('obj.arr_str', {$regex: /MARK/ig})</a> - field must be array and one of elements must match criteria
 			<li><a href="/examples/mongoose/39queryarray-size" target="_blank">.size('obj.arr_str', 0)</a> - field must be array and must contain given number of elements
 			<li><a href="/examples/mongoose/39queryarray-slice" target="_blank">.slice('obj.arr_str', -2)</a> - reduces number of array elements
-			<li><a href="/examples/mongoose/40queryoper-remove" target="_blank">.remove(criteria)</a> - delete all docs matching query criteria
+			<li><a href="/examples/mongoose/40queryoper-remove" target="_blank">.remove(criteria)</a> - delete all docs matching query criteria <b>.remove({'obj.arr_str': {$elemMatch: {$eq: 'pero'}}})</b>
 			<li><a href="/examples/mongoose/40queryoper-update" target="_blank">.update(criteria, newDoc, options)</a> - update all docs matching query criteria
 			<li><a href="/examples/mongoose/41querymisc-dollarwhere" target="_blank">.$where(JSfunction)</a> - JS function or expression passed to mongodb query (must return true or false)
 			<li><a href="/examples/mongoose/41querymisc-comment" target="_blank">.comment('Some comment!')</a> - add comment
 			<li><a href="/examples/mongoose/41querymisc-cursor-stream" target="_blank">.cursor().on('data', fja).on('end', fja)</a> - use cursor on data stream
 			<li><a href="/examples/mongoose/41querymisc-exists" target="_blank">.exists(path)</a> - returns docs where mongo path exists
 			<li><a href="/examples/mongoose/41querymisc-merge" target="_blank">query.merge(query2)</a> - merge results from query and query2
-			<li><a href="/examples/mongoose/41querymisc-setoptions" target="_blank">.setOptions({}})</a> - sets query options like limit, skip, sort, .... <a href="http://mongoosejs.com/docs/api.html#query_Query-setOptions">all options</a>
+			<li><a href="/examples/mongoose/41querymisc-setoptions" target="_blank">.setOptions({}})</a> - sets query options like limit, skip, sort, .... <a href="http://mongoosejs.com/docs/api.html#query_Query-setOptions" target="_blank">all options</a>
 
 		</ol>
 
@@ -295,7 +295,7 @@
 		<ol>
 			<li><a href="/examples/mongoose/70refs-savepersonthenstory" target="_blank">save ref document (parallel)</a> - Save person then story. Two savings will be executed in parralel.
 			<li><a href="/examples/mongoose/70refs-savestorythenperson" target="_blank">save ref document (serial)</a> - Save story then person. Two savings will be executed serially, one after another.
-			<li><a href="/examples/mongoose/70refs-getperson?person_id=3" target="_blank">find doc with populated data</a>
+			<li><a href="/examples/mongoose/70refs-getperson?person_id=3" target="_blank"><b>.populate()</b> -find doc with populated data</a>
 				- Get person with populated story data. Pay attention on 'ref' schema property which enable populate() method.
 				In order to get data, first fill the database with <a href="/examples/mongoose/70refs-savestorythenperson" target="_blank">2nd example</a>.
 			<li><a href="/examples/mongoose/70refs-execpopulate" target="_blank">doc.execPopulate()</a> - Execute populate() and returns promise. (Bluebird's .execPopulateAsync() will not work)
@@ -305,7 +305,7 @@
 
 		<br><br>
 		<h4>Deletion of linked docs</h4>
-		<a href="/examples/mongoose/70refs-emptycollections" target="_blank">Empty collections</a> before start examples.
+		First <a href="/examples/mongoose/70refs-savepersonthenstory" target="_blank">fill collections</a> with 1st example.
 		<ol>
 			<li><a href="/examples/mongoose/70refs-deleteperson?person_id=1" target="_blank">ref deletion - person</a>
 				- Delete linked documents. For example if person doc is deleted all refrenced story docs should be deleted too.
@@ -314,6 +314,7 @@
 			<li><a href="/examples/mongoose/70refs-deletestory?story_id=" target="_blank">ref deletion - story</a>
 				- When story doc is removed it should be also removed from person.stories[] array.
 				<a href="/examples/mongoose/70refs-savestorythenperson" target="_blank">Fill db</a> before deletion.
+				Also insert story_id in browser URL, for example <i>story_id=57f4f7405bb919f237ae7e21</i>
 		</ol>
 
 

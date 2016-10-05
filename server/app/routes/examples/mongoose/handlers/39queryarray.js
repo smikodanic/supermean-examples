@@ -238,8 +238,8 @@ module.exports.elemMatch = function (req, res, next) {
 module.exports.size = function (req, res, next) {
     'use strict';
 
-    // query.size('obj.arr_str', 0);
-    query.where('obj.arr_str').size(0);
+    // query.size('obj.arr_str', 4);
+    query.where('obj.arr_str').size(4);
 
 
     console.log(JSON.stringify(query.getQuery(), null, 2));
@@ -334,7 +334,12 @@ module.exports.slice = function (req, res, next) {
 
     console.log(JSON.stringify(query.getQuery(), null, 2));
     /*
-
+{
+  "obj.arr_str": {
+    "$size": 4
+  },
+  "num": 33
+}
      */
 
     query.execAsync()

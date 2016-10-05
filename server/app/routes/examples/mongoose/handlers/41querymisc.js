@@ -12,9 +12,6 @@ Bpromise.promisifyAll(require('mongoose')); //enables execAsync()
 
 
 
-var query = operationsModel.getFindQuery();
-
-
 /*****************************************************************************************
 * GET /examples/mongoose/41querymisc-dollarwhere *
 *****************************************************************************************
@@ -22,6 +19,7 @@ var query = operationsModel.getFindQuery();
 module.exports.dollarwhere = function (req, res, next) {
     'use strict';
 
+    var query = operationsModel.getFindQuery();
     query.$where(function () { //here cannot be used arrow function because mongodb doesn't accept it
         return this.str === 'From array 2 !'; //this.str is 'operations#str' field in mongoDB
         // return false; //empty array [] will be returned. Usefull to break output under certain conditions
@@ -67,6 +65,7 @@ module.exports.dollarwhere = function (req, res, next) {
 module.exports.comment = function (req, res, next) {
     'use strict';
 
+    var query = operationsModel.getFindQuery();
     query
         .where({})
         .comment('Select doc where num=33') //just a comment
@@ -95,6 +94,8 @@ module.exports.comment = function (req, res, next) {
 * In opposite there is pulled stream where we must send request for every new doc.*/
 module.exports.cursorStream = function (req, res, next) {
     'use strict';
+
+    var query = operationsModel.getFindQuery();
 
     var docs = [];
     let i = 1;
@@ -177,6 +178,7 @@ doc4{
 module.exports.exists = function (req, res, next) {
     'use strict';
 
+    var query = operationsModel.getFindQuery();
     query
         .exists('mix.name');
         // .exists('mix');
@@ -248,11 +250,13 @@ module.exports.exists = function (req, res, next) {
 module.exports.merge = function (req, res, next) {
     'use strict';
 
+    var query = operationsModel.getFindQuery();
+
     var query2 = query.where({str: /some/ig}); //will be merged into query results
 
     query
         .where({str: /2/ig})
-        // .where({str: /some/ig}); //will not work on sme path, so use merge() to apply on same path 'str'
+        // .where({str: /some/ig}); //will not work on same path, so use merge() to apply on same path 'str'
         .merge(query2);
 
 
@@ -340,6 +344,7 @@ module.exports.merge = function (req, res, next) {
 module.exports.setOptions = function (req, res, next) {
     'use strict';
 
+    var query = operationsModel.getFindQuery();
     query
         .setOptions({
             limit: 2,

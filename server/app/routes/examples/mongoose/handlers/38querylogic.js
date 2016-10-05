@@ -12,9 +12,6 @@ Bpromise.promisifyAll(require('mongoose')); //enables execAsync()
 
 
 
-var query = operationsModel.getFindQuery();
-
-
 /*****************************************************************************************
 * GET /examples/mongoose/38querylogic-gt-lt *
 *****************************************************************************************
@@ -23,6 +20,7 @@ module.exports.gtlt = function (req, res, next) {
     'use strict';
 
     //define query
+    var query = operationsModel.getFindQuery();
     query
         .where('num').gt(30).lt(34);
 
@@ -103,6 +101,7 @@ module.exports.andor = function (req, res, next) {
     'use strict';
 
     //define query
+    var query = operationsModel.getFindQuery();
     query
         .and([{str: {$regex: /som/ig}}, {num: {$lt: 35}}]);
 

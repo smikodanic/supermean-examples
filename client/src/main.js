@@ -23,7 +23,7 @@ var clientApp = angular.module('clientApp', [
     'ui.router',
     'ngCookies',
     'ngPassport.basicStrategy',
-    'ngPassport.JWTStrategy',
+    'ngPassport.JWTStrategy'
     // 'ngPassport.hashStrategy'
 ]);
 
@@ -78,3 +78,13 @@ clientApp.controller('QCtrl_methods', require('./app/examples-spa/q/qCtrl_method
 clientApp.controller('TopmenuBasicCtrl', require('./app/examples-spa/login/basic/_common/topmenu/topmenuCtrl'));
 clientApp.controller('TopmenuJWTCtrl', require('./app/examples-spa/login/jwt/_common/topmenu/topmenuCtrl'));
 clientApp.controller('TopmenuHashCtrl', require('./app/examples-spa/login/hash/_common/topmenu/topmenuCtrl'));
+
+//directives
+clientApp.controller('DirectivesCtrl', require('./app/examples-spa/directives/directivesCtrl'));
+
+
+
+/******************* DIRECTIVES *******************
+ **************************************************/
+clientApp.directive('myTemplateString', require('./app/examples-spa/directives/directive_examples/01template-string'));
+

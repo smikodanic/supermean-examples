@@ -14,4 +14,4 @@ server.listen(port);
 
 //server events
 server.on('error', require('./events').onError(port));
-// server.on('listening', require('./events').onListening(server));
+server.on('listening', require('./events').onListening(server));

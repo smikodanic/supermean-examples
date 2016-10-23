@@ -35,6 +35,7 @@ module.exports = function ($stateProvider, $urlRouterProvider, APPCONF) {
     $stateProvider.state('examples-spa_uirouter', require('../../app/examples-spa/uirouter/uirouterRte')(APPCONF)); // url: /examples-spa/uirouter
     $stateProvider.state('examples-spa_q', require('../../app/examples-spa/q/qRte')(APPCONF)); // url: /examples-spa/q
     $stateProvider.state('examples-spa_login', require('../../app/examples-spa/login/loginRte')(APPCONF)); // url: /examples-spa/login
+    $stateProvider.state('examples-spa_directives', require('../../app/examples-spa/directives/directivesRte')(APPCONF)); // url: /examples-spa/directives
 
     $stateProvider.state('examples-spa_login_basic_form', require('../../app/examples-spa/login/basic/form/formRte')(APPCONF)); // url: /examples-spa/login/basic/form
     $stateProvider.state('examples-spa_login_basic_page1', require('../../app/examples-spa/login/basic/page1/page1Rte')(APPCONF)); // url: /examples-spa/login/basic/page1

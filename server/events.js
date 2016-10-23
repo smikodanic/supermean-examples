@@ -57,7 +57,7 @@ module.exports.onListening = function (server) {
             ? 'pipe ' + addr
             : 'port ' + addr.port;
 
-        console.log('Listening on ' + bind);
+        console.log('supermean-examples started on ' + bind);
     };
 
     return onListening;

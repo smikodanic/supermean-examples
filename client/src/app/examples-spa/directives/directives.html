@@ -120,6 +120,42 @@ clientApp.run(function ($templateCache) {
 				</li>
 
 
+				<li>
+					<b>controller: function($scope, $element, $attrs, $transclude, otherInjectables) { ... }</b> - usage of $element, $attrs and $transclude
+					[<a href="https://github.com/smikodanic/supermean-examples/blob/master/client/src/app/examples-spa/directives/directive_examples/03controller-internal2.js" target="_blank">03controller-internal.js</a>]
+
+					<div class="well">
+						<my-controller-internal2 var-from-attribute="My var from attribute!"></my-controller-internal2>
+					</div>
+				</li>
+
+
+				<li>
+					<b>restrict: 'E | A | C | M'</b> - E-element, A-attribute, C-class, M-comment (EA in most cases)
+					<br><b>replace: true | false</b> - will directive element will be replaced with real HTML tag (default is false)
+
+					<br>
+					[<a href="https://github.com/smikodanic/supermean-examples/blob/master/client/src/app/examples-spa/directives/directive_examples/04restrict-e.js" target="_blank">04restrict-e.js</a>,
+					<a href="https://github.com/smikodanic/supermean-examples/blob/master/client/src/app/examples-spa/directives/directive_examples/04restrict-a.js" target="_blank">04restrict-a.js</a>]
+
+<pre><code>//template-- &lt;p style="color:green"&gt; &lt;/p&gt;
+//directive--  &lt;mydir class="pull-right"&gt; &lt;/mydir&gt;
+
+//replace: true (will merge directive and template attributes)
+//result will be:  &lt;p class="pull-right" style="color:green"&gt; &lt;/p&gt;
+
+
+//replace: false
+&lt;mydir class="pull-right"&gt; &lt;p style="color:green"&gt; &lt;/p&gt; &lt;/mydir&gt;
+</code></pre>
+
+					<div class="well">
+						<my-restrict-e class="pull-right"></my-restrict-e>
+						<p my-restrict-a="some value"></p>
+					</div>
+				</li>
+
+
 
 
 

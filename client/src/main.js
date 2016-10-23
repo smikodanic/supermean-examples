@@ -97,3 +97,5 @@ clientApp.run(function ($templateCache) {
     $templateCache.put('green.html', '<p style="color:green">green template</p>');
     $templateCache.put('red.html', '<p style="color:red">red template</p>');
 });
+
+clientApp.directive('myControllerExternal', require('./app/examples-spa/directives/directive_examples/03controller-external'));

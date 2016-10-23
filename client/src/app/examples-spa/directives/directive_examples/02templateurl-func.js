@@ -6,7 +6,7 @@ module.exports = function () {
     var directiveObj = {
         restrict: 'E',
         templateUrl: function(tElement, tAttrs) {
-            console.log(stringify(tAttrs, null, 2));
+            // console.log(stringify(tAttrs, null, 2));
             return tAttrs.myTpl || 'green.html';
         }
     };

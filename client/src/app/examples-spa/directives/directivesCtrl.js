@@ -4,7 +4,7 @@
 module.exports = function ($scope) {
     'use strict';
 
-   console.log('directives');
+   $scope.myVar = 'My variable from controller "DirectivesCtrl" !';
 
 
 };

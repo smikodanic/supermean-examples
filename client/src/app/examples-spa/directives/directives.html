@@ -35,13 +35,17 @@
 
 	<div class="row">
 
-		<div class="col-sm-7">
+		<div class="col-sm-12">
 
 			<h3>Directive definition object properties</h3>
-			<i>Notice: All example directives are located in <b>/directives/directive_examples/</b> folder.</i>
+			<i>Notice: All example directives are located in <b>/directives/directive_examples/</b> folder and are put in
+				<a href="https://github.com/smikodanic/supermean-examples/blob/master/client/src/app/examples-spa/directives/directives.html" target="_blank">directives.html</a> file.
+			</i>
 			<br><br>
 
 			<ol>
+
+				<!-- template -->
 				<li>
 					<b>template: 'html string'</b> - template used as a HTML string
 					[<a href="https://github.com/smikodanic/supermean-examples/blob/master/client/src/app/examples-spa/directives/directive_examples/01template-string.js" target="_blank">01template-string.js</a>]
@@ -50,6 +54,57 @@
 						<my-template-string></my-template-string>
 					</div>
 				</li>
+
+				<li>
+					<b>template: function(tElement, tAttrs) { ... }</b> - template used as a function which returns HTML string
+					[<a href="https://github.com/smikodanic/supermean-examples/blob/master/client/src/app/examples-spa/directives/directive_examples/01template-func.js" target="_blank">01template-func.js</a>]
+
+
+					<div class="well" style="min-height:80px">
+						<my-template-func my-html="<p style='color:red'>My HTML.</p>" class="pull-right"></my-template-func>
+					</div>
+				</li>
+
+
+
+				<!-- templateUrl -->
+				<li>
+					<b>templateUrl: function(tElement, tAttrs) { ... }</b> - template used as a function which returns template URL
+					[<a href="https://github.com/smikodanic/supermean-examples/blob/master/client/src/app/examples-spa/directives/directive_examples/02templateUrl-func.js" target="_blank">02templateUrl-func.js</a>]
+
+<pre><code>//define default templates
+clientApp.run(function ($templateCache) {
+    'use strict';
+    $templateCache.put('green.html', '&lt;p style="color:green"&gt;green template&lt;/p&gt;');
+    $templateCache.put('red.html', '&lt;p style="color:red"&gt;red template&lt;/p&gt;');
+});
+</code></pre>
+
+					<div class="well">
+
+						<my-templateurl-func my-tpl="red"></my-template-func>
+
+					</div>
+				</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 			</ol>
 
 

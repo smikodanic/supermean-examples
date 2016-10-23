@@ -42,6 +42,7 @@
     "gulp-nodemon": "^2.0.6",
     "gulp-postmortem": "^1.0.5",
     "gulp-uglify": "^1.5.2",
+    "json-stringify-safe": "^5.0.1",
     "nodedump": "0.0.8",
     "rimraf": "^2.5.2",
     "vinyl-buffer": "^1.0.0",

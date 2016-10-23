@@ -3,7 +3,9 @@ module.exports = function () {
 
     var directiveObj = {
         restrict: 'E',
-        template: '<p>Simple directive!!!</p>'
+        templateUrl: function(tElement, tAttrs) {
+            return tAttrs.myTpl || 'green.html';
+        }
     };
 
     return directiveObj;

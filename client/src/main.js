@@ -88,11 +88,12 @@ clientApp.controller('DirectivesCtrl', require('./app/examples-spa/directives/di
  **************************************************/
 clientApp.directive('myTemplateString', require('./app/examples-spa/directives/directive_examples/01template-string'));
 clientApp.directive('myTemplateFunc', require('./app/examples-spa/directives/directive_examples/01template-func'));
+clientApp.directive('myTemplateurl', require('./app/examples-spa/directives/directive_examples/02templateurl'));
 
-// clientApp.directive('myTemplateurlFunc', require('./app/examples-spa/directives/directive_examples/02templateurl-func'));
+clientApp.directive('myTemplateurlFunc', require('./app/examples-spa/directives/directive_examples/02templateurl-func'));
     //define default templates
-// clientApp.run(function ($templateCache) {
-//     'use strict';
-//     $templateCache.put('green.html', '<p style="color:green">green template</p>');
-//     $templateCache.put('red.html', '<p style="color:red">red template</p>');
-// });
+clientApp.run(function ($templateCache) {
+    'use strict';
+    $templateCache.put('green.html', '<p style="color:green">green template</p>');
+    $templateCache.put('red.html', '<p style="color:red">red template</p>');
+});

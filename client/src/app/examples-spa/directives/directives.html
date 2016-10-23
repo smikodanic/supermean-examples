@@ -69,8 +69,18 @@
 
 				<!-- templateUrl -->
 				<li>
+					<b>templateUrl: 'mytemplate.html'</b> - template URL is using HTML file in /dist/ folder
+					[<a href="https://github.com/smikodanic/supermean-examples/blob/master/client/src/app/examples-spa/directives/directive_examples/02templateurl.js" target="_blank">02templateurl.js</a>]
+
+					<div class="well">
+						<my-templateurl></my-templateurl>
+					</div>
+				</li>
+
+				<li>
 					<b>templateUrl: function(tElement, tAttrs) { ... }</b> - template used as a function which returns template URL
-					[<a href="https://github.com/smikodanic/supermean-examples/blob/master/client/src/app/examples-spa/directives/directive_examples/02templateUrl-func.js" target="_blank">02templateUrl-func.js</a>]
+					[<a href="https://github.com/smikodanic/supermean-examples/blob/master/client/src/app/examples-spa/directives/directive_examples/02templateurl-func.js" target="_blank">02templateurl-func.js</a>]
+					<br><i>In this example notice how to define template inside JS file (main.js).</i>
 
 <pre><code>//define default templates
 clientApp.run(function ($templateCache) {
@@ -81,9 +91,8 @@ clientApp.run(function ($templateCache) {
 </code></pre>
 
 					<div class="well">
-
-						<my-templateurl-func my-tpl="red"></my-template-func>
-
+						<!-- <my-templateurl-func></my-template-func> --> <!-- green.html will be used by default defined in 02templateurl-func.js -->
+						<my-templateurl-func my-tpl="red.html"></my-template-func>
 					</div>
 				</li>
 

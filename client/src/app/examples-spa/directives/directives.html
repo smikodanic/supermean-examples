@@ -80,7 +80,7 @@
 				<li>
 					<b>templateUrl: function(tElement, tAttrs) { ... }</b> - template used as a function which returns template URL
 					[<a href="https://github.com/smikodanic/supermean-examples/blob/master/client/src/app/examples-spa/directives/directive_examples/02templateurl-func.js" target="_blank">02templateurl-func.js</a>]
-					<br><i>In this example notice how to define template inside JS file (main.js).</i>
+					<br><i>NOTICE: In this example template is defined inside JS file (main.js) using $templateCache.</i>
 
 <pre><code>//define default templates
 clientApp.run(function ($templateCache) {
@@ -100,10 +100,22 @@ clientApp.run(function ($templateCache) {
 				<!-- controller -->
 				<li>
 					<b>controller: 'someCtrl'</b> - external controller is used
-					[<a href="https://github.com/smikodanic/supermean-examples/blob/master/client/src/app/examples-spa/directives/directive_examples/03controller-external.js" target="_blank">03controller-external.js</a>]
+					[<a href="https://github.com/smikodanic/supermean-examples/blob/master/client/src/app/examples-spa/directives/directive_examples/03controller-external.js" target="_blank">03controller-external.js</a>,
+					 <a href="https://github.com/smikodanic/supermean-examples/blob/master/client/src/app/examples-spa/directives/directivesCtrl.js" target="_blank">directivesCtrl.js</a>]
 
 					<div class="well">
 						<my-controller-external></my-controller-external>
+					</div>
+				</li>
+
+
+				<li>
+					<b>controller: function($scope) { ... }</b> - internal controller
+					[<a href="https://github.com/smikodanic/supermean-examples/blob/master/client/src/app/examples-spa/directives/directive_examples/03controller-internal.js" target="_blank">03controller-internal.js</a>]
+					<br><i>NOTICE: $scope which is outside template can be used inside template with {{myVar}}.</i>
+
+					<div class="well">
+						<my-controller-internal></my-controller-internal>
 					</div>
 				</li>
 

@@ -99,3 +99,4 @@ clientApp.run(function ($templateCache) {
 });
 
 clientApp.directive('myControllerExternal', require('./app/examples-spa/directives/directive_examples/03controller-external'));
+clientApp.directive('myControllerInternal', require('./app/examples-spa/directives/directive_examples/03controller-internal'));

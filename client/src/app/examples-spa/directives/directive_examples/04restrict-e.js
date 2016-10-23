@@ -1,5 +1,3 @@
-var stringify = require('json-stringify-safe'); //circular JSON
-
 module.exports = function () {
     'use strict';
 

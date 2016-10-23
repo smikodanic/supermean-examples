@@ -141,7 +141,7 @@ clientApp.run(function ($templateCache) {
 <pre><code>//template-- &lt;p style="color:green"&gt; &lt;/p&gt;
 //directive--  &lt;mydir class="pull-right"&gt; &lt;/mydir&gt;
 
-//replace: true (will merge directive and template attributes)
+//replace: true <b>(will merge directive and template attributes)</b>
 //result will be:  &lt;p class="pull-right" style="color:green"&gt; &lt;/p&gt;
 
 
@@ -151,7 +151,10 @@ clientApp.run(function ($templateCache) {
 
 					<div class="well">
 						<my-restrict-e class="pull-right"></my-restrict-e>
-						<p my-restrict-a="some value"></p>
+						<br>
+						<br>
+						<br>
+						<p my-restrict-a="<p style='color:Maroon'>From directive's attribute.</p>"></p>
 					</div>
 				</li>
 

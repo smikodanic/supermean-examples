@@ -89,6 +89,7 @@ clientApp.controller('DirectivesCtrl', require('./app/examples-spa/directives/di
 clientApp.directive('myTemplateString', require('./app/examples-spa/directives/directive_examples/01template-string'));
 clientApp.directive('myTemplateFunc', require('./app/examples-spa/directives/directive_examples/01template-func'));
 clientApp.directive('myTemplateurl', require('./app/examples-spa/directives/directive_examples/02templateurl'));
+clientApp.directive('myTemplatenamespaceSvg', require('./app/examples-spa/directives/directive_examples/02templatenamespace-svg'));
 
 clientApp.directive('myTemplateurlFunc', require('./app/examples-spa/directives/directive_examples/02templateurl-func'));
     //define default templates

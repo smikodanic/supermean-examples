@@ -28,7 +28,7 @@
 		<div class="col-sm-5">
 			<p class="alert alert-warning">
 				<a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>
-				<b>Warning:</b> Open browser console to see example output result.
+				<b>Notice:</b> Angular directives are located on this page. In some examples you have to open browser console to see output results.
 			</p>
 		</div>
 	</div>
@@ -37,14 +37,14 @@
 
 		<div class="col-sm-12">
 
-			<h3>Directive definition object properties</h3>
+			<h2>Directive definition object properties</h2>
 			<i>Notice: All example directives are located in <b>/directives/directive_examples/</b> folder and are put in
 				<a href="https://github.com/smikodanic/supermean-examples/blob/master/client/src/app/examples-spa/directives/directives.html" target="_blank">directives.html</a> file.
 			</i>
 			<br><br>
 
+			<h3>TEMPLATE</h3>
 			<ol>
-
 				<!-- template -->
 				<li>
 					<b>template: 'html string'</b> - template used as a HTML string
@@ -96,7 +96,23 @@ clientApp.run(function ($templateCache) {
 					</div>
 				</li>
 
+				<!-- templateNamespace -->
+				<li>
+					<b>templateNamespace: 'html | svg | math'</b> - document type representation
+					[<a href="https://github.com/smikodanic/supermean-examples/blob/master/client/src/app/examples-spa/directives/directive_examples/02templateurl.js" target="_blank">02templatenamespace.js</a>]
 
+					<div class="well">
+						<svg width="100" height="100">
+							<my-templatenamespace-svg></my-templatenamespace-svg>
+						</svg>
+					</div>
+				</li>
+
+			</ol>
+
+
+			<h3>CONTROLLER</h3>
+			<ol>
 				<!-- controller -->
 				<li>
 					<b>controller: 'someCtrl'</b> - external controller is used
@@ -128,11 +144,34 @@ clientApp.run(function ($templateCache) {
 						<my-controller-internal2 var-from-attribute="My var from attribute!"></my-controller-internal2>
 					</div>
 				</li>
+			</ol>
 
 
+			<h3>SCOPE</h3>
+			Define scope inside directive. Possible values:
+			<br><b>false</b> -No new scope. Directive will use it's parent scope. This is <b>default</b> value.
+			<br><b>true</b> -no scope
+			<br><b>false</b> -no scope
+
+			<ol>
+				<li>
+					<b>controller: function($scope) { ... }</b> - internal controller
+					[<a href="https://github.com/smikodanic/supermean-examples/blob/master/client/src/app/examples-spa/directives/directive_examples/03controller-internal.js" target="_blank">03controller-internal.js</a>]
+					<br><i>NOTICE: $scope which is outside template can be used inside template with {{myVar}}.</i>
+
+					<div class="well">
+						<my-controller-internal></my-controller-internal>
+					</div>
+				</li>
+
+			</ol>
+
+
+			<h3>OTHER PROPERTIES</h3>
+			<ol>
 				<li>
 					<b>restrict: 'E | A | C | M'</b> - E-element, A-attribute, C-class, M-comment (EA in most cases)
-					<br><b>replace: true | false</b> - will directive element will be replaced with real HTML tag (default is false)
+					<br><b>replace: true | false</b> - will be directive element replaced with real HTML tag (default is false)
 
 					<br>
 					[<a href="https://github.com/smikodanic/supermean-examples/blob/master/client/src/app/examples-spa/directives/directive_examples/04restrict-e.js" target="_blank">04restrict-e.js</a>,
@@ -158,25 +197,10 @@ clientApp.run(function ($templateCache) {
 					</div>
 				</li>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 			</ol>
+
+
+
 
 
 		</div>

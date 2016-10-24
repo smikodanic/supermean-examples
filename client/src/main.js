@@ -81,6 +81,7 @@ clientApp.controller('TopmenuHashCtrl', require('./app/examples-spa/login/hash/_
 
 //directives
 clientApp.controller('DirectivesCtrl', require('./app/examples-spa/directives/directivesCtrl'));
+clientApp.controller('ScopeParentCtrl', require('./app/examples-spa/directives/scopeParentCtrl'));
 
 
 
@@ -104,3 +105,7 @@ clientApp.directive('myControllerInternal', require('./app/examples-spa/directiv
 clientApp.directive('myControllerInternal2', require('./app/examples-spa/directives/directive_examples/03controller-internal2'));
 clientApp.directive('myRestrictE', require('./app/examples-spa/directives/directive_examples/04restrict-e'));
 clientApp.directive('myRestrictA', require('./app/examples-spa/directives/directive_examples/04restrict-a'));
+
+clientApp.directive('myScopeFalse', require('./app/examples-spa/directives/directive_examples/05scope-false'));
+clientApp.directive('myScopeTrue', require('./app/examples-spa/directives/directive_examples/05scope-true'));
+clientApp.directive('myScopeObjAt', require('./app/examples-spa/directives/directive_examples/05scope-object-at'));

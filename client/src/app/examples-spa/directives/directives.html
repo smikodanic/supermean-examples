@@ -98,7 +98,7 @@ clientApp.run(function ($templateCache) {
 
 				<!-- templateNamespace -->
 				<li>
-					<b>templateNamespace: 'html | svg | math'</b> - document type representation
+					<b>templateNamespace: 'html | svg | math'</b> - document type representation ('html' is default)
 					[<a href="https://github.com/smikodanic/supermean-examples/blob/master/client/src/app/examples-spa/directives/directive_examples/02templateurl.js" target="_blank">02templatenamespace.js</a>]
 
 					<div class="well">
@@ -149,18 +149,44 @@ clientApp.run(function ($templateCache) {
 
 			<h3>SCOPE</h3>
 			Define scope inside directive. Possible values:
-			<br><b>false</b> -No new scope. Directive will use it's parent scope. This is <b>default</b> value.
-			<br><b>true</b> -no scope
-			<br><b>false</b> -no scope
 
-			<ol>
+			<ol ng-controller="ScopeParentCtrl">
 				<li>
-					<b>controller: function($scope) { ... }</b> - internal controller
-					[<a href="https://github.com/smikodanic/supermean-examples/blob/master/client/src/app/examples-spa/directives/directive_examples/03controller-internal.js" target="_blank">03controller-internal.js</a>]
-					<br><i>NOTICE: $scope which is outside template can be used inside template with {{myVar}}.</i>
+					<b>scope: false</b> - No new scope. The controller and directive are using the same scope object. This means any changes to the controller or directive will be in sync.
+					<br>Usually scope is defined inside controller: property. false is <b>default</b> value.
+					[<a href="https://github.com/smikodanic/supermean-examples/blob/master/client/src/app/examples-spa/directives/directive_examples/05scope-false.js" target="_blank">05scope-false.js</a>]
+
+					<br><i>IMPORTANT: A value inserted in 'childScopeVar' input will appear in parent scope.</i>
 
 					<div class="well">
-						<my-controller-internal></my-controller-internal>
+						<my-scope-false></my-scope-false>
+						<p>childScopeVar in parent scope: {{childScopeVar}}</p>
+					</div>
+				</li>
+
+				<li>
+					<b>scope: true</b> - New child scope will be created inside directive. Any changes made to this new scope will not reflect back to the parent scope.
+					[<a href="https://github.com/smikodanic/supermean-examples/blob/master/client/src/app/examples-spa/directives/directive_examples/05scope-true.js" target="_blank">05scope-true.js</a>]
+
+					<br><i>
+					IMPORTANT: A value inserted in 'childScopeVar' input will NOT appear in parent scope.
+					That's because <b>true</b> creates new child scope which is different from parent scope.
+					<br>If you want that variable to be accessible in parent scope put ng-model="<b>$parent.</b>childScopeVar2"</i>
+
+					<div class="well">
+						<my-scope-true></my-scope-true>
+						<p>childScopeVar2 in parent scope: {{childScopeVar2}}</p>
+					</div>
+				</li>
+
+
+				<li>
+					<b>scope: {isoScope: '@attr'}</b> - New isolated scope for reusable angular directives. @ binds 'isoScope' to directive's attribute.
+					[<a href="https://github.com/smikodanic/supermean-examples/blob/master/client/src/app/examples-spa/directives/directive_examples/05scope-isolated-at.js" target="_blank">05scope-isolated-at.js</a>]
+
+					<div class="well">
+						<my-scope-obj-at attr-val="Val from directive attribute!"></my-scope-obj-at>
+						<p>isoScopeVar in parent scope: {{isoScopeVar}}</p>
 					</div>
 				</li>
 

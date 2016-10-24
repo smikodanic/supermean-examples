@@ -6,6 +6,7 @@ module.exports = function (APPCONF) {
 
     return {
         url: '/examples-spa/directives',
-        templateUrl: APPCONF.PATH_DIST_HTML + '/examples-spa/directives/directives.html'
+        templateUrl: APPCONF.PATH_DIST_HTML + '/examples-spa/directives/directives.html',
+        controller: 'DirectivesCtrl'
     };
 };

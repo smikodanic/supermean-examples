@@ -103,6 +103,8 @@ clientApp.run(function ($templateCache) {
 clientApp.directive('myControllerExternal', require('./app/examples-spa/directives/directive_examples/03controller-external'));
 clientApp.directive('myControllerInternal', require('./app/examples-spa/directives/directive_examples/03controller-internal'));
 clientApp.directive('myControllerInternal2', require('./app/examples-spa/directives/directive_examples/03controller-internal2'));
+clientApp.directive('myControlleras', require('./app/examples-spa/directives/directive_examples/03controller-as'));
+
 clientApp.directive('myRestrictE', require('./app/examples-spa/directives/directive_examples/04restrict-e'));
 clientApp.directive('myRestrictA', require('./app/examples-spa/directives/directive_examples/04restrict-a'));
 

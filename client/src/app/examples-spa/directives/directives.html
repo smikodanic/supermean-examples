@@ -138,10 +138,27 @@ clientApp.run(function ($templateCache) {
 
 				<li>
 					<b>controller: function($scope, $element, $attrs, $transclude, otherInjectables) { ... }</b> - usage of $element, $attrs and $transclude
-					[<a href="https://github.com/smikodanic/supermean-examples/blob/master/client/src/app/examples-spa/directives/directive_examples/03controller-internal2.js" target="_blank">03controller-internal.js</a>]
+					[<a href="https://github.com/smikodanic/supermean-examples/blob/master/client/src/app/examples-spa/directives/directive_examples/03controller-internal2.js" target="_blank">03controller-internal2.js</a>]
 
 					<div class="well">
 						<my-controller-internal2 var-from-attribute="My var from attribute!"></my-controller-internal2>
+					</div>
+				</li>
+
+				<li>
+					<b>controllerAs: 'someName'</b> - enables usage of controller inside directive when scope is isolated, for example 'someName.foo'
+					[<a href="https://github.com/smikodanic/supermean-examples/blob/master/client/src/app/examples-spa/directives/directive_examples/03controller-as.js" target="_blank">03controller-as.js</a>]
+
+<pre><code>
+//'this' is used instead of $scope because we want to secure isolation
+
+controller: function () {
+    <b>this</b>.foo = '-from ctrl';
+}
+</code></pre>
+
+					<div class="well">
+						<my-controlleras attr-value="-from atribute"></my-controlleras>
 					</div>
 				</li>
 			</ol>

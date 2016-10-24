@@ -38,7 +38,7 @@
 		<div class="col-sm-12">
 
 			<h2>Directive definition object properties</h2>
-			<i>Notice: All example directives are located in <b>/directives/directive_examples/</b> folder and are put in
+			<i>Notice: All directive examples are defined and located in <b>/directives/directive_examples/</b> folder and are put in
 				<a href="https://github.com/smikodanic/supermean-examples/blob/master/client/src/app/examples-spa/directives/directives.html" target="_blank">directives.html</a> file.
 			</i>
 			<br><br>
@@ -182,11 +182,25 @@ clientApp.run(function ($templateCache) {
 
 				<li>
 					<b>scope: {isoScope: '@attr'}</b> - New isolated scope for reusable angular directives. @ binds 'isoScope' to directive's attribute.
-					[<a href="https://github.com/smikodanic/supermean-examples/blob/master/client/src/app/examples-spa/directives/directive_examples/05scope-isolated-at.js" target="_blank">05scope-isolated-at.js</a>]
+					[<a href="https://github.com/smikodanic/supermean-examples/blob/master/client/src/app/examples-spa/directives/directive_examples/05scope-object-at.js" target="_blank">05scope-object-at.js</a>]
+
+					<br><i>IMPORTANT: On the contrary to <b>true</b>, object {} creates new isolated scope, so that scope doesn't inherit anything from the parents.</i>
 
 					<div class="well">
-						<my-scope-obj-at attr-val="Val from directive attribute!"></my-scope-obj-at>
+						<my-scope-obj-at attr-val="Val from directive's attribute!"></my-scope-obj-at>
 						<p>isoScopeVar in parent scope: {{isoScopeVar}}</p>
+					</div>
+				</li>
+
+
+				<li>
+					<b>scope: {isoScope: '=attr'}</b> - New isolated scope. = binds 'isoScope' to directive's attribute where model is defined. It is bidirectional binding.
+					[<a href="https://github.com/smikodanic/supermean-examples/blob/master/client/src/app/examples-spa/directives/directive_examples/05scope-object-eq.js" target="_blank">05scope-object-eq.js</a>]
+
+					<br><i>IMPOTRANT: = is bidirectional binding what means changes in 'parentModel' will reflect to 'localModel' and vice versa. (Try to input something into 'localModel' input field.)</i>
+					<div class="well">
+						parentModel in parent scope: <input type="text" ng-model="parentModel" placeholder="parentModel"> {{parentModel}}
+						<my-scope-obj-eq attr-val="parentModel"></my-scope-obj-eq>
 					</div>
 				</li>
 

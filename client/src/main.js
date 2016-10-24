@@ -109,3 +109,4 @@ clientApp.directive('myRestrictA', require('./app/examples-spa/directives/direct
 clientApp.directive('myScopeFalse', require('./app/examples-spa/directives/directive_examples/05scope-false'));
 clientApp.directive('myScopeTrue', require('./app/examples-spa/directives/directive_examples/05scope-true'));
 clientApp.directive('myScopeObjAt', require('./app/examples-spa/directives/directive_examples/05scope-object-at'));
+clientApp.directive('myScopeObjEq', require('./app/examples-spa/directives/directive_examples/05scope-object-eq'));

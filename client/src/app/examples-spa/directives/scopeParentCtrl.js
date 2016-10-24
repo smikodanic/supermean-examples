@@ -6,7 +6,11 @@
 module.exports = function ($scope) {
     'use strict';
 
-   $scope.parentScopeVar= 'Parent scope var from "ScopeParentCtrl" !';
+    $scope.parentScopeVar = 'Parent scope var from "ScopeParentCtrl" !';
+
+    $scope.alertMe = function (msg) {
+        alert(msg);
+    };
 
 
 };

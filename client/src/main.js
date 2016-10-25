@@ -114,3 +114,6 @@ clientApp.directive('myScopeObjAt', require('./app/examples-spa/directives/direc
 clientApp.directive('myScopeObjEq', require('./app/examples-spa/directives/directive_examples/05scope-object-eq'));
 clientApp.directive('myScopeObjLt', require('./app/examples-spa/directives/directive_examples/05scope-object-lt'));
 clientApp.directive('myScopeObjAnd', require('./app/examples-spa/directives/directive_examples/05scope-object-and'));
+
+clientApp.directive('myCompileOrder', require('./app/examples-spa/directives/directive_examples/06compile-order'));
+clientApp.directive('myCompilePostfunction', require('./app/examples-spa/directives/directive_examples/06compile-postfunction'));

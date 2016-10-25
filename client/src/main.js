@@ -117,3 +117,5 @@ clientApp.directive('myScopeObjAnd', require('./app/examples-spa/directives/dire
 
 clientApp.directive('myCompileOrder', require('./app/examples-spa/directives/directive_examples/06compile-order'));
 clientApp.directive('myCompilePostfunction', require('./app/examples-spa/directives/directive_examples/06compile-postfunction'));
+clientApp.directive('myLnk', require('./app/examples-spa/directives/directive_examples/07link'));
+clientApp.directive('myNgrepeatInterpolate', require('./app/examples-spa/directives/directive_examples/08ngrepeat-interpolate'));

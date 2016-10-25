@@ -318,11 +318,33 @@ controller: function () {
 
 
 			<li>
-				<b>compile: function (tElem, tAttrs) { ... ...  return function (scope, iElem, iAttr, controller) {...}}</b> - When we don't need pre. (Open browser's console!)
+				<b>compile: function (tElem, tAttrs) { ... ...  return function (scope, iElem, iAttr, controller) {...}}</b> - When we don't need pre inside compile: we can use this shorten syntax.
 				[<a href="https://github.com/smikodanic/supermean-examples/blob/master/client/src/app/examples-spa/directives/directive_examples/06compile-postfunction.js" target="_blank">06compile-postfunction.js</a>]
 
 				<div class="well">
 					<p my-compile-postfunction>Some text inside directive's template</p>
+				</div>
+			</li>
+
+			<li>
+				<b>link: {pre: function () {...}, post: function () {...}}</b> - When we don't need compiler we can use link: property.
+				[<a href="https://github.com/smikodanic/supermean-examples/blob/master/client/src/app/examples-spa/directives/directive_examples/07link.js" target="_blank">07link.js</a>]
+
+				<div class="well">
+					<p my-lnk>Some other text inside directive's template</p>
+				</div>
+			</li>
+
+
+			<li>
+				<b>$interpolate</b> - As mentioned above controller .
+				[<a href="https://github.com/smikodanic/supermean-examples/blob/master/client/src/app/examples-spa/directives/directive_examples/08ngrepeat-interpolate.js" target="_blank">08ngrepeat-interpolate.js</a>]
+				<br>This directive is not on this page!
+
+				<div class="well">
+					<ul>
+						<!-- <li my-ngrepeat-interpolate my-attr-val="{{i}}" ng-repeat="i in [1,2,3]">r.b. {{i}}</li> -->
+					</ul>
 				</div>
 			</li>
 

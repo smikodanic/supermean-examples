@@ -94,7 +94,7 @@ tAttrs
 
  */
 
-},{"json-stringify-safe":73}],6:[function(require,module,exports){
+},{"json-stringify-safe":75}],6:[function(require,module,exports){
 module.exports = function () {
     'use strict';
 
@@ -141,7 +141,7 @@ module.exports = function () {
     return directiveObj;
 };
 
-},{"json-stringify-safe":73}],9:[function(require,module,exports){
+},{"json-stringify-safe":75}],9:[function(require,module,exports){
 module.exports = function () {
     'use strict';
 
@@ -243,7 +243,7 @@ module.exports = function () {
     return directiveObj;
 };
 
-},{"json-stringify-safe":73}],15:[function(require,module,exports){
+},{"json-stringify-safe":75}],15:[function(require,module,exports){
 module.exports = function () {
     'use strict';
 
@@ -410,7 +410,7 @@ module.exports = function () {
         compile: function (tElem, tAttr) { //t = template
             tElem.css('border', '1px solid purple');
 
-            //post-link function
+            //post-link function (instead of post: function () {...})
             return function (scope, iElem, iAttr, controller) { //i = instance template
                 iElem.css({color: 'purple', font: '15px Times'});
             };
@@ -422,6 +422,82 @@ module.exports = function () {
 };
 
 },{}],24:[function(require,module,exports){
+module.exports = function () {
+    'use strict';
+
+    var directiveObj = {
+        restrict: 'A',
+        link: {
+            pre: function (scope, iElem, iAttr, controller) { //i = instance template
+                iElem.css({color: 'blue', font: '15px Times'});
+            },
+
+            post: function (scope, iElem, iAttr, controller) { //i = instance template
+                iElem.css('border', '2px dotted blue');
+            }
+        }
+
+
+
+
+    };
+
+    return directiveObj;
+};
+
+},{}],25:[function(require,module,exports){
+module.exports = function ($interpolate) {
+    'use strict';
+
+    console.log('\n\nEXAMPLE from 08compile-interpolate.js');
+
+    var directiveObj = {
+        restrict: 'A',
+        template: '<p style="color:Navy">{{bar}} <br>{{foo}}</p> Open console!!!',
+        replace: false,
+        scope: false,
+        // compile: function (tElem, tAttr) { //t = template
+        //     console.log(tAttr.myAttrVal, ' ..compile');
+
+        //     return {
+        //         pre: function (scope, iElem, iAttr, controller) { //i = instance template
+        //             console.log(iAttr.myAttrVal, ' ..pre');
+        //         },
+        //         post: function (scope, iElem, iAttr, controller) { //i = instance template
+        //             console.log(iAttr.myAttrVal, ' ..post');
+        //         }
+        //     };
+        // },
+        controller: function ($scope, $element, $attrs) {
+            //interpolation
+            var v = $interpolate($attrs.myAttrVal)($scope);
+
+            console.log(v, ' ..controller');
+        }
+    };
+
+    return directiveObj;
+};
+
+/*
+Without interpolate:
+EXAMPLE from 08compile-interpolate.js
+{{i}}  ..compile
+{{i}}  ..controller
+1  ..pre
+1  ..post
+{{i}}  ..controller
+2  ..pre
+2  ..post
+{{i}}  ..controller
+3  ..pre
+3  ..post
+
+CONCLUSION: 'i' is not interpreted in compile and controller because ng-repeat is nested directive.
+ */
+
+
+},{}],26:[function(require,module,exports){
 /**
  * Controller: DirectivesCtrl
  */
@@ -433,7 +509,7 @@ module.exports = function ($scope) {
 
 };
 
-},{}],25:[function(require,module,exports){
+},{}],27:[function(require,module,exports){
 /* state: 'examples-spa_q'
  * url: /examples-spa/q
  ************************/
@@ -447,7 +523,7 @@ module.exports = function (APPCONF) {
     };
 };
 
-},{}],26:[function(require,module,exports){
+},{}],28:[function(require,module,exports){
 /**
  * Controller: ScopeParentCtrl
  *
@@ -465,7 +541,7 @@ module.exports = function ($scope) {
 
 };
 
-},{}],27:[function(require,module,exports){
+},{}],29:[function(require,module,exports){
 /**
  * Controller: Examples-spaCtrl
  */
@@ -475,7 +551,7 @@ module.exports = function ($scope) {
     console.log('A list of SPA Examples.');
 };
 
-},{}],28:[function(require,module,exports){
+},{}],30:[function(require,module,exports){
 /* state: 'examples-spa'
  * url: /examples-spa
  ************************/
@@ -489,7 +565,7 @@ module.exports = function (APPCONF) {
     };
 };
 
-},{}],29:[function(require,module,exports){
+},{}],31:[function(require,module,exports){
 /**
  * Controller: TopmenuBasicCtrl
  */
@@ -518,7 +594,7 @@ module.exports = function ($scope, $http, APPCONF) {
 
 };
 
-},{}],30:[function(require,module,exports){
+},{}],32:[function(require,module,exports){
 /* state: 'examples-spa_login_basic_form'
  * url: /examples-spa/login/basic/form
  ************************/
@@ -539,7 +615,7 @@ module.exports = function (APPCONF) {
     };
 };
 
-},{}],31:[function(require,module,exports){
+},{}],33:[function(require,module,exports){
 /* state: 'examples-spa_login_basic_page1'
  * url: /examples-spa/login/basic/page1
  ************************/
@@ -563,7 +639,7 @@ module.exports = function (APPCONF) {
     };
 };
 
-},{}],32:[function(require,module,exports){
+},{}],34:[function(require,module,exports){
 /* state: 'examples-spa_login_page2'
  * url: /examples-spa/login/page2
  ************************/
@@ -587,7 +663,7 @@ module.exports = function (APPCONF) {
     };
 };
 
-},{}],33:[function(require,module,exports){
+},{}],35:[function(require,module,exports){
 /* state: 'examples-spa_login_basic_page3'
  * url: /examples-spa/login/basic/page3
  ************************/
@@ -611,7 +687,7 @@ module.exports = function (APPCONF) {
     };
 };
 
-},{}],34:[function(require,module,exports){
+},{}],36:[function(require,module,exports){
 /**
  * Controller: TopmenuHashCtrl
  */
@@ -640,7 +716,7 @@ module.exports = function ($scope, $http, APPCONF) {
 
 };
 
-},{}],35:[function(require,module,exports){
+},{}],37:[function(require,module,exports){
 /* state: 'examples-spa_login_hash_form'
  * url: /examples-spa/login/hash/form
  ************************/
@@ -661,7 +737,7 @@ module.exports = function (APPCONF) {
     };
 };
 
-},{}],36:[function(require,module,exports){
+},{}],38:[function(require,module,exports){
 /* state: 'examples-spa_login_hash_page1'
  * url: /examples-spa/login/hash/page1
  ************************/
@@ -685,7 +761,7 @@ module.exports = function (APPCONF) {
     };
 };
 
-},{}],37:[function(require,module,exports){
+},{}],39:[function(require,module,exports){
 /* state: 'examples-spa_login_hash_page2'
  * url: /examples-spa/login/hash/page2
  ************************/
@@ -709,7 +785,7 @@ module.exports = function (APPCONF) {
     };
 };
 
-},{}],38:[function(require,module,exports){
+},{}],40:[function(require,module,exports){
 /* state: 'examples-spa_login_hash_page3'
  * url: /examples-spa/login/hash/page3
  ************************/
@@ -733,7 +809,7 @@ module.exports = function (APPCONF) {
     };
 };
 
-},{}],39:[function(require,module,exports){
+},{}],41:[function(require,module,exports){
 /**
  * Controller: TopmenuJWTCtrl
  */
@@ -762,7 +838,7 @@ module.exports = function ($scope, $http, APPCONF) {
 
 };
 
-},{}],40:[function(require,module,exports){
+},{}],42:[function(require,module,exports){
 /* state: 'examples-spa_login_jwt_form'
  * url: /examples-spa/login/jwt/form
  ************************/
@@ -783,7 +859,7 @@ module.exports = function (APPCONF) {
     };
 };
 
-},{}],41:[function(require,module,exports){
+},{}],43:[function(require,module,exports){
 /* state: 'examples-spa_login_jwt_page1'
  * url: /examples-spa/login/jwt/page1
  ************************/
@@ -807,7 +883,7 @@ module.exports = function (APPCONF) {
     };
 };
 
-},{}],42:[function(require,module,exports){
+},{}],44:[function(require,module,exports){
 /* state: 'examples-spa_login_jwt_page2'
  * url: /examples-spa/login/jwt/page2
  ************************/
@@ -831,7 +907,7 @@ module.exports = function (APPCONF) {
     };
 };
 
-},{}],43:[function(require,module,exports){
+},{}],45:[function(require,module,exports){
 /* state: 'examples-spa_login_jwt_page3'
  * url: /examples-spa/login/jwt/page3
  ************************/
@@ -855,7 +931,7 @@ module.exports = function (APPCONF) {
     };
 };
 
-},{}],44:[function(require,module,exports){
+},{}],46:[function(require,module,exports){
 /* state: 'examples-spa_login'
  * url: /examples-spa/login
  ************************/
@@ -868,7 +944,7 @@ module.exports = function (APPCONF) {
     };
 };
 
-},{}],45:[function(require,module,exports){
+},{}],47:[function(require,module,exports){
 /**
  * Controller: ListQcreationCtrl
  */
@@ -1055,7 +1131,7 @@ module.exports = function ($scope, $q, $timeout) {
 
 };
 
-},{}],46:[function(require,module,exports){
+},{}],48:[function(require,module,exports){
 /**
  * Controller: ListQmethodsCtrl
  */
@@ -1182,7 +1258,7 @@ console:
 
 };
 
-},{}],47:[function(require,module,exports){
+},{}],49:[function(require,module,exports){
 /* state: 'examples-spa_q'
  * url: /examples-spa/q
  ************************/
@@ -1195,7 +1271,7 @@ module.exports = function (APPCONF) {
     };
 };
 
-},{}],48:[function(require,module,exports){
+},{}],50:[function(require,module,exports){
     /**************************************************************************************
      ********************************* UI-ROUTER EXAMPLES *********************************
      **************************************************************************************/
@@ -1525,14 +1601,14 @@ module.exports = function ($stateProvider, $urlRouterProvider) {
 
 };
 
-},{}],49:[function(require,module,exports){
+},{}],51:[function(require,module,exports){
 /* Controller: 'StateControllerAliasCtrl' */
 module.exports = function ($scope) {
     'use strict';
     $scope.myVar = 'Variable from $scope !'
 };
 
-},{}],50:[function(require,module,exports){
+},{}],52:[function(require,module,exports){
 /* state: 'examples-spa_uirouter'
  * url: /examples-spa/uirouter
  ************************/
@@ -1546,7 +1622,7 @@ module.exports = function (APPCONF) {
 };
 
 
-},{}],51:[function(require,module,exports){
+},{}],53:[function(require,module,exports){
 /*global angular*/
 
 /******************* CUSTOM MODULES *******************************
@@ -1666,8 +1742,10 @@ clientApp.directive('myScopeObjAnd', require('./app/examples-spa/directives/dire
 
 clientApp.directive('myCompileOrder', require('./app/examples-spa/directives/directive_examples/06compile-order'));
 clientApp.directive('myCompilePostfunction', require('./app/examples-spa/directives/directive_examples/06compile-postfunction'));
+clientApp.directive('myLnk', require('./app/examples-spa/directives/directive_examples/07link'));
+clientApp.directive('myNgrepeatInterpolate', require('./app/examples-spa/directives/directive_examples/08ngrepeat-interpolate'));
 
-},{"../../bower_components/angular-cookies/angular-cookies.min.js":1,"../../bower_components/angular-ui-router/release/angular-ui-router.min.js":2,"./app/404/404Ctrl":3,"./app/examples-spa/directives/directive_examples/01template-func":5,"./app/examples-spa/directives/directive_examples/01template-string":6,"./app/examples-spa/directives/directive_examples/02templatenamespace-svg":7,"./app/examples-spa/directives/directive_examples/02templateurl":9,"./app/examples-spa/directives/directive_examples/02templateurl-func":8,"./app/examples-spa/directives/directive_examples/03controller-as":10,"./app/examples-spa/directives/directive_examples/03controller-external":11,"./app/examples-spa/directives/directive_examples/03controller-internal":12,"./app/examples-spa/directives/directive_examples/03controller-internal2":13,"./app/examples-spa/directives/directive_examples/04restrict-a":14,"./app/examples-spa/directives/directive_examples/04restrict-e":15,"./app/examples-spa/directives/directive_examples/05scope-false":16,"./app/examples-spa/directives/directive_examples/05scope-object-and":17,"./app/examples-spa/directives/directive_examples/05scope-object-at":18,"./app/examples-spa/directives/directive_examples/05scope-object-eq":19,"./app/examples-spa/directives/directive_examples/05scope-object-lt":20,"./app/examples-spa/directives/directive_examples/05scope-true":21,"./app/examples-spa/directives/directive_examples/06compile-order":22,"./app/examples-spa/directives/directive_examples/06compile-postfunction":23,"./app/examples-spa/directives/directivesCtrl":24,"./app/examples-spa/directives/scopeParentCtrl":26,"./app/examples-spa/examples-spaCtrl":27,"./app/examples-spa/login/basic/_common/topmenu/topmenuCtrl":29,"./app/examples-spa/login/hash/_common/topmenu/topmenuCtrl":34,"./app/examples-spa/login/jwt/_common/topmenu/topmenuCtrl":39,"./app/examples-spa/q/qCtrl_creation":45,"./app/examples-spa/q/qCtrl_methods":46,"./app/examples-spa/uirouter/stateControllerAliasCtrl":49,"./ng/config/html5mode":52,"./ng/config/routes-ui":53,"./ng/constant/APPCONF":54,"./ng/modules/angular-passport/ngPassportBasic":55,"./ng/modules/angular-passport/ngPassportJWT":56}],52:[function(require,module,exports){
+},{"../../bower_components/angular-cookies/angular-cookies.min.js":1,"../../bower_components/angular-ui-router/release/angular-ui-router.min.js":2,"./app/404/404Ctrl":3,"./app/examples-spa/directives/directive_examples/01template-func":5,"./app/examples-spa/directives/directive_examples/01template-string":6,"./app/examples-spa/directives/directive_examples/02templatenamespace-svg":7,"./app/examples-spa/directives/directive_examples/02templateurl":9,"./app/examples-spa/directives/directive_examples/02templateurl-func":8,"./app/examples-spa/directives/directive_examples/03controller-as":10,"./app/examples-spa/directives/directive_examples/03controller-external":11,"./app/examples-spa/directives/directive_examples/03controller-internal":12,"./app/examples-spa/directives/directive_examples/03controller-internal2":13,"./app/examples-spa/directives/directive_examples/04restrict-a":14,"./app/examples-spa/directives/directive_examples/04restrict-e":15,"./app/examples-spa/directives/directive_examples/05scope-false":16,"./app/examples-spa/directives/directive_examples/05scope-object-and":17,"./app/examples-spa/directives/directive_examples/05scope-object-at":18,"./app/examples-spa/directives/directive_examples/05scope-object-eq":19,"./app/examples-spa/directives/directive_examples/05scope-object-lt":20,"./app/examples-spa/directives/directive_examples/05scope-true":21,"./app/examples-spa/directives/directive_examples/06compile-order":22,"./app/examples-spa/directives/directive_examples/06compile-postfunction":23,"./app/examples-spa/directives/directive_examples/07link":24,"./app/examples-spa/directives/directive_examples/08ngrepeat-interpolate":25,"./app/examples-spa/directives/directivesCtrl":26,"./app/examples-spa/directives/scopeParentCtrl":28,"./app/examples-spa/examples-spaCtrl":29,"./app/examples-spa/login/basic/_common/topmenu/topmenuCtrl":31,"./app/examples-spa/login/hash/_common/topmenu/topmenuCtrl":36,"./app/examples-spa/login/jwt/_common/topmenu/topmenuCtrl":41,"./app/examples-spa/q/qCtrl_creation":47,"./app/examples-spa/q/qCtrl_methods":48,"./app/examples-spa/uirouter/stateControllerAliasCtrl":51,"./ng/config/html5mode":54,"./ng/config/routes-ui":55,"./ng/constant/APPCONF":56,"./ng/modules/angular-passport/ngPassportBasic":57,"./ng/modules/angular-passport/ngPassportJWT":58}],54:[function(require,module,exports){
 /**
  * $location in HTML5 mode
  *
@@ -1684,7 +1762,7 @@ module.exports = function ($locationProvider) {
     // $locationProvider.html5Mode(false); //http://localhost:3000/something#/example
 };
 
-},{}],53:[function(require,module,exports){
+},{}],55:[function(require,module,exports){
 /*global window*/
 /**
  * App routes defined by ui-router.
@@ -1754,7 +1832,7 @@ module.exports = function ($stateProvider, $urlRouterProvider, APPCONF) {
 
 
 
-},{"../../app/404/404Rte":4,"../../app/examples-spa/directives/directivesRte":25,"../../app/examples-spa/examples-spaRte":28,"../../app/examples-spa/login/basic/form/formRte":30,"../../app/examples-spa/login/basic/page1/page1Rte":31,"../../app/examples-spa/login/basic/page2/page2Rte":32,"../../app/examples-spa/login/basic/page3/page3Rte":33,"../../app/examples-spa/login/hash/form/formRte":35,"../../app/examples-spa/login/hash/page1/page1Rte":36,"../../app/examples-spa/login/hash/page2/page2Rte":37,"../../app/examples-spa/login/hash/page3/page3Rte":38,"../../app/examples-spa/login/jwt/form/formRte":40,"../../app/examples-spa/login/jwt/page1/page1Rte":41,"../../app/examples-spa/login/jwt/page2/page2Rte":42,"../../app/examples-spa/login/jwt/page3/page3Rte":43,"../../app/examples-spa/login/loginRte":44,"../../app/examples-spa/q/qRte":47,"../../app/examples-spa/uirouter/examplesRte":48,"../../app/examples-spa/uirouter/uirouterRte":50}],54:[function(require,module,exports){
+},{"../../app/404/404Rte":4,"../../app/examples-spa/directives/directivesRte":27,"../../app/examples-spa/examples-spaRte":30,"../../app/examples-spa/login/basic/form/formRte":32,"../../app/examples-spa/login/basic/page1/page1Rte":33,"../../app/examples-spa/login/basic/page2/page2Rte":34,"../../app/examples-spa/login/basic/page3/page3Rte":35,"../../app/examples-spa/login/hash/form/formRte":37,"../../app/examples-spa/login/hash/page1/page1Rte":38,"../../app/examples-spa/login/hash/page2/page2Rte":39,"../../app/examples-spa/login/hash/page3/page3Rte":40,"../../app/examples-spa/login/jwt/form/formRte":42,"../../app/examples-spa/login/jwt/page1/page1Rte":43,"../../app/examples-spa/login/jwt/page2/page2Rte":44,"../../app/examples-spa/login/jwt/page3/page3Rte":45,"../../app/examples-spa/login/loginRte":46,"../../app/examples-spa/q/qRte":49,"../../app/examples-spa/uirouter/examplesRte":50,"../../app/examples-spa/uirouter/uirouterRte":52}],56:[function(require,module,exports){
 //application constants (configuration file)
 module.exports = {
 
@@ -1764,7 +1842,7 @@ module.exports = {
 
 };
 
-},{}],55:[function(require,module,exports){
+},{}],57:[function(require,module,exports){
 var ngPassportBasic = require('angular-passport').ngPassportBasic;
 
 /* configure */
@@ -1778,7 +1856,7 @@ ngPassportBasic.constant('NGPASSPORT_CONF_BASIC', {
 
 module.exports = ngPassportBasic;
 
-},{"angular-passport":57}],56:[function(require,module,exports){
+},{"angular-passport":59}],58:[function(require,module,exports){
 var ngPassportJWT = require('angular-passport').ngPassportJWT;
 
 /* configure */
@@ -1792,12 +1870,12 @@ ngPassportJWT.constant('NGPASSPORT_CONF_JWT', {
 
 module.exports = ngPassportJWT;
 
-},{"angular-passport":57}],57:[function(require,module,exports){
+},{"angular-passport":59}],59:[function(require,module,exports){
 module.exports.ngPassportBasic = require('./src/ngPassportBasic');
 module.exports.ngPassportJWT = require('./src/ngPassportJWT');
 module.exports.ngPassportHash = require('./src/ngPassportHash');
 
-},{"./src/ngPassportBasic":70,"./src/ngPassportHash":71,"./src/ngPassportJWT":72}],58:[function(require,module,exports){
+},{"./src/ngPassportBasic":72,"./src/ngPassportHash":73,"./src/ngPassportJWT":74}],60:[function(require,module,exports){
 /**
  * Controller: 'NgPassportBasicCtrl'
  */
@@ -1833,7 +1911,7 @@ module.exports = function ($scope, basicAuth, $state, NGPASSPORT_CONF_BASIC) {
     };
 };
 
-},{}],59:[function(require,module,exports){
+},{}],61:[function(require,module,exports){
 /**
  * Controller: 'NgPassportHashCtrl'
  */
@@ -1869,7 +1947,7 @@ module.exports = function ($scope, hashAuth, $state, NGPASSPORT_CONF_HASH) {
     };
 };
 
-},{}],60:[function(require,module,exports){
+},{}],62:[function(require,module,exports){
 /**
  * Controller: 'NgPassportJWTCtrl'
  */
@@ -1905,7 +1983,7 @@ module.exports = function ($scope, jwtAuth, $state, NGPASSPORT_CONF_JWT) {
     };
 };
 
-},{}],61:[function(require,module,exports){
+},{}],63:[function(require,module,exports){
 module.exports = function (ctrl) {
     'use strict';
 
@@ -1925,7 +2003,7 @@ module.exports = function (ctrl) {
     };
 };
 
-},{}],62:[function(require,module,exports){
+},{}],64:[function(require,module,exports){
 module.exports = function (ctrl) {
     'use strict';
 
@@ -1945,7 +2023,7 @@ module.exports = function (ctrl) {
     };
 };
 
-},{}],63:[function(require,module,exports){
+},{}],65:[function(require,module,exports){
 module.exports = function () {
     'use strict';
 
@@ -2031,7 +2109,7 @@ module.exports = function () {
 
 };
 
-},{}],64:[function(require,module,exports){
+},{}],66:[function(require,module,exports){
 /**
  * Services for Basic Authentication
  * Notice: $cookies require 'ngCookies' module to be included
@@ -2175,7 +2253,7 @@ module.exports = function ($http, NGPASSPORT_CONF_BASIC, base64, $cookies, $loca
 
 };
 
-},{}],65:[function(require,module,exports){
+},{}],67:[function(require,module,exports){
 /**
  * API Request interceptor
  * Notice: $injector is required to inject basicAuth, because config() accepts providers only not services.
@@ -2228,7 +2306,7 @@ module.exports = function ($injector) {
 
 };
 
-},{}],66:[function(require,module,exports){
+},{}],68:[function(require,module,exports){
 /**
  * Services for Hash Authentication
  * Notice: $cookies require 'ngCookies' module to be included
@@ -2365,7 +2443,7 @@ module.exports = function ($http, NGPASSPORT_CONF_HASH, $cookies, $location, $st
 
 };
 
-},{}],67:[function(require,module,exports){
+},{}],69:[function(require,module,exports){
 /**
  * API Request interceptor
  * Notice: $injector is required to inject hashAuth, because config() accepts providers only not services.
@@ -2404,7 +2482,7 @@ module.exports = function ($injector, NGPASSPORT_CONF_HASH) {
 
 };
 
-},{}],68:[function(require,module,exports){
+},{}],70:[function(require,module,exports){
 /**
  * Services for JWT Authentication
  * Notice: $cookies require 'ngCookies' module to be included
@@ -2541,7 +2619,7 @@ module.exports = function ($http, NGPASSPORT_CONF_JWT, $cookies, $location, $sta
 
 };
 
-},{}],69:[function(require,module,exports){
+},{}],71:[function(require,module,exports){
 /**
  * API Request interceptor
  * Notice: $injector is required to inject jwtAuth, because config() accepts providers only not services.
@@ -2578,7 +2656,7 @@ module.exports = function ($injector) {
 
 };
 
-},{}],70:[function(require,module,exports){
+},{}],72:[function(require,module,exports){
 /*global angular, window*/
 
 /***************************** BASIC AUTHETICATION ****************
@@ -2642,7 +2720,7 @@ module.exports = ngPassportBasic;
 */
 window.ngPassportBasic = ngPassportBasic;
 
-},{"./controller/ngPassportBasicCtrl":58,"./directive/ngpassportForm":61,"./directive/ngpassportLogout":62,"./factory/base64":63,"./factory/basicAuth":64,"./factory/basicInterceptApiRequest":65}],71:[function(require,module,exports){
+},{"./controller/ngPassportBasicCtrl":60,"./directive/ngpassportForm":63,"./directive/ngpassportLogout":64,"./factory/base64":65,"./factory/basicAuth":66,"./factory/basicInterceptApiRequest":67}],73:[function(require,module,exports){
 /*global angular, window*/
 
 /***************************** HASH AUTHETICATION ****************
@@ -2705,7 +2783,7 @@ module.exports = ngPassportHash;
 */
 window.ngPassportHash = ngPassportHash;
 
-},{"./controller/ngPassportHashCtrl":59,"./directive/ngpassportForm":61,"./directive/ngpassportLogout":62,"./factory/hashAuth":66,"./factory/hashInterceptApiRequest":67}],72:[function(require,module,exports){
+},{"./controller/ngPassportHashCtrl":61,"./directive/ngpassportForm":63,"./directive/ngpassportLogout":64,"./factory/hashAuth":68,"./factory/hashInterceptApiRequest":69}],74:[function(require,module,exports){
 /*global angular, window*/
 
 /***************************** JWT (Json Web Token) AUTHETICATION ****************
@@ -2768,7 +2846,7 @@ module.exports = ngPassportJWT;
 */
 window.ngPassportJWT = ngPassportJWT;
 
-},{"./controller/ngPassportJWTCtrl":60,"./directive/ngpassportForm":61,"./directive/ngpassportLogout":62,"./factory/jwtAuth":68,"./factory/jwtInterceptApiRequest":69}],73:[function(require,module,exports){
+},{"./controller/ngPassportJWTCtrl":62,"./directive/ngpassportForm":63,"./directive/ngpassportLogout":64,"./factory/jwtAuth":70,"./factory/jwtInterceptApiRequest":71}],75:[function(require,module,exports){
 exports = module.exports = stringify
 exports.getSerialize = serializer
 
@@ -2797,4 +2875,4 @@ function serializer(replacer, cycleReplacer) {
   }
 }
 
-},{}]},{},[51]);
+},{}]},{},[53]);

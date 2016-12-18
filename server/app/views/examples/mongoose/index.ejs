@@ -365,7 +365,38 @@
 		Doc: <a href="https://mongodb.github.io/node-mongodb-native/" target="_blank">https://mongodb.github.io/node-mongodb-native/</a> and
 		<br> To access nodejs native driver from mongoose use: <b>MyModel.collection</b>
 		<ol>
-			<li><a href="/examples/mongoose/90native-find" target="_blank">find</a>
+			<li><a href="/examples/mongoose/90native-find" target="_blank">find</a></li>
+		</ol>
+
+
+		<br><br>
+		<h4>IMPORTANT !!!</h4>
+		<ol>
+			<li>
+				Updating ordinary docNew to mongoose doc will assign methods like .save() , .update()
+				and also trigger middlewares. On the contrary modelName.create() , modelName.update() will not trigger pre or post
+				middleware.
+<pre>
+module.exports.updateDb_save = function (queryObj, docNew) {
+    'use strict';
+    return databasesModel.findOneAsync(queryObj)
+        .then(function (doc) {
+
+            /******** IMPORTANT!!!
+             * Converting ordinary 'doc' to mongoose 'doc' which has methods: save(), update() ...etc.
+             * Also save() will execute schema validators before saving doc: Sch.pre('save', pre_dbmo.cryptPass)
+             */
+            <span style="color:red">doc.set(docNew);</span> //updated 'doc'
+
+            //=-=-= updating doc with save()
+            //save() will execute validators defined in schema
+            return doc.saveAsync();
+        });
+};
+</pre>
+			</li>
+			<li>Also notice usage of <b>var doc = new databasesModel(docNew);</b> which will trigger middlewares.</li>
+		</ol>
 
 	</main>
 

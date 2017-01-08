@@ -25,7 +25,7 @@ module.exports = function (req, res, next) {
         multi: false, //whether multiple documents should be updated (false)
         runValidators: true, //validators validate the update operation against the model's schema
         strict: true, //values not defined in schema will not be saved in db (default is defined in schema options, and can be overwritten here)
-        overwrite: false //disables update-only mode, allowing you to overwrite the doc (false)
+        overwrite: false //disables update-only mode, allowing you to overwrite the doc (false) [if overwrite:true then fields not defined in newDoc will be deleted]
     };
 
 

@@ -12,7 +12,7 @@ var userpass = process.env.EMAILJS; //$export EMAILJS=email@gmail.com:my_passwor
 var usr = userpass.split(':')[0];
 var pass = userpass.split(':')[1];
 
-console.log(JSON.stringify(userpass, null, 4));
+// console.log(JSON.stringify(userpass, null, 4));
 
 var gmailSMTP = emailjs.server.connect({
     user: usr,
@@ -49,13 +49,15 @@ router.post('/send', function (req, res) {
     'use strict';
 
     var data = req.body;
+    // console.log(JSON.stringify(data, null, 4));
+    
+    var msg = data.message + '\n\nfrom: ' + data.email;
 
     gmailSMTP.send({
         from: data.name + '<' + data.email + '>',
         to: usr,
-        // cc: 'smikodanic@gmail.com',
         subject: 'SuperMEAN Inquiry',
-        text: data.message
+        text: msg
     }, function (err, message) {
         if (err) {
             res.status(500).send(err);

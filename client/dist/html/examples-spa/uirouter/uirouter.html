@@ -38,7 +38,7 @@ $stateProvider
             }
         }
     });
-</pre></li><li><b>parent:</b><br><a ui-sref="myParent3.myChild" target="_blank">myParent3.myChild</a> - <b>parent:</b> doesn't define state but only inherits parent template. That's why this ui-sref link will not work! Try <a ui-sref="myChild3" target="_blank">myChild3</a><br><a ui-sref="myChild3.myGrandChild" target="_blank">myParent3.myChild3.myGrandChild</a><pre>
+</pre></li><li><b>parent:</b><br><a ui-sref="myParent3.myChild" target="_blank">myParent3.myChild</a> - <b>parent: </b>doesn't define state but only inherits parent template. That's why this ui-sref link will not work! Try <a ui-sref="myChild3" target="_blank">myChild3</a><br><a ui-sref="myChild3.myGrandChild" target="_blank">myParent3.myChild3.myGrandChild</a><pre>
 $stateProvider
     .state('myParent3', {
         url: '/examples-spa/uirouter/stateviewsparent3',

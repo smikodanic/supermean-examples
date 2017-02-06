@@ -1,0 +1,1 @@
+{"version":3,"sources":["main.css","app/examples-spa/examples-spa.scss"],"names":[],"mappings":"AAAA;;;;IAII;;ACJJ;EACC,kBAAiB,EACjB;;ADOD,sRAAsR","file":"main.css","sourcesContent":[null,"section.main-block {\n\tmin-height: 350px;\n}\n"]}

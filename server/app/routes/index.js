@@ -8,16 +8,17 @@ var router = express.Router();
 
 var emailjs = require("emailjs");
 
-var userpass = process.env.EMAILJS; //$export EMAILJS=email@gmail.com:my_password
+var userpass = process.env.EMAILJS_SUPERMEAN_WWW; //$export EMAILJS_UNIAPI_WWW=email@gmail.com:my_password:smtp.gmail.com
 var usr = userpass.split(':')[0];
 var pass = userpass.split(':')[1];
+var host = userpass.split(':')[2];
 
 // console.log(JSON.stringify(userpass, null, 4));
 
 var gmailSMTP = emailjs.server.connect({
     user: usr,
     password: pass,
-    host: 'smtp.gmail.com',
+    host: host,
     // port: 465,
     // port: 587,
     ssl: true
@@ -50,11 +51,12 @@ router.post('/send', function (req, res) {
 
     var data = req.body;
     // console.log(JSON.stringify(data, null, 4));
-    
+
     var msg = data.message + '\n\nfrom: ' + data.email;
 
     gmailSMTP.send({
         from: data.name + '<' + data.email + '>',
+        'reply-to': data.name + '<' + data.email + '>',
         to: usr,
         subject: 'SuperMEAN Inquiry',
         text: msg

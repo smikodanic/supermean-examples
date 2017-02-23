@@ -5,13 +5,23 @@
 
 var express = require('express');
 var router = express.Router();
+var chalk = require('chalk');
 
 var emailjs = require("emailjs");
 
 var userpass = process.env.EMAILJS_SUPERMEAN_WWW; //$export EMAILJS_UNIAPI_WWW=email@gmail.com:my_password:smtp.gmail.com
-var usr = userpass.split(':')[0];
-var pass = userpass.split(':')[1];
-var host = userpass.split(':')[2];
+
+var usr = '',
+    pass = '',
+    host = '';
+
+if (!userpass) {
+    console.log(chalk.red('ERROR: EmailJS parameters not defined. Use $export EMAILJS_SUPERMEAN_WWW=email@gmail.com:my_password:smtp.gmail.com'));
+} else {
+    usr = userpass.split(':')[0];
+    pass = userpass.split(':')[1];
+    host = userpass.split(':')[2];
+}
 
 // console.log(JSON.stringify(userpass, null, 4));
 

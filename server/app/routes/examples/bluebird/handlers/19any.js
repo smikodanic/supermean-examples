@@ -28,8 +28,18 @@ module.exports = function (req, res, next) {
     });
 
 
+
     //*** uncomment this and .then() will be executed instantly
-    // promisArr[2] = 'Some string'; //instantly
+    promisArr[2] = 'Some string'; //instantly
+
+
+    //*** uncomment this and .then() will be executed instantly but val will be undefined (use race() instead of any())
+    // promisArr[3] = BPromise.resolve('From promise promisArr[3].');
+
+    //*** uncomment this and .then() will be executed instantly but val will be undefined (use race() instead of any())
+    // promisArr[4] = new BPromise(function (resolve, reject) { //13sec
+    //     resolve('From promise promisArr[4].');
+    // });
 
 
 
@@ -37,7 +47,10 @@ module.exports = function (req, res, next) {
         .then(function (val) {
             console.log('One promise is fulfilled!');
 
-            console.log(val);
+            console.log(JSON.stringify(val, null, 4));
+        })
+        .catch(function (err) {
+            console.log(err);
         });
 
 };

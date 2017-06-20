@@ -17,7 +17,7 @@ module.exports = function () {
         clientID: config.auth.facebook.appID,
         clientSecret: config.auth.facebook.appSecret,
         callbackURL: config.auth.facebook.callbackURL,
-        profileFields: ['id', 'displayName', 'photos', 'email']
+        profileFields: ['id', 'displayName', 'photos', 'emails']
     }, function (accessToken, refreshToken, profile, cb) {
 /* var profile is transfered into req.user and can be used in controller, req.user = profile
 

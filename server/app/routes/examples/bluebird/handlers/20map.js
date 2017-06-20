@@ -6,6 +6,9 @@
  * BPromise.map([promisA, promisB, valueA, valueB], function (elem) { ... }).then(function (valArr) { ... })
  * Simmilar as .all() but do mapping of resolved values.
  *
+ * IMPORTANT
+ * All promises must be fulfilled, otherwise map will not work !!!
+ *
  * This example takes a value from array and map it with adding 2 to each array element.
  *
  */
@@ -27,6 +30,7 @@ module.exports = function (req, res, next) {
     });
 
     BPromise.map(promisArr, function (elem) {
+        console.log(elem);
         return parseInt(elem, 10) + 2;
     })
         .then(function (valArr) { //will wait for promisArr[1] to get fulfilled state
